@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminGoods">
+
+<insert id="insertAdminGoods" parameterType="hashmap" useGeneratedKeys="true" keyProperty="GOODS_NUM">
+<selectKey keyProperty="GOODS_NUM" resultType="string" order="BEFORE">
+			SELECT GOODS_NUM_SEQ.NEXTVAL FROM DUAL
+</selectKey>
+<![CDATA[ 
+INSERT INTO GOODS (
+	GOODS_NUM,
+	GOODS_NAME,
+	GOODS_AMOUNT,
+	GOODS_CATEGORY,
+	GOODS_PRICE,
+	GOODS_DATE,
+	GOODS_CALORIE
+	) 
+VALUES (
+	#{GOODS_NUM},
+	#{GOODS_NAME},
+	#{GOODS_AMOUNT},
+	#{GOODS_CATEGORY},
+	#{GOODS_PRICE},
+	SYSDATE,
+	#{GOODS_CALORIE}
+	)
+	]]>
+</insert>
+
+
+
+<insert id="insertGoodsFile" parameterType="hashmap" >
+
+	<![CDATA[
+		INSERT INTO IMAGE
+		(   
+			IMAGE_NUM,
+		    IMAGE_GOODS_NUM,
+			IMAGE_CATEGORY,
+			IMAGE_IMG,
+			IMAGE_STORED,
+			IMAGE_SIZE
+		)
+		VALUES
+		(   		    
+			IMAGE_NUM_SEQ.NEXTVAL,
+			#{IMAGE_GOODS_NUM},
+			#{IMAGE_CATEGORY},
+			#{IMAGE_IMG},
+			#{IMAGE_STORED},
+			#{IMAGE_SIZE}
+		)
+	]]>
+</insert>
+
+
+
+<select id="adminGoodsList" resultType="hashmap">
+<![CDATA[
+select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+	from GOODS, IMAGE 
+	where GOODS_NUM = IMAGE_GOODS_NUM
+    and IMAGE_CATEGORY = 1
+	and GOODS_DELETE = 'N'
+	order by GOODS_NUM desc
+]]>
+</select>
+
+	<select id="adminGoodsUpdateDetail" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT 
+				GOODS_NUM,
+				GOODS_NAME,
+				GOODS_CATEGORY,
+				GOODS_PRICE,
+				GOODS_AMOUNT,
+				GOODS_CALORIE 
+			FROM 
+				GOODS 
+			WHERE 
+				GOODS_NUM = #{GOODS_NUM}		
+		]]>
+	</select>
+
+	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    IMAGE_GOODS_NUM,
+				IMAGE_NUM,
+				IMAGE_CATEGORY,
+				IMAGE_IMG,
+				ROUND(IMAGE_SIZE/1024,1) AS IMAGE_SIZE,
+				IMAGE_STORED
+			FROM
+			    IMAGE	
+			WHERE
+			    IMAGE_GOODS_NUM = #{GOODS_NUM}
+		]]>
+	</select>
+
+	<update id="adminGoodsUpdate" parameterType="hashmap">
+			<![CDATA[
+				UPDATE GOODS 
+				SET 
+					GOODS_NAME = #{GOODS_NAME},
+					GOODS_PRICE = #{GOODS_PRICE},
+					GOODS_AMOUNT = #{GOODS_AMOUNT},
+					GOODS_CALORIE = #{GOODS_CALORIE} 
+				WHERE 
+					GOODS_NUM = #{GOODS_NUM}	
+			]]>
+	</update>
+	
+	<update id="updateFile" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_FILE SET
+				DEL_GB = 'N'
+			WHERE
+				IMAGE_GOODS_NUM = #{IMAGE_GOODS_NUM}	
+		]]>
+	</update>
+	
+	
+	
+	
+
+<update id="deleteAdminGoods" parameterType="hashmap">
+	<![CDATA[
+UPDATE GOODS
+		SET
+			GOODS_DELETE = 'Y'
+		WHERE
+			GOODS_NUM = #{GOODS_NUM}
+]]>
+</update>
+
+
+	
+
+
+</mapper>

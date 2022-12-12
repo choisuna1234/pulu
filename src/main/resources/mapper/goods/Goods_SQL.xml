@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="goods">
+
+	<!-- main.jsp에서 보여지는 상품 정렬 -->
+	<select id="goodsList" resultType="hashmap">
+	<![CDATA[
+	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+				GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where GOODS_NUM = IMAGE_GOODS_NUM
+		and GOODS_CATEGORY = #{categoryNo}
+	    and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'
+		order by GOODS_NUM desc
+	]]>
+	</select>
+
+
+	<!-- GOODS_DETAIL 상품 상세보기 -->
+	<select id="goodsdetail" resultType="hashmap">
+	<![CDATA[
+		select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+				GOODS_DATE, GOODS_CALORIE
+		from GOODS
+		where GOODS_NUM = #{GOODS_NUM}  
+		and GOODS_DELETE = 'N' 
+	]]>
+	</select>
+
+
+	<!-- 이미지 가져오기 -->
+	<select id="imgselect" resultType="hashmap">
+	<![CDATA[
+		select IMAGE_STORED
+		from	GOODS, IMAGE
+		where	GOODS_NUM = #{GOODS_NUM}
+		and		GOODS_NUM = IMAGE_NUM
+	]]>
+	</select>
+
+
+	<!-- 선민: 주문할 상품의 번호, 이름, 가격, 이미지정보 1개를 select -->
+	<select id="selectOrderGoodsInfo" resultType="hashMap">
+	<![CDATA[
+		select	GOODS_NUM, GOODS_NAME, GOODS_PRICE,
+				IMAGE_STORED
+		from	GOODS, IMAGE 
+		where	GOODS_NUM = #{GOODS_NUM}
+		and		GOODS_NUM = IMAGE_GOODS_NUM
+		and		IMAGE_CATEGORY = 1
+	]]>
+	</select>
+	
+	
+	
+
+
+</mapper>

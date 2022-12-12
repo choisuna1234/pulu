@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminMember">
+
+	<!-- 선민: 전체 회원목록을 가져오기 -->
+	<!-- member테이블의 인덱스이름을 PK_NUM으로 변경해야 작동 -->
+	<select id="selectMemberList" parameterType="hashmap" resultType="hashmap">
+	select
+		/*+ index_asc (member PK_NUM) */
+		rownum, num, id, name, phone, email, zipcode, addr1, addr2, grade 
+	from member
+	</select>
+	
+	<!-- 선민: 개인 회원정보를 가져오기 -->
+	<select id="selectMemberInfo" parameterType="String" resultType="hashmap">
+	select *
+	from member
+	where id = #{ID}
+	</select>
+	
+	<!-- 선민: 개인 회원정보를 수정하기 -->
+	<select id="updateMemberInfo" parameterType="hashmap">
+	update member
+	set
+		phone = #{PHONE},
+		email = #{EMAIL},
+		zipcode = #{ZIPCODE},
+		addr1 = #{ADDR1},
+		addr2 = #{ADDR2}
+	where id = #{ID}
+	</select>
+	
+	
+	<!-- 선민: 개인 회원정보를 삭제하기 -->
+	<delete id="deleteMemberInfo" parameterType="String">
+	delete
+	from member
+	where id = #{ID}
+	</delete>
+	
+	
+	
+</mapper>

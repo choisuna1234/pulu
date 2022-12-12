@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 소영: FAQ 게시판 SQL -->
+<mapper namespace="faq">
+
+	<!-- FAQ 등록 -->
+	<insert id="adminFaqInsert" parameterType="hashMap" useGeneratedKeys="true" keyProperty="FAQ_NUM">
+		<selectKey keyProperty="FAQ_NUM" resultType="integer" order="BEFORE">
+			SELECT FAQ_NUM_SEQ.NEXTVAL FROM DUAL 
+		</selectKey>
+		<![CDATA[
+			INSERT INTO FAQ( 
+			FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_CONTENT, FAQ_READCOUNT, FAQ_DATE, FAQ_DELETE)
+			VALUES(
+			#{FAQ_NUM}, 'Admin', #{FAQ_SUBJECT}, #{FAQ_CONTENT}, 0, SYSDATE, 'N')   
+		]]>
+	</insert>
+
+	<!-- FAQ 목록 -->
+	<select id="faqList" resultType="hashMap" parameterType="hashMap">
+		<![CDATA[
+			SELECT ROW_NUMBER() OVER (ORDER BY FAQ_NUM DESC) RNUM, FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_READCOUNT, TO_CHAR(FAQ_DATE, 'YYYY.MM.DD') AS FAQ_DATE
+			FROM FAQ
+			WHERE FAQ_DELETE = 'N'
+			ORDER BY FAQ_NUM DESC
+		]]>
+	</select>
+
+	<!-- FAQ 상세보기 -->
+	<select id="faqDetail" resultType="hashMap" parameterType="hashMap">
+		<![CDATA[
+			SELECT FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_CONTENT, FAQ_READCOUNT, TO_CHAR(FAQ_DATE, 'YYYY.MM.DD') AS FAQ_DATE
+			FROM FAQ
+			WHERE FAQ_NUM = #{FAQ_NUM}
+			ORDER BY FAQ_NUM DESC
+		]]>
+	</select>
+	
+	<!-- 조회수 업데이트 -->
+	<update id="faqUpdateReadCount" parameterType="hashmap">
+		<![CDATA[
+			UPDATE FAQ 
+			SET FAQ_READCOUNT = NVL(FAQ_READCOUNT, 0) + 1
+			WHERE FAQ_NUM = #{FAQ_NUM}	
+		]]>
+	</update>
+	
+	<!-- FAQ 업데이트 -->
+	<update id="faqUpdate" parameterType="hashmap">
+		<![CDATA[
+			UPDATE FAQ 
+			SET FAQ_SUBJECT = #{FAQ_SUBJECT}, FAQ_CONTENT = #{FAQ_CONTENT}
+			WHERE FAQ_NUM = #{FAQ_NUM}	
+		]]>
+	</update>
+	
+	<update id="faqDelete" parameterType="hashmap">
+		<![CDATA[
+			UPDATE FAQ
+			SET FAQ_DELETE = 'Y'
+			WHERE FAQ_NUM = #{FAQ_NUM}
+		]]>
+	</update>
+	
+	<!--FAQ검색(제목)0  -->
+	<select id="faqSearch0" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		  SELECT FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_READCOUNT, FAQ_DATE
+		  FROM FAQ
+		  WHERE FAQ_SUBJECT LIKE '%' || #{isSearch} || '%'
+		  AND FAQ_DELETE = 'N'
+		  ORDER BY FAQ_NUM DESC
+		]]>
+	</select>
+	
+	<!--FAQ검색(내용)1  -->
+	<select id="faqSearch1" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_READCOUNT, FAQ_DATE
+			FROM FAQ
+			WHERE FAQ_CONTENT LIKE '%' || #{isSearch} || '%'
+			AND FAQ_DELETE = 'N'
+			ORDER BY FAQ_NUM DESC
+		]]>
+	</select>
+	
+	<!--FAQ검색(카테고리)2
+	<select id="faqSearch2" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			 SELECT FAQ_NUM, FAQ_HITCOUNT, FAQ_CONTENT, FAQ_TITLE, FAQ_REGDATE, FAQ_CATEGORY 
+			 FROM FAQ
+			 WHERE  FAQ_CATEGORY LIKE '%' || #{FAQ_CATEGORY} || '%'
+			 AND FAQ_DELETE = 'N'
+		]]>
+	</select>  -->
+
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+
+<!-- 선아: 상품주문시, 회원정보 가져오기 -->
+	<select id="orderMember" parameterType="hashMap" resultType="hashMap">
+		<![CDATA[
+			SELECT 
+                        ID,
+                        NAME,
+                        PHONE,
+                        EMAIL,
+                        ZIPCODE,
+                        ADDR1,
+                        ADDR2
+			FROM MEMBER
+			WHERE ID = #{ID}
+			GROUP BY 
+                        ID, 
+                        NAME,
+                        PHONE,
+                        EMAIL,
+                        ZIPCODE,
+                        ADDR1,
+                        ADDR2
+     		   ]]>
+	</select>
+
+<!-- 상품 정보들 가져오기 -->
+<select id="orderGoods" resultType="hashMap">
+		<![CDATA[
+			SELECT 
+				GOODS_NUM,
+				GOODS_NAME,
+				GOODS_PRICE,
+				GOODS_AMOUNT
+			FROM GOODS
+			WHERE GOODS_NUM = #{GOODS_NUM}
+		]]>
+	</select>
+	
+	<!-- 선민: 주문할 상품의 번호, 이름, 가격, 이미지정보 1개를 select -->
+	<select id="selectOrderGoodsInfo" resultType="hashMap">
+	<![CDATA[
+		select	GOODS_NUM, GOODS_NAME, GOODS_PRICE,
+				IMAGE_STORED
+		from	GOODS, IMAGE 
+		where	GOODS_NUM = #{GOODS_NUM}
+		and		GOODS_NUM = IMAGE_GOODS_NUM
+		and		IMAGE_CATEGORY = 1
+	]]>
+	</select>
+	
+	<!-- 주문 내역 넣기 -->
+	   <insert id="insertOrderGoods" parameterType="hashmap">
+   <![CDATA[
+   INSERT INTO GOODS_ORDER
+      (
+	    ORDER_NUM, 
+	    ORDER_PAY_TYPE, 
+	    ORDER_GOODS_NUM, 
+	   	ORDER_GOODS_NAME, 
+	   	ORDER_GOODS_PRICE, 
+	  	ORDER_GOODS_AMOUNT, 
+	   	ORDER_MEMBER_ID, 
+	   	ORDER_RECEIVE_NAME, 
+	   	ORDER_RECEIVE_ADDR1, 
+	    ORDER_RECEIVE_ADDR2, 
+	   	ORDER_RECEIVE_PHONE, 
+	    ORDER_RECEIVE_ZIPCODE, 
+	   	ORDER_MEMO, 
+	    ORDER_SUM_MONEY,
+	      
+	    ORDER_GOODS_IMAGE
+      )
+      values
+      (
+      
+         ORDER_NUM_SEQ.NEXTVAL,  
+         #{ORDER_PAY_TYPE}, 
+         #{GOODS_NUM}, 
+         #{ORDER_GOODS_NAME}, 
+         #{ORDER_GOODS_PRICE}, 
+         
+         #{ORDER_GOODS_AMOUNT}, 
+         #{ORDER_MEMBER_ID},    
+         #{ORDER_RECEIVE_NAME},
+         #{ORDER_RECEIVE_ADDR1},
+         #{ORDER_RECEIVE_ADDR2},
+         
+         #{ORDER_RECEIVE_PHONE},
+         #{ORDER_RECEIVE_ZIPCODE},
+         #{ORDER_MEMO},
+         #{ORDER_SUM_MONEY},
+         #{ORDER_GOODS_IMAGE}
+         
+      )
+   ]]>
+   </insert>
+	
+	
+
+</mapper>

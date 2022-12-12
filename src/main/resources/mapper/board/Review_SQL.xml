@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+<!-- 후기 등록 조건 -->
+<select id="reviewInsertCheck" parameterType="hashMap" resultType="hashMap">
+<![CDATA[
+SELECT ORDER_MEMBER_ID, ORDER_STATUS
+FROM GOODS_ORDER
+WHERE ORDER_STATUS = AND ORDER_MEMBER_ID = #{ORDER_MEMBER_ID} AND ORDER_GOODS_NUM = #{ORDER_GOODS_NUM}
+]]>
+</select>
+<!-- 후기 등록 --> 
+<insert id="reviewInsert" parameterType="hashMap">
+<selectKey keyProperty="REVIEW_NUM" resultType="integer" order="BEFORE">
+SELECT REVIEW_NUM_SEQ.NEXTVAL FROM DUAL
+</selectKey>
+<![CDATA[
+INSERT INTO REVIEW ( REVIEW_NUM, REVIEW_GOODS_NUM, REVIEW_ID, 
+                     REVIEW_CONTENTS, REVIEW_IMAGE, REVIEW_DATE, REVIEW_DELETE, REVIEW_STATUS, REVIEW_COMMENT)
+VALUES ( #{REVIEW_NUM}, #{REVIEW_GOODS_NUM, #{REVIEW_ID}, #{REVIEW_CONTENTS}, #{REVIEW_IMAGE}, SYSDATE, 'N', '답변대기', NULL)
+]]>
+</insert>
+
+<!-- 후기 수정 -->
+<update id="reviewUpdate" parameterType="hashMap">
+<![CDATA[UPDATE REVIEW
+SET REVIEW_CONTENTS = #{REVIEW_CONTENTS},
+    REVIEW_IMAGE = #{REVIEW_IMAGE},
+    REVIEW_DATE = SYSDATE
+WHERE REVIEW_NUM = #{REVIEW_NUM}
+]]>
+</update>
+
+<!-- 후기 삭제 -->
+<update id="reviewDelete" parameterType="hashMap">
+<![CDATA[
+UPDATE REVIEW
+SET REVIEW_DELETE = 'Y'
+WHERE REVIEW_NUM = #{REVIEW_NUM}
+]]>
+</update>
+
+<!-- 후기 목록 -->
+<select id="reviewList" resultType="hashMap" parameterType="hashMap">
+<![CDATA[
+SELECT ROW_NUMBER() OVER (ORDER BY REVIEW_NUM DESC) RNUM, REVIEW_NUM, REVIEW_GOODS_NUM, REVIEW_ID,
+       REVIEW_CONTENTS, REVIEW_DATE, REVIEW_STATUS
+FROM REVIEW
+WHERE REVIEW_DELETE = 'N'
+]]>
+</select>
+
+<!-- 후기 검색(내용) -->
+<select id="searchContent" resultType="hashMap" parameterType="hashMap">
+<![CDATA[
+SELECT REVIEW_NUM, REVIEW_GOODS_NUM, REVIEW_ID, REVIEW_CONTENTS, REVIEW_IMAGE, REVIEW_DATE, REVIEW_COMMENT
+FROM REVIEW
+WHERE REVIEW_CONTENTS LIKE '%' || #{isSearch} || '%' AND REVIEW_DELETE = 'N'
+ORDER BY REVIEW_NUM DESC
+]]>
+</select>
+
+</mapper>

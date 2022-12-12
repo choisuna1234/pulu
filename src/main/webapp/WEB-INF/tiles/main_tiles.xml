@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="layout" template="/WEB-INF/tiles/layout/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/tiles/tile/header.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/tiles/tile/mainbody.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/tiles/tile/footer.jsp"/>
+	</definition>
+	
+	<definition name="main_tiles" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/main/mainbody.jsp"/>
+	</definition>
+
+	<!-- 상품 -->
+
+	<definition name="goods_list" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/goods/list.jsp"/>
+	</definition>	
+
+	<definition name="goods_detail" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/goods/detail.jsp"/>
+	</definition>	
+
+	<definition name="admin_goods_list" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsList.jsp"/>
+	</definition>	
+
+	<definition name="admin_goods_insert" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsInsert.jsp"/>
+	</definition>	
+
+	<definition name="admin_goods_update" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsUpdateForm.jsp"/>
+	</definition>	
+
+
+
+	
+	<definition name="join" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/join.jsp"/>
+	</definition>
+	<!-- 선민: 왜 main_tiles에 넣는지 모름.. 그냥 넣음 -->
+	<definition name="joinOK" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/joinOK.jsp"/>
+	</definition>
+	<definition name="loginForm" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp"/>
+	</definition>
+	
+	<definition name="myPage" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/myPage.jsp"/>
+	</definition>
+	<definition name="findIdForm" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/findIdForm.jsp"/>
+	</definition>
+	<definition name="findIdForm2" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/findIdForm2.jsp"/>
+	</definition>
+	<definition name="findPwForm" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/findPwForm.jsp"/>
+	</definition>
+	<definition name="findPwForm2" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/findPwForm2.jsp"/>
+	</definition>
+	<definition name="deleteForm" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/deleteForm.jsp"/>
+	</definition>
+	<definition name="myInfoModify" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/myInfoModify.jsp"/>
+	</definition>
+	
+	
+	
+	<definition name="pOrder" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/order/pOrder.jsp"/>
+	</definition>
+	
+	<definition name="orderResult" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/order/orderResult.jsp"/>
+	</definition>
+	
+	<definition name="layout_admin" template="/WEB-INF/tiles/layout/admin_layout.jsp">
+		<put-attribute name="body" value="/WEB-INF/views/main/adminMain.jsp"/>
+	</definition>
+	
+	<definition name="admin_Main" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/main/adminMain.jsp"/>
+	</definition>
+	<definition name="admin_notice_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminNoticeList.jsp"/>
+	</definition>
+	<definition name="admin_notice_detail" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminNoticeDetail.jsp"/>
+	</definition>
+	<definition name="admin_notice_insert_form" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminNoticeInsertForm.jsp"/>
+	</definition>
+	<definition name="admin_notice_update_form" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminNoticeUpdateForm.jsp"/>
+	</definition>
+	<definition name="admin_faq_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminFaqList.jsp"/>
+	</definition>
+	<definition name="admin_faq_detail" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminFaqDetail.jsp"/>
+	</definition>
+	<definition name="admin_faq_insert_form" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminFaqInsertForm.jsp"/>
+	</definition>
+	<definition name="admin_faq_update_form" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminFaqUpdateForm.jsp"/>
+	</definition>
+	<definition name="admin_member_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminMember/adminMemberList.jsp"/>
+	</definition>
+	
+
+	
+</tiles-definitions> 

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qna">
+	
+	<!-- QNA 목록 -->
+	<select id="qnaList" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+				SELECT ROW_NUMBER() OVER (ORDER BY QNA_NUM DESC) RNUM, QNA_NUM, QNA_GOODS_NUM, QNA_ID,
+					   QNA_SUBJECT, QNA_CONTENTS, QNA_DATE, QNA_STATUS
+				FROM QNA
+				WHERE QNA_GOODS_NUM = #{QNA_GOODS_NUM} 
+				AND QNA_DELETE = 'N'
+				ORDER BY QNA_NUM DESC
+			]]>
+	</select>
+	
+	<!-- QNA 등록 -->
+	<insert id="qnaInsert" parameterType="hashMap">
+		<selectKey keyProperty="QNA_NUM" resultType="integer"
+			order="BEFORE">
+			SELECT QNA_NUM_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+			<![CDATA[
+				INSERT INTO QNA ( QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS)
+				VALUES ( #{QNA_NUM}, #{QNA_GOODS_NUM, #{QNA_ID}, #{QNA_SUBJECT}, #{QNA_CONTENTS}, #{QNA_IMAGE}, SYSDATE, 'N', '답변대기')
+			]]>
+	</insert>
+	
+	<!-- QNA 상세보기 -->
+	<select id="qnaDetail" resultType="hashMap" parameterType="hashMap">
+		<![CDATA[
+			SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
+			FROM QNA
+			WHERE QNA_NUM = #{QNA_NUM}
+		]]>
+	</select>
+
+	<!-- QNA 수정 -->
+	<update id="qnaUpdate" parameterType="hashMap">
+		<![CDATA[UPDATE QNA
+			SET QNA_CONTENTS = NULL
+			WHERE QNA_NUM = #{QNA_NUM}
+			AND QNA_ID = #{QNA_ID}
+		]]>
+	</update>
+
+	<!-- QNA 삭제 -->
+	<update id="qnaDelete" parameterType="hashMap">
+		<![CDATA[
+			UPDATE QNA
+			SET QNA_DELETE = 'Y'
+			WHERE QNA_NUM = #{QNA_NUM}
+		]]>
+	</update>
+
+	<!-- QNA 검색 0 - 제목 -->
+	<select id="qnaSearch0" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+				SELECTQNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
+				FROM QNA
+				WHERE QNA_SUBJECT LIKE '%' || #{isSearch} || '%' 
+				AND QNA_DELETE = 'N' 
+				ORDER BY QNA_NUM DESC
+			]]>
+	</select>
+
+	<!-- QNA 검색 1 - 아이디--><!-- QNA 관리자 검색 1 - 작성자 -->
+	<select id="qnaSearch1" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+				SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
+				FROM QNA
+				WHERE QNA_ID LIKE '%' || #{isSearch} || '%'  
+				AND QNA_DELETE = 'N' 
+				ORDER BY QNA_NUM DESC
+			]]>
+	</select>
+	
+	<!-- QNA 관리자 검색 0 - 상품 번호 -->
+	<select id="adminQnaSearch0" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+				SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
+				FROM QNA
+				WHERE QNA_GOODS_NUM LIKE '%' || #{isSearch} || '%' 
+				AND QNA_DELETE = 'N' 
+				ORDER BY QNA_NUM DESC
+			]]>
+	</select>
+
+	<!-- QNA 관리자 검색 1 - 작성자 --><!--  
+	<select id="qnaSearch1" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+				SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_COMMENT
+				FROM QNA
+				WHERE QNA_ID LIKE '%' || #{isSearch} || '%'  
+				AND QNA_DELETE = 'N' 
+				ORDER BY QNA_NUM DESC
+			]]>
+	</select>-->
+	
+	<!-- QNA 코멘트 등록 -->
+	<update id="qnaComInsert" parameterType="hashMap">
+			<![CDATA[
+				UPDATE QNA
+				SET QNA_COMMENT = #{QNA_COMMENT},  
+					QNA_STATUS = #{QNA_STATUS}
+				WHERE QNA_NUM = #{QNA_NUM}
+				AND QNA_ID = 'Admin'
+			]]>
+	</update>
+	
+	<!-- QNA 코멘트 수정 -->
+	<update id="qnaComUpdate" parameterType="hashMap">
+		<![CDATA[
+			UPDATE QNA 
+			SET QNA_COMMENT = #{QNA_COMMENT} 
+			WHERE QNA_NUM = #{QNA_NUM}
+			AND QNA_GOODS_NUM = #{QNA_GOODS_NUM}
+			AND QNA_ID = 'Admin'
+		]]>
+	</update>
+	
+	<!-- QNA 코멘트 삭제 -->
+	<update id="qnaComDelete" parameterType="hashMap">
+		<![CDATA[
+			UPDATE QNA 
+			SET QNA_COMMENT = NULL,
+			QNA_STATUS = '답변대기'
+			WHERE QNA_NUM = #{QNA_NUM}
+			AND QNA_ID = 'Admin'
+		]]> 
+	</update>
+	
+</mapper>
