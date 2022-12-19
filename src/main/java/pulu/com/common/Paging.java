@@ -18,6 +18,8 @@ public class Paging {
 	private int searchNum;
 	private String isSearch;
 	private int repState;
+	private int categoryNo;
+	private String goodsSearch; // 상품검색
 
 	private StringBuffer pagingHtml;
 
@@ -57,10 +59,8 @@ public class Paging {
 			endPage = totalPage;
 		}
 
-		
 		// 이전 block 페이지
 		pagingHtml = new StringBuffer();
-		
 
 		if (currentPage > blockPage) {
 //			pagingHtml.append( "<a href='" + list + "&currentPage=1'><처음></a>;");
@@ -342,6 +342,168 @@ public class Paging {
 		}
 	}
 
+	// 검섹포함 페이징 의종
+	public Paging(int currentPage, int totalCount, int blockCount, int blockPage, String list, String goodsSearch,
+			int categoryNo, HttpServletRequest request) {
+		this.currentPage = currentPage;
+		this.totalCount = totalCount;
+		this.blockCount = blockCount;
+		this.blockPage = blockPage;
+		this.list = list;
+		this.goodsSearch = goodsSearch;
+		this.categoryNo = categoryNo;
+
+		// 전체 페이지 수
+		totalPage = (int) Math.ceil((double) totalCount / blockCount);
+
+		if (totalPage == 0) {
+			totalPage = 1;
+		}
+
+		// 현재 페이지가 전체 페이지 수보다 크면 전체 페이지 수로 설정
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+
+		// 현재 페이지의 처음과 마지막 글의 번호 가져오기.
+		startCount = (currentPage - 1) * blockCount;
+		endCount = startCount + blockCount - 1;
+
+		// 시작 페이지와 마지막 페이지 값 구하기.
+		startPage = (int) ((currentPage - 1) / blockPage) * blockPage + 1;
+		endPage = startPage + blockPage - 1;
+
+		// 마지막 페이지가 전체 페이지 수보다 크면 전체 페이지 수로 설정
+		if (endPage > totalPage) {
+			endPage = totalPage;
+		}
+
+		// 이전 block 페이지
+		pagingHtml = new StringBuffer();
+		categoryNo = Integer.parseInt(request.getParameter("categoryNo"));
+
+		if (currentPage > blockPage) {
+			if (goodsSearch == null) {
+				pagingHtml.append("<a class='page prv' href=" + list + "?categoryNo=" + categoryNo + "&currentPage="
+						+ (startPage - 1) + ">");
+			} else {
+				pagingHtml.append("<a class='page prv' href=" + list + "?categoryNo=" + categoryNo + "&goodsSearch="
+						+ goodsSearch + "&currentPage=" + (startPage - 1) + ">");
+			}
+			pagingHtml.append("&lt;");
+			pagingHtml.append("</a>");
+		}
+
+		// 페이지 번호.현재 페이지는 빨간색으로 강조하고 링크를 제거.
+		for (int i = startPage; i <= endPage; i++) {
+			if (i > totalPage) {
+				break;
+			}
+			if (i == currentPage) {
+				pagingHtml.append("<strong>");
+				pagingHtml.append(i);
+				pagingHtml.append("</strong>");
+			} else {
+				if (goodsSearch == null) {
+					pagingHtml.append("<a class='page' href=" + list + "?categoryNo=" + categoryNo + "&currentPage=");
+				} else {
+					pagingHtml.append("<a class='page' href=" + list + "?categoryNo=" + categoryNo + "&goodsSearch="
+							+ goodsSearch + "&currentPage=");
+				}
+				pagingHtml.append(i);
+				pagingHtml.append(">");
+				pagingHtml.append(i);
+				pagingHtml.append("</a>");
+			}
+		}
+
+		// 다음 block 페이지
+		if (totalPage - startPage >= blockPage) {
+			if (goodsSearch == null) {
+				pagingHtml.append("<a class='page next' href=" + list + "?categoryNo=" + categoryNo + "&currentPage="
+						+ (endPage + 1) + ">");
+			} else {
+				pagingHtml.append("<a class='page next' href=" + list + "?categoryNo=" + categoryNo + "&goodsSearch="
+						+ goodsSearch + "&currentPage=" + (endPage + 1) + ">");
+			}
+			pagingHtml.append("&gt;");
+			pagingHtml.append("</a>");
+		}
+	}
+
+	// 의종: 카테고리 분류별 메인페이징
+	public Paging(int currentPage, int totalCount, int blockCount, int blockPage, String list, int categoryNo,
+			HttpServletRequest request) {
+
+		this.currentPage = currentPage;
+		this.totalCount = totalCount;
+		this.blockCount = blockCount;
+		this.blockPage = blockPage;
+		this.list = list;
+		this.categoryNo = categoryNo;
+
+		// 전체 페이지 수
+		totalPage = (int) Math.ceil((double) totalCount / blockCount);
+		if (totalPage == 0) {
+			totalPage = 1;
+		}
+
+		// 현재 페이지가 전체 페이지 수보다 크면 전체 페이지 수로 설정
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+
+		// 현재 페이지의 처음과 마지막 글의 번호 가져오기.
+		startCount = (currentPage - 1) * blockCount;
+		endCount = startCount + blockCount - 1;
+
+		// 시작 페이지와 마지막 페이지 값 구하기.
+		startPage = (int) ((currentPage - 1) / blockPage) * blockPage + 1;
+		endPage = startPage + blockPage - 1;
+
+		// 마지막 페이지가 전체 페이지 수보다 크면 전체 페이지 수로 설정
+		if (endPage > totalPage) {
+			endPage = totalPage;
+		}
+
+		// 이전 block 페이지
+		pagingHtml = new StringBuffer();
+		categoryNo = Integer.parseInt(request.getParameter("categoryNo"));
+
+		if (currentPage > blockPage) {
+			pagingHtml.append("<a class='page prv' href=" + list + "?categoryNo=" + categoryNo + "&currentPage="
+					+ (startPage - 1) + ">");
+			pagingHtml.append("&lt;");
+			pagingHtml.append("</a>");
+		}
+
+		// 페이지 번호.현재 페이지는 빨간색으로 강조하고 링크를 제거.
+		for (int i = startPage; i <= endPage; i++) {
+			if (i > totalPage) {
+				break;
+			}
+			if (i == currentPage) {
+				pagingHtml.append("<strong>");
+				pagingHtml.append(i);
+				pagingHtml.append("</strong>");
+			} else {
+				pagingHtml.append("<a class='page' href=" + list + "?categoryNo=" + categoryNo + "&currentPage=");
+				pagingHtml.append(i);
+				pagingHtml.append(">");
+				pagingHtml.append(i);
+				pagingHtml.append("</a>");
+			}
+		}
+
+		// 다음 block 페이지
+		if (totalPage - startPage >= blockPage) {
+			pagingHtml.append("<a class='page next' href=" + list + "?categoryNo=" + categoryNo + "&currentPage="
+					+ (endPage + 1) + ">");
+			pagingHtml.append("&gt;");
+			pagingHtml.append("</a>");
+		}
+	}
+
 	public int getCurrentPage() {
 		return currentPage;
 	}
@@ -460,5 +622,13 @@ public class Paging {
 
 	public void setRepState(int repState) {
 		this.repState = repState;
+	}
+
+	public void setCategoryNo(int categoryNo) {
+		this.categoryNo = categoryNo;
+	}
+
+	public String getgoodsSearch() {
+		return goodsSearch;
 	}
 }

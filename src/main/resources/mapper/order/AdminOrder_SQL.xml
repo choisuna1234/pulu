@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminOrder">
+	
+	<!-- 관리자 주문처리 리스트 --><!-- <상품이름 : 첫상품 + 외 (수량)개 >로 나오게끔 -->
+	<select id="orderList" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+				SELECT ROW_NUMBER() OVER (ORDER BY ORDER_NUM DESC) AS RNUM, O.ORDER_NUM, O.ORDER_PAY_TYPE, O.ORDER_GOODS_NAME, O.ORDER_GOODS_AMOUNT,
+					   M.ID, O.ORDER_SUM_MONEY, O.ORDER_DATE, O.ORDER_STATUS, M.GRADE
+				FROM GOODS_ORDER O, MEMBER M
+				WHERE O.ORDER_MEMBER_ID = M.ID
+				ORDER BY O.ORDER_DATE DESC
+			]]>
+	</select><!--  O, MEMBER M, GOODS G,  -->
+	
+	
+	<!-- 관리자 주문처리 상세보기 -->
+	<select id="orderDetail" resultType="hashMap" parameterType="hashMap">
+		<![CDATA[
+			SELECT O.ORDER_NUM, O.ORDER_PAY_TYPE, 
+				   O.ORDER_GOODS_NUM, O.ORDER_GOODS_NAME, O.ORDER_GOODS_PRICE, O.ORDER_GOODS_AMOUNT,
+				   M.ID, M.NAME, M.PHONE, O.ORDER_RECEIVE_NAME, O.ORDER_RECEIVE_ADDR1, O.ORDER_RECEIVE_ADDR2, O.ORDER_RECEIVE_PHONE, O.ORDER_RECEIVE_ZIPCODE, 
+				   O.ORDER_MEMO, O.ORDER_SUM_MONEY, O.ORDER_DATE, O.ORDER_STATUS, O.ORDER_GOODS_IMAGE, M.GRADE
+			FROM GOODS_ORDER O, MEMBER M
+			WHERE O.ORDER_NUM = #{ORDER_NUM}
+			
+			AND M.ID = O.ORDER_MEMBER_ID
+		]]>
+	</select><!-- AND G.GOODS_NUM = O.ORDER_GOODS_NUM -->
+	
+	<!-- <select id="orderDetail" resultType="hashMap" parameterType="hashMap">
+		<![CDATA[
+			SELECT *
+			FROM GOODS_ORDER O JOIN GOODS G
+                    			ON O.ORDER_GOODS_NUM = G.GOODS_NUM
+                  			   JOIN MEMBER M
+                    			ON O.ORDER_MEMBER_ID = M.ID
+            WHERE ORDER_NUM = #{ORDER_NUM}        			
+		]]>
+	</select> -->
+
+	<!-- 관리자 주문처리 수정 -->
+	<update id="orderUpdate" parameterType="hashMap">
+		<![CDATA[
+			UPDATE GOODS_ORDER
+			SET	ORDER_RECEIVE_NAME = #{ORDER_RECEIVE_NAME},
+				ORDER_STATUS = #{ORDER_STATUS},
+				ORDER_RECEIVE_ADDR1 = #{ORDER_RECEIVE_ADDR1},
+				ORDER_RECEIVE_ADDR2 = #{ORDER_RECEIVE_ADDR2},
+				ORDER_RECEIVE_PHONE = #{ORDER_RECEIVE_PHONE},
+				ORDER_RECEIVE_ZIPCODE = #{ORDER_RECEIVE_ZIPCODE},
+				ORDER_MEMO = #{ORDER_MEMO}
+			WHERE ORDER_NUM = #{ORDER_NUM}
+			
+		]]>
+	</update> <!-- AND QNA_ID = 'Admin' -->
+	
+	
+	<!-- 관리자 주문처리 <주문상태> 수정 -->
+	<update id="orderStatusUpdate" parameterType="hashMap">
+		<![CDATA[
+			UPDATE GOODS_ORDER
+			SET ORDER_STATUS = #{ORDER_STATUS}
+			WHERE ORDER_NUM = #{ORDER_NUM}
+		]]>
+	</update>
+	
+
+	<!-- 관리자 주문처리 삭제 = 주문취소 -->
+	<update id="orderDelete" parameterType="hashmap">
+		<![CDATA[
+			UPDATE GOODS_ORDER
+			SET ORDER_STATUS = 5
+			WHERE ORDER_NUM = #{ORDER_NUM}
+		]]>
+	</update>
+	
+	<!-- <delete id="orderDelete" parameterType="hashMap">
+		DELETE
+		FROM GOODS_ORDER
+		WHERE ORDER_NUM = #{ORDER_NUM}
+	</delete> -->
+
+	<!-- 관리자 주문 검색 0(주문상태) - 상단 카테고리 -->
+	<select id="orderSearch0" resultType="hashMap" parameterType="hashMap">
+			<![CDATA[
+				SELECT ORDER_NUM, ORDER_PAY_TYPE, ORDER_GOODS_NAME, ORDER_GOODS_AMOUNT,
+					   ORDER_MEMBER_ID, ORDER_SUM_MONEY, ORDER_DATE, ORDER_STATUS
+				FROM GOODS_ORDER  
+				WHERE ORDER_STATUS = #{isSearch}  
+				ORDER BY ORDER_DATE DESC  
+			]]>
+	</select>
+
+	<!-- 관리자 주문처리 검색 1 - 아이디 -->
+	<select id="orderSearch1" resultType="hashMap" parameterType="hashMap">
+			<![CDATA[
+				SELECT ORDER_NUM, ORDER_PAY_TYPE, ORDER_GOODS_NAME, ORDER_GOODS_AMOUNT,
+					   ORDER_MEMBER_ID, ORDER_SUM_MONEY, ORDER_DATE, ORDER_STATUS
+				FROM GOODS_ORDER 
+				WHERE ORDER_MEMBER_ID LIKE '%' || #{isSearch} || '%'  
+				ORDER BY ORDER_DATE DESC 
+			]]>
+	</select>
+	
+	<!-- 관리자 주문처리 검색 2 - 주문 번호 -->
+	<select id="orderSearch2" resultType="hashMap" parameterType="hashMap">
+			<![CDATA[
+				SELECT ORDER_NUM, ORDER_PAY_TYPE, ORDER_GOODS_NAME, ORDER_GOODS_AMOUNT,
+					   ORDER_MEMBER_ID, ORDER_SUM_MONEY, ORDER_DATE, ORDER_STATUS
+				FROM GOODS_ORDER
+				WHERE ORDER_NUM LIKE '%' || #{isSearch} || '%' 
+				ORDER BY ORDER_DATE DESC
+			]]>
+	</select>
+</mapper>

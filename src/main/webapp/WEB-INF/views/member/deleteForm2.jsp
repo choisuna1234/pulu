@@ -19,7 +19,7 @@
 			그동안 푸르뎁 서비스를 아끼고 사랑해주셔서 고맙습니다 <br> 더욱더 노력하고 발전하는 푸르뎁이 되겠습니다.
 		</h4>
 
-		<button type="button" onclick="location.href='main.pulu';">푸르뎁 홈 바로가기</button>
+		<button type="button" onclick="location.href='logout.pulu';">푸르뎁 홈 바로가기</button>
 </center>
 
 

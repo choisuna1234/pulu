@@ -25,6 +25,7 @@ public class QnaDAO extends AbstractDAO {
 		return (List<Map<String,Object>>) selectList("qna.qnaSearch1", map);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void qnaInsert(Map<String, Object> map) throws Exception {
 		insert("qna.qnaInsert", map);
 		
@@ -35,10 +36,12 @@ public class QnaDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("qna.qnaDetail", map);
 	}
 
-	public void adminqnaUpdate(Map<String, Object> map) throws Exception {
+	@SuppressWarnings("unchecked")
+	public void qnaUpdate(Map<String, Object> map) throws Exception {
 		update("qna.qnaUpdate", map);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void qnaDelete(Map<String, Object> map) throws Exception {
 		update("qna.qnaDelete", map);
 	}

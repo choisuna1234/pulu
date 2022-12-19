@@ -35,7 +35,7 @@ text-align: center;
 		<div class="adminGoodsList">
 			<div class="adminListTop">
 				<h2>상품 목록</h2>
-				<a href="./adminGoodsWriteForm.pulu">글쓰기</a>
+				<a href="./adminGoodsInsertForm.pulu">글쓰기</a>
 			</div>
 			<div class="adminListMain">
 				<table class="board_list">
@@ -101,7 +101,7 @@ text-align: center;
 </div>
 	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
  <%@ include file="/WEB-INF/include/include-body.jspf" %>
-
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 function gfn_isNull(str) {
 	if (str == null) return true;
@@ -163,7 +163,7 @@ function ComSubmit(opt_formId) {
 		
 		function fn_updateBoard(){
 			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/adminGoodsModifyForm.pulu' />");
+			comSubmit.setUrl("<c:url value='/adminGoodsUpdateForm.pulu' />");
 			comSubmit.addParam("GOODS_NUM", $("#GOODS_NUM").val());
 			comSubmit.submit();
 		}

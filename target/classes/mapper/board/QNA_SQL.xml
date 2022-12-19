@@ -7,14 +7,31 @@
 	<select id="qnaList" resultType="hashMap"
 		parameterType="hashMap">
 			<![CDATA[
-				SELECT ROW_NUMBER() OVER (ORDER BY QNA_NUM DESC) RNUM, QNA_NUM, QNA_GOODS_NUM, QNA_ID,
-					   QNA_SUBJECT, QNA_CONTENTS, QNA_DATE, QNA_STATUS
-				FROM QNA
-				WHERE QNA_GOODS_NUM = #{QNA_GOODS_NUM} 
-				AND QNA_DELETE = 'N'
-				ORDER BY QNA_NUM DESC
+			SELECT ROW_NUMBER() OVER (ORDER BY QNA_NUM DESC) AS RNUM, QNA_NUM, GOODS_NUM, QNA_ID, QNA_SUBJECT,
+      		 QNA_CONTENTS, QNA_DATE, QNA_STATUS, QNA_COMMENT
+			FROM QNA Q INNER JOIN GOODS G 
+			ON G.GOODS_NUM = Q.QNA_GOODS_NUM
+			WHERE QNA_DELETE = 'N' AND GOODS_NUM = #{GOODS_NUM}
+			ORDER BY QNA_DATE DESC
 			]]>
-	</select>
+	</select><!-- QNA_GOODS_NUM = #{QNA_GOODS_NUM} 
+				AND --><!-- ROW_NUMBER() OVER (ORDER BY QNA_NUM DESC) RNUM, QNA_NUM, QNA_GOODS_NUM, QNA_ID,
+					   QNA_SUBJECT, QNA_CONTENTS, QNA_DATE, QNA_STATUS, QNA_COMMENT -->
+	
+	<!-- QNA 관리자 목록 -->
+	<select id="adminQnaList" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+			SELECT *
+			FROM QNA Q INNER JOIN GOODS G 
+			ON G.GOODS_NUM = Q.QNA_GOODS_NUM
+			WHERE QNA_DELETE = 'N'
+			ORDER BY QNA_DATE DESC
+			]]>
+	</select><!-- QNA_GOODS_NUM = #{QNA_GOODS_NUM} 
+				AND --><!-- ROW_NUMBER() OVER (ORDER BY QNA_NUM DESC) RNUM, QNA_NUM, QNA_GOODS_NUM, QNA_ID,
+					   QNA_SUBJECT, QNA_CONTENTS, QNA_DATE, QNA_STATUS, QNA_COMMENT -->
+	
 	
 	<!-- QNA 등록 -->
 	<insert id="qnaInsert" parameterType="hashMap">
@@ -23,15 +40,15 @@
 			SELECT QNA_NUM_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 			<![CDATA[
-				INSERT INTO QNA ( QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS)
-				VALUES ( #{QNA_NUM}, #{QNA_GOODS_NUM, #{QNA_ID}, #{QNA_SUBJECT}, #{QNA_CONTENTS}, #{QNA_IMAGE}, SYSDATE, 'N', '답변대기')
+				INSERT INTO QNA ( QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS)
+				VALUES ( #{QNA_NUM}, #{QNA_GOODS_NUM}, #{QNA_ID}, #{QNA_SUBJECT}, #{QNA_CONTENTS})
 			]]>
 	</insert>
 	
 	<!-- QNA 상세보기 -->
 	<select id="qnaDetail" resultType="hashMap" parameterType="hashMap">
 		<![CDATA[
-			SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
+			SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT 
 			FROM QNA
 			WHERE QNA_NUM = #{QNA_NUM}
 		]]>
@@ -39,15 +56,24 @@
 
 	<!-- QNA 수정 -->
 	<update id="qnaUpdate" parameterType="hashMap">
-		<![CDATA[UPDATE QNA
-			SET QNA_CONTENTS = NULL
+		<![CDATA[
+			UPDATE QNA
+			SET QNA_CONTENTS = #{QNA_CONTENTS}
 			WHERE QNA_NUM = #{QNA_NUM}
-			AND QNA_ID = #{QNA_ID}
 		]]>
-	</update>
+	</update><!-- AND QNA_ID = #{QNA_ID} -->
 
 	<!-- QNA 삭제 -->
 	<update id="qnaDelete" parameterType="hashMap">
+		<![CDATA[
+			UPDATE QNA
+			SET QNA_DELETE = 'Y'
+			WHERE QNA_NUM = #{QNA_NUM}
+		]]>
+	</update>
+	
+	<!-- QNA 삭제 -->
+	<update id="adminQnaDelete" parameterType="hashMap">
 		<![CDATA[
 			UPDATE QNA
 			SET QNA_DELETE = 'Y'
@@ -59,23 +85,32 @@
 	<select id="qnaSearch0" resultType="hashMap"
 		parameterType="hashMap">
 			<![CDATA[
-				SELECTQNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
-				FROM QNA
+				SELECT QNA_NUM, GOODS_NUM, QNA_ID, QNA_SUBJECT, 
+	      			   QNA_CONTENTS, QNA_DATE, QNA_STATUS, QNA_COMMENT
+				FROM QNA Q INNER JOIN GOODS G 
+				ON G.GOODS_NUM = Q.QNA_GOODS_NUM
+				WHERE QNA_DELETE = 'N' AND GOODS_NUM = #{GOODS_NUM}
+				AND WHERE QNA_SUBJECT LIKE '%' || #{isSearch} || '%' 
+				ORDER BY QNA_DATE DESC
+			]]>
+	</select><!-- SELECT *
+				FROM QNA Q INNER JOIN GOODS G 
+				ON G.GOODS_NUM = Q.QNA_GOODS_NUM
 				WHERE QNA_SUBJECT LIKE '%' || #{isSearch} || '%' 
 				AND QNA_DELETE = 'N' 
-				ORDER BY QNA_NUM DESC
-			]]>
-	</select>
+				ORDER BY QNA_DATE DESC -->
 
-	<!-- QNA 검색 1 - 아이디--><!-- QNA 관리자 검색 1 - 작성자 -->
+	<!-- QNA 검색 1 - 아이디-->
 	<select id="qnaSearch1" resultType="hashMap"
 		parameterType="hashMap">
 			<![CDATA[
-				SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
-				FROM QNA
-				WHERE QNA_ID LIKE '%' || #{isSearch} || '%'  
-				AND QNA_DELETE = 'N' 
-				ORDER BY QNA_NUM DESC
+				SELECT QNA_NUM, GOODS_NUM, QNA_ID, QNA_SUBJECT, 
+	      			   QNA_CONTENTS, QNA_DATE, QNA_STATUS, QNA_COMMENT
+				FROM QNA Q INNER JOIN GOODS G 
+				ON G.GOODS_NUM = Q.QNA_GOODS_NUM
+				WHERE QNA_DELETE = 'N' AND GOODS_NUM = #{GOODS_NUM}
+				AND WHERE QNA_ID LIKE '%' || #{isSearch} || '%' 
+				ORDER BY QNA_DATE DESC
 			]]>
 	</select>
 	
@@ -87,30 +122,53 @@
 				FROM QNA
 				WHERE QNA_GOODS_NUM LIKE '%' || #{isSearch} || '%' 
 				AND QNA_DELETE = 'N' 
-				ORDER BY QNA_NUM DESC
+				ORDER BY QNA_DATE DESC
 			]]>
 	</select>
 
-	<!-- QNA 관리자 검색 1 - 작성자 --><!--  
-	<select id="qnaSearch1" resultType="hashMap"
+	<!-- QNA 관리자 검색 1 - 제목  -->
+	<select id="adminQnaSearch1" resultType="hashMap"
 		parameterType="hashMap">
 			<![CDATA[
-				SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_COMMENT
+				SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
+				FROM QNA
+				WHERE QNA_SUBJECT LIKE '%' || #{isSearch} || '%'  
+				AND QNA_DELETE = 'N' 
+				ORDER BY QNA_DATE DESC
+			]]>
+	</select>
+	
+	<!-- QNA 관리자 검색 2 - 작성자 -->
+	<select id="adminQnaSearch2" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+				SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
 				FROM QNA
 				WHERE QNA_ID LIKE '%' || #{isSearch} || '%'  
 				AND QNA_DELETE = 'N' 
-				ORDER BY QNA_NUM DESC
+				ORDER BY QNA_DATE DESC
 			]]>
-	</select>-->
+	</select>
+	
+	<!-- QNA 관리자 검색 3 - 답변상태 -->
+	<select id="adminQnaSearch3" resultType="hashMap"
+		parameterType="hashMap">
+			<![CDATA[
+				SELECT QNA_NUM, QNA_GOODS_NUM, QNA_ID, QNA_SUBJECT, QNA_CONTENTS, QNA_IMAGE, QNA_DATE, QNA_DELETE, QNA_STATUS, QNA_COMMENT
+				FROM QNA
+				WHERE QNA_STATUS LIKE '%' || #{isSearch} || '%'  
+				AND QNA_DELETE = 'N' 
+				ORDER BY QNA_DATE DESC
+			]]>
+	</select>
 	
 	<!-- QNA 코멘트 등록 -->
 	<update id="qnaComInsert" parameterType="hashMap">
 			<![CDATA[
 				UPDATE QNA
 				SET QNA_COMMENT = #{QNA_COMMENT},  
-					QNA_STATUS = #{QNA_STATUS}
+					QNA_STATUS = '답변완료'
 				WHERE QNA_NUM = #{QNA_NUM}
-				AND QNA_ID = 'Admin'
 			]]>
 	</update>
 	
@@ -119,9 +177,8 @@
 		<![CDATA[
 			UPDATE QNA 
 			SET QNA_COMMENT = #{QNA_COMMENT} 
+				QNA_STATUS = '답변완료'
 			WHERE QNA_NUM = #{QNA_NUM}
-			AND QNA_GOODS_NUM = #{QNA_GOODS_NUM}
-			AND QNA_ID = 'Admin'
 		]]>
 	</update>
 	
@@ -129,10 +186,9 @@
 	<update id="qnaComDelete" parameterType="hashMap">
 		<![CDATA[
 			UPDATE QNA 
-			SET QNA_COMMENT = NULL,
+			SET QNA_COMMENT = '',
 			QNA_STATUS = '답변대기'
 			WHERE QNA_NUM = #{QNA_NUM}
-			AND QNA_ID = 'Admin'
 		]]> 
 	</update>
 	

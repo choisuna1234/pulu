@@ -63,17 +63,18 @@ public class AdminGoodsController {
 		Map<String,Object> resultMap= adminGoodsService.adminGoodsUpdateDetail(commandMap.getMap());
 		mv.addObject("map", resultMap.get("map"));
 		mv.addObject("list", resultMap.get("list"));
-
+    
 		return mv;
 	}
-
+    
+	//게시글 수정
 	@RequestMapping(value="/adminGoodsUpdate")
 	public ModelAndView adminGoodsUpdate(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/adminGoodsList.pulu");
 
 		adminGoodsService.adminGoodsUpdate(commandMap.getMap(), request);
 
-		mv.addObject("goodsnum", commandMap.get("goodsnum"));
+		mv.addObject("goodsnum", commandMap.get("goodsnum")); //image goodsnum 으로
 		return mv;
 	}
 

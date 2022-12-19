@@ -51,8 +51,6 @@ td {
     margin: 0 auto;
 }
 
-
-
 .goodsListBody{
 	width: 100%;
 }
@@ -144,7 +142,29 @@ td {
 	</div>
 	</div>
 </div>
-
+<!-- 페이징 -->
+	<div class="paging" align="center">
+		<ul class="inline">
+			${pagingHtml}
+			<div id="dataTables-example_filter" class="dataTables_filter"
+				style="width: 600px;">
+				 <form action="List.pulu"  >
+		
+					<div style="width:70%;">
+						<input type="hidden" name="categoryNo" value="${categoryNo}"/>
+						<input class="form-control" type="text" name="goodsSearch"
+							id="goodsSearch" value="${goodsSearch}" placeholder="상품이름을 입력하세요."/>
+					</div>
+					<span>
+						<div style="float:auto; width: 10%;">
+							<button type="submit" class="btn btn-default" >검색</button>
+						</div>
+					</span>
+               
+				</form> 
+			</div>
+		</ul>
+	</div> 
 
 <script type="text/javascript">
 $(document).ready(function(){

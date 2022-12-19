@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="basket">
+
+
+	<!-- 장바구니 중복확인 -->
+	<select id="checkBasket" parameterType="hashmap" resultType="hashmap">
+		SELECT *
+		FROM BASKET
+		WHERE BASKET_GOODS_NUM = #{GOODS_NUM}
+		AND BASKET_MEMBER_ID = #{LOGIN_ID}
+	</select>
+	
+
+	<!-- 장바구니 등록 -->
+	<insert id="insertBasket" parameterType="hashmap">
+		INSERT INTO BASKET (BASKET_NUM, BASKET_MEMBER_ID, BASKET_GOODS_NUM, BASKET_GOODS_AMOUNT)
+		VALUES (BASKET_NUM_SEQ.NEXTVAL, #{LOGIN_ID}, #{GOODS_NUM}, #{SELECTED_GOODS_AMOUNT}) 
+	</insert>
+	
+	
+	<!-- 기존 장바구니 수량 추가 -->
+	<update id="updateBasket" parameterType="hashmap">
+<!-- 		UPDATE BASKET  -->
+<!-- 		SET BASKET_GOODS_AMOUNT = BASKET_GOODS_AMOUNT + #{SELECTED_GOODS_AMOUNT} -->
+<!-- 		WHERE BASKET_GOODS_NUM = #{BASKET_GOODS_NUM} -->
+<!-- 		AND BASKET_MEMBER_ID = #{BASKET_MEMBER_ID} -->
+		UPDATE BASKET 
+		SET BASKET_GOODS_AMOUNT = BASKET_GOODS_AMOUNT + #{SELECTED_GOODS_AMOUNT}
+		WHERE BASKET_NUM = #{BASKET_NUM}
+	</update>
+	
+	
+	
+	
+	<!-- 장바구니 리스트 수량 변경 -->
+	<update id="updateCount" parameterType="hashmap">
+		UPDATE BASKET
+		SET BASKET_GOODS_AMOUNT = #{SELECTED_GOODS_AMOUNT}
+		WHERE BASKET_NUM = #{BASKET_NUM}
+	</update>
+	
+	
+	
+	
+	<!-- 장바구니 전체 삭제 -->
+	<delete id="deleteBasketAll">
+		DELETE FROM BASKET WHERE BASKET_MEMBER_ID = #{LOGIN_ID}
+	</delete>
+	
+	
+	<!-- 장바구니 리스트 불러오기 -->
+	<select id="basketList" resultType="hashmap">
+		select /*+ index_asc (BASKET, PK_BASKET_NUM) */
+	    BASKET_NUM, BASKET_GOODS_NUM, BASKET_GOODS_AMOUNT,
+	    GOODS_NUM, GOODS_NAME, GOODS_PRICE, GOODS_CALORIE,
+	    IMAGE_STORED
+	    from BASKET, GOODS, IMAGE 
+	    where BASKET_MEMBER_ID = #{LOGIN_ID}
+	    and BASKET_GOODS_NUM = GOODS_NUM
+	    and GOODS_NUM = IMAGE_GOODS_NUM
+	    and IMAGE_CATEGORY = 1
+	</select>
+	
+</mapper>

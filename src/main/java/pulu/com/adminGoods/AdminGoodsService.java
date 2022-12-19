@@ -15,7 +15,8 @@ public interface AdminGoodsService {
 
 
 	Map<String, Object> adminGoodsUpdateDetail(Map<String, Object> map) throws Exception;
-
+    
+	
 	void adminGoodsUpdate(Map<String,Object> map,HttpServletRequest request)throws Exception;
 
 

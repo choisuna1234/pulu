@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<!-- 선민: 회원가입 -->
+	<insert id="insertMember" parameterType="hashmap">
+	<![CDATA[
+		insert into member
+		(
+			num, 
+			id, 
+			password, 	
+			name, 
+			phone, 
+			email, 
+			zipcode,
+			addr1,
+			addr2
+		)
+		values
+		(
+			MEMBER_NUM_SEQ.NEXTVAL, 
+			#{ID}, 
+			#{PASSWORD}, 
+			#{NAME}, 
+			#{PHONE}, 
+			#{EMAIL}, 
+			#{ZIPCODE}, 
+			#{ADDR1}, 	
+			#{ADDR2}
+		)
+	]]>
+	</insert>
+
+
+	<!-- 선민: 로그인 하려는 ID의 정보 가져오기 -->
+	<select id="selectId" parameterType="hashmap"
+		resultType="hashmap">
+		select *
+		from member
+		where id = #{ID} AND block = 'N'
+	</select>
+
+	<!-- 선민: ID 중복확인 -->
+	<select id="confirmId" parameterType="String"
+		resultType="String">
+		select count(*)
+		from member
+		where id = #{INPUTID}
+	</select>
+
+
+
+
+
+	<!-- 선아: 아이디 찾기 -->
+	<select id="findId" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT ID, NAME, BLOCK
+		FROM MEMBER 
+		WHERE NAME = #{NAME} AND EMAIL = #{EMAIL}
+	]]>
+	</select>
+
+	<!-- 선아: 아이디 찾기 실패 -->
+	<select id="findId_fail" parameterType="hashmap"
+		resultType="hashmap">
+	<![CDATA[
+		SELECT NAME, EMAIL, BLOCK
+		FROM MEMBER WHERE NAME = #{NAME} AND EMAIL = #{EMAIL}	
+		]]>
+	</select>
+
+	<!-- 선아: 비밀번호 찾기 -->
+	<select id="findPw" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT 
+		ID, PASSWORD, BLOCK 
+		FROM MEMBER 
+		WHERE ID = #{ID} AND NAME = #{NAME} AND EMAIL = #{EMAIL} AND BLOCK = 'N'
+		]]>
+	</select>
+
+	<!-- 선아: 비밀번호 찾기 실패 -->
+	<select id="findPw_fail" parameterType="hashmap"
+		resultType="hashmap">
+	<![CDATA[
+		SELECT ID, NAME, EMAIL, BLOCK
+		FROM MEMBER 
+		WHERE ID = #{ID} AND NAME = #{NAME} AND EMAIL = #{EMAIL}
+		]]>
+	</select>
+
+	<!-- 선아: 해당이메일 존재여부 확인 -->
+	<select id="checkMember" parameterType="String" resultType="int">
+	<![CDATA[
+	SELECT COUNT(EMAIL) FROM MEMBER WHERE EMAIL = #{EMAIL}
+	]]>
+	</select>
+
+	<!-- 선아: 회원탈퇴 -->
+	<update id="memberDelete" parameterType="hashmap">
+      	<![CDATA[
+          UPDATE MEMBER
+             SET BLOCK = 'Y'
+         WHERE NUM = #{str_Num}
+      	]]>
+	</update>
+
+	<!-- 선아: 회원정보 조회 -->
+	<select id="memberInfo" parameterType="hashmap"
+		resultType="hashmap">
+	<![CDATA[
+			SELECT 
+				NUM,
+				ID,
+				PASSWORD,
+				NAME,
+				PHONE,
+				EMAIL,
+				ZIPCODE,
+				ADDR1,
+				ADDR2,
+				GRADE,
+				JOIN_DATE,
+				BLOCK       
+			FROM MEMBER
+			WHERE ID = #{loginId} 
+     		   ]]>
+	</select>
+
+	<!-- 선아: 회원정보 수정 -->
+	<update id="memberUpdate" parameterType="hashmap">
+    <![CDATA[
+	UPDATE MEMBER
+	   SET
+	ID = #{ID},
+	NAME = #{NAME},
+	PASSWORD = #{PASSWORD},
+	PHONE = #{PHONE},
+	EMAIL = #{EMAIL},
+	ZIPCODE = #{ZIPCODE},
+	ADDR1 = #{ADDR1},
+	ADDR2 = #{ADDR2}
+	   WHERE ID = #{ID}
+	]]>
+	</update>
+
+	<!-- 선아: 새 비밀번호 변경 -->
+	<update id="newPassword" parameterType="hashmap">
+    <![CDATA[
+	UPDATE MEMBER
+	   SET PASSWORD = #{PASSWORD}
+	   WHERE ID = #{ID}
+	]]>
+	</update>
+
+  <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ주문내역ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+<!-- 병찬: 마이페이지 주문내역 리스트 -->
+<select id="myInfoOrder" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+SELECT G.GOODS_NUM, G.GOODS_NAME, ORDER_GOODS_IMAGE, ORDER_NUM, ORDER_STATUS, ORDER_SUM_MONEY, ORDER_MEMBER_ID, ORDER_DATE, ORDER_GOODS_AMOUNT
+FROM GOODS_ORDER O, GOODS G, MEMBER M
+WHERE G.GOODS_NUM = O.ORDER_GOODS_NUM AND M.ID = O.ORDER_MEMBER_ID AND M.ID = #{ID}
+]]>
+</select>
+
+<!-- 병찬: 마이페이지 주문내역 상세보기 -->
+<select id="myInfoOrderDetail" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+SELECT ORDER_GOODS_NUM, ORDER_GOODS_NAME, ORDER_GOODS_IMAGE, ORDER_NUM, ORDER_STATUS, ORDER_SUM_MONEY, ORDER_MEMBER_ID, ORDER_DATE, ORDER_GOODS_AMOUNT, ORDER_RECEIVE_NAME, ORDER_RECEIVE_ADDR1, ORDER_RECEIVE_ADDR2, ORDER_RECEIVE_PHONE
+FROM GOODS_ORDER O, GOODS G, MEMBER M 
+WHERE G.GOODS_NUM = O.ORDER_GOODS_NUM AND M.ID = O.ORDER_MEMBER_ID AND M.ID = #{ID} AND ORDER_NUM = #{ORDER_NUM}
+]]>
+</select>
+
+<!-- 병찬: 마이페이지 주문내역 수정 -->
+<update id="myInfoOrderUpdate" parameterType="hashmap">
+<![CDATA[
+UPDATE GOODS_ORDER
+SET ORDER_GOODS_AMOUNT = #{ORDER_GOODS_AMOUNT},
+     ORDER_RECEIVE_NAME = #{ORDER_RECEIVE_NAME},
+     ORDER_RECEIVE_ADDR1 = #{ORDER_RECEIVE_ADDR1},
+     ORDER_RECEIVE_ADDR2 = #{ORDER_RECEIVE_ADDR2},
+     ORDER_MEMO = #{ORDER_MEMO}
+WHERE ORDER_NUM = #{ORDER_NUM}
+]]>
+</update>
+
+<!-- 병찬: 마이페이지 주문내역 취소 -->
+<update id="myInfoOrderDelete" parameterType="hashmap">
+<![CDATA[
+UPDATE GOODS_ORDER
+SET ORDER_STATUS = '주문취소'
+WHERE ORDER_NUM = #{ORDER_NUM}
+]]>
+</update>
+
+<!-- 병찬: 주문내역 취소 시 상품수량 복구 -->
+<update id="goodsAmountUpdate" parameterType="hashmap">
+<![CDATA[
+UPDATE GOODS
+SET GOODS_AMOUNT + ${GOODS_AMOUNT}
+WHERE GOODS_NUM = #{GOODS_NUM}
+]]>
+</update>
+
+</mapper>

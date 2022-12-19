@@ -127,7 +127,7 @@ public class AdminFaqController {
 
 	
 	// 관리자 FAQ 등록폼
-	@RequestMapping(value = "/adminFaqInsertForm") // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
+	@RequestMapping(value = "/adminFaqInsertForm", method = RequestMethod.POST) // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
 	public ModelAndView adminFaqInsertForm(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("admin_faq_insert_form"); // jsp 경로 설정
 
@@ -136,7 +136,7 @@ public class AdminFaqController {
 
 	
 	// 관리자 FAQ 등록
-	@RequestMapping(value = "/adminFaqInsert") // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
+	@RequestMapping(value = "/adminFaqInsert", method = RequestMethod.POST) // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
 	public ModelAndView adminFaqInsert(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/adminFaqList.pulu"); // 등록 후 리스트로 돌아갈 수 있도록 리다이렉트를 통한 jsp 경로 설정
 
@@ -164,15 +164,13 @@ public class AdminFaqController {
 		mv.addObject("isSearch", isSearch);
 		mv.addObject("searchNum", searchNum);
 		mv.addObject("currentPage", currentPage);
-//		mv.addObject("map", map.get("map"));
-//		mv.addObject("list", map.get("list"));
 
 		return mv;
 	}
 
 	
 	// 관리자 FAQ 수정폼 이동
-	@RequestMapping(value = "/adminFaqUpdateForm")
+	@RequestMapping(value = "/adminFaqUpdateForm", method = RequestMethod.POST)
 	public ModelAndView adminFaqUpdateForm(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("admin_faq_update_form");
 
@@ -194,7 +192,7 @@ public class AdminFaqController {
 
 	
 	// 관리자 FAQ 수정
-	@RequestMapping(value = "/adminFaqUpdate")
+	@RequestMapping(value = "/adminFaqUpdate", method = RequestMethod.POST)
 	public ModelAndView adminFaqUpdate(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/adminFaqDetail.pulu");
 

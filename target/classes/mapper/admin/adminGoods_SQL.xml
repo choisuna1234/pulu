@@ -3,10 +3,12 @@
 
 <mapper namespace="adminGoods">
 
-<insert id="insertAdminGoods" parameterType="hashmap" useGeneratedKeys="true" keyProperty="GOODS_NUM">
-<selectKey keyProperty="GOODS_NUM" resultType="string" order="BEFORE">
+	<insert id="insertAdminGoods" parameterType="hashmap"
+		useGeneratedKeys="true" keyProperty="GOODS_NUM">
+		<selectKey keyProperty="GOODS_NUM" resultType="string"
+			order="BEFORE">
 			SELECT GOODS_NUM_SEQ.NEXTVAL FROM DUAL
-</selectKey>
+		</selectKey>
 <![CDATA[ 
 INSERT INTO GOODS (
 	GOODS_NUM,
@@ -27,11 +29,11 @@ VALUES (
 	#{GOODS_CALORIE}
 	)
 	]]>
-</insert>
+	</insert>
 
 
 
-<insert id="insertGoodsFile" parameterType="hashmap" >
+	<insert id="insertGoodsFile" parameterType="hashmap">
 
 	<![CDATA[
 		INSERT INTO IMAGE
@@ -53,11 +55,11 @@ VALUES (
 			#{IMAGE_SIZE}
 		)
 	]]>
-</insert>
+	</insert>
 
 
 
-<select id="adminGoodsList" resultType="hashmap">
+	<select id="adminGoodsList" resultType="hashmap">
 <![CDATA[
 select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
@@ -65,11 +67,14 @@ select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 	where GOODS_NUM = IMAGE_GOODS_NUM
     and IMAGE_CATEGORY = 1
 	and GOODS_DELETE = 'N'
+	and IMAGE_DEL_GB ='N'
 	order by GOODS_NUM desc
 ]]>
-</select>
+	</select>
 
-	<select id="adminGoodsUpdateDetail" parameterType="hashmap" resultType="hashmap">
+	<!-- 상품수정 상세보기 -->
+	<select id="adminGoodsUpdateDetail" parameterType="hashmap"
+		resultType="hashmap">
 		<![CDATA[
 			SELECT 
 				GOODS_NUM,
@@ -85,7 +90,9 @@ select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 		]]>
 	</select>
 
-	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
+	<!-- 이미지 파일 가져오기 -->
+	<select id="selectFileList" parameterType="hashmap"
+		resultType="hashmap">
 		<![CDATA[
 			SELECT
 			    IMAGE_GOODS_NUM,
@@ -98,6 +105,7 @@ select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 			    IMAGE	
 			WHERE
 			    IMAGE_GOODS_NUM = #{GOODS_NUM}
+			    AND IMAGE_DEL_GB = 'N'
 		]]>
 	</select>
 
@@ -113,32 +121,31 @@ select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 					GOODS_NUM = #{GOODS_NUM}	
 			]]>
 	</update>
-	
+
+
+	<!-- 파일 수정 -->
 	<update id="updateFile" parameterType="hashmap">
 		<![CDATA[
-			UPDATE TB_FILE SET
-				DEL_GB = 'N'
+			UPDATE IMAGE 
+			SET
+		      	IMAGE_DEL_GB = 'Y'
 			WHERE
-				IMAGE_GOODS_NUM = #{IMAGE_GOODS_NUM}	
+				IMAGE_GOODS_NUM = #{GOODS_NUM}	
 		]]>
 	</update>
-	
-	
-	
-	
 
-<update id="deleteAdminGoods" parameterType="hashmap">
-	<![CDATA[
-UPDATE GOODS
-		SET
+
+	<!-- 상품 삭제 -->
+	<update id="deleteAdminGoods" parameterType="hashmap">
+	  <![CDATA[
+  UPDATE GOODS
+		 SET
 			GOODS_DELETE = 'Y'
-		WHERE
+		 WHERE
 			GOODS_NUM = #{GOODS_NUM}
-]]>
-</update>
+  ]]>
+	</update>
 
-
-	
 
 
 </mapper>

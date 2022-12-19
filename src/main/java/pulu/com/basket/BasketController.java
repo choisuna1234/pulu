@@ -42,15 +42,32 @@ public class BasketController {
 
 	// 선민: 기존 장바구니 수량 추가 (update)
 	@RequestMapping(value = "/updateBasket", method = RequestMethod.POST)
-	public void updateBasket(CommandMap commandMap, HttpSession session) throws Exception {
+	public String updateBasket(CommandMap commandMap, HttpSession session) throws Exception {
+		log.info("\n업데이트 시작 : " + commandMap.getMap());
 		basketService.updateBasket(commandMap.getMap(), session);
+		return "redirect:/basketList.pulu";
 	}
 
+	
+	
+	
+		// 장바구니 리스트 - 수량 변경
+		@RequestMapping(value = "/updateCount", method = RequestMethod.POST)
+		public String updateCount(CommandMap commandMap, HttpSession session) throws Exception {
+			int result = basketService.updateCount(commandMap.getMap());
+			log.info("수량변경 return == " + result);
+			return "redirect:/basketList.pulu";
+		}
+		
+	
+		
+		
+		
 	// 선민: 장바구니 전체 삭제 (delete)
 	@RequestMapping(value = "/deleteBasketAll")
 	public String deleteBasketAll(HttpSession session) throws Exception {
 		basketService.deleteBasketAll(session);
-		return "basketList";
+		return "redirect:/basketList.pulu";
 	}
 
 	// 선민: 장바구니 넣기 완료 팝업 (계속 쇼핑, 장바구니 이동)

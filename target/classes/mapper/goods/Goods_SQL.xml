@@ -6,14 +6,16 @@
 	<!-- main.jsp에서 보여지는 상품 정렬 -->
 	<select id="goodsList" resultType="hashmap">
 	<![CDATA[
-	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
-				GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+	SELECT ROW_NUMBER() OVER (ORDER BY GOODS_NUM DESC) RNUM, GOODS_NUM,
+        GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+        GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
 		from GOODS, IMAGE 
-		where GOODS_NUM = IMAGE_GOODS_NUM
+		where IMAGE_DEL_GB = 'N' 
+		and GOODS_NUM = IMAGE_GOODS_NUM
 		and GOODS_CATEGORY = #{categoryNo}
 	    and IMAGE_CATEGORY = 1
 		and GOODS_DELETE = 'N'
-		order by GOODS_NUM desc
+		
 	]]>
 	</select>
 
@@ -37,6 +39,7 @@
 		from	GOODS, IMAGE
 		where	GOODS_NUM = #{GOODS_NUM}
 		and		GOODS_NUM = IMAGE_NUM
+		and     IMAGE_DEL_GB = 'N'
 	]]>
 	</select>
 
@@ -50,11 +53,68 @@
 		where	GOODS_NUM = #{GOODS_NUM}
 		and		GOODS_NUM = IMAGE_GOODS_NUM
 		and		IMAGE_CATEGORY = 1
+		and     IMAGE_DEL_GB ='N'
 	]]>
 	</select>
-	
-	
-	
+
+	<!-- 의종: 상품 검색 -->
+	<select id="searchGoods" resultType="hashMap">
+	<![CDATA[		
+	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+				GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where GOODS_NAME LIKE '%' || #{goodsSearch} || '%'
+		and GOODS_CATEGORY = #{categoryNo}
+      	and GOODS_NUM = IMAGE_GOODS_NUM
+		and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'
+		and IMAGE_DEL_GB = 'N'
+		order by GOODS_NUM desc
+    ]]>
+	</select>
+
+	<!-- 의종: 상품 옵션별 검색 낮은가격 -->
+	<select id="searchOption0" resultType="hashMap">
+	<![CDATA[		
+	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+				GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where GOODS_CATEGORY = #{categoryNo}
+      	and GOODS_NUM = IMAGE_GOODS_NUM
+		and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'
+		order by GOODS_PRICE asc
+    ]]>
+	</select>
+
+	<!-- 의종: 상품 옵션별 검색 높은가격 -->
+	<select id="searchOption1" resultType="hashMap">
+	<![CDATA[		
+	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+				GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where GOODS_CATEGORY = #{categoryNo}
+      	and GOODS_NUM = IMAGE_GOODS_NUM
+		and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'
+		order by GOODS_PRICE desc
+    ]]>
+	</select>
+
+	<!-- 의종: 상품 옵션별 검색 추천상품 -->
+	<select id="searchOption2" resultType="hashMap">
+	<![CDATA[		
+	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+			GOODS_BEST,	GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where GOODS_CATEGORY = #{categoryNo}
+        and GOODS_BEST = 1
+      	and GOODS_NUM = IMAGE_GOODS_NUM
+		and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'
+		order by GOODS_NUM desc 
+    ]]>
+	</select>
 
 
 </mapper>

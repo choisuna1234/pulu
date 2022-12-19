@@ -24,7 +24,6 @@ public class AbstractDAO {
 	// 글 + 상품 등록
 	public Object insert(String queryId, Object params)  {
 		printQueryId(queryId);
-		log.debug("\t QueryId \t: " + queryId);
 		return sqlSession.insert(queryId, params);
 	}
 

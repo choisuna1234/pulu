@@ -102,7 +102,7 @@ function openMemberDetail(rownum) {
 					<div>
 					
 					
-					<div style="border: 1px; float:left; width: 310px;">
+					<div style="border: 1px; float:left; width: 330px;">
 					<div class="form-group input-group">
 						<form action="">
 							<select class="form-control" style="width:80px;">
@@ -114,7 +114,7 @@ function openMemberDetail(rownum) {
 							<input type="text" class="form-control" style="width:190px;">
 							<span class="input-group-btn">
 								<button type="submit" class="btn btn-primary">
-									<i class="fa fa-search"></i>
+									검색
 								</button>
 							</span>
 						</form>

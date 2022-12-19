@@ -52,6 +52,18 @@
 	]]>
 	</select>
 	
+	<!-- 선민: (DTO) 주문할 상품의 번호, 이름, 가격, 이미지정보 1개를 select -->
+	<select id="getGoodsInfo" resultType="hashMap">
+	<![CDATA[
+		select	GOODS_NUM, GOODS_NAME, GOODS_PRICE,
+				IMAGE_STORED
+		from	GOODS, IMAGE 
+		where	GOODS_NUM = #{GOODS_NUM}
+		and		GOODS_NUM = IMAGE_GOODS_NUM
+		and		IMAGE_CATEGORY = 1
+	]]>
+	</select>
+	
 	<!-- 주문 내역 넣기 -->
 	   <insert id="insertOrderGoods" parameterType="hashmap">
    <![CDATA[
@@ -71,12 +83,10 @@
 	    ORDER_RECEIVE_ZIPCODE, 
 	   	ORDER_MEMO, 
 	    ORDER_SUM_MONEY,
-	      
 	    ORDER_GOODS_IMAGE
       )
       values
       (
-      
          ORDER_NUM_SEQ.NEXTVAL,  
          #{ORDER_PAY_TYPE}, 
          #{GOODS_NUM}, 
@@ -94,7 +104,6 @@
          #{ORDER_MEMO},
          #{ORDER_SUM_MONEY},
          #{ORDER_GOODS_IMAGE}
-         
       )
    ]]>
    </insert>

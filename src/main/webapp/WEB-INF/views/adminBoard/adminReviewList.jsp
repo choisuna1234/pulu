@@ -30,8 +30,8 @@
 	</thead>
 	<tbody>
 		<c:choose>
-			<c:when test="${fn:length(adminreviewList) > 0}">
-				<c:forEach items="${adminreviewList}" var="row">
+			<c:when test="${fn:length(adminReviewList) > 0}">
+				<c:forEach items="${adminReviewList}" var="row">
 					<tr>
 						<td>${row.REVIEW_NUM }</td>
 						<td>${row.REVIEW_GOODS_NUM }</td>

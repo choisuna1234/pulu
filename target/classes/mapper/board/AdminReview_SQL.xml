@@ -24,7 +24,7 @@ WHERE REVIEW_NUM = #{REVIEW_NUM}
 
 
 <!-- 관리자 페이지 후기 리스트 -->
-<select id="adminreviewList" resultType="hashMap" parameterType="hashMap">
+<select id="adminReviewList" resultType="hashMap" parameterType="hashMap">
 <![CDATA[
 SELECT ROW_NUMBER() OVER (ORDER BY REVIEW_NUM DESC) RNUM, REVIEW_NUM, REVIEW_GOODS_NUM, REVIEW_ID,
        REVIEW_CONTENTS, REVIEW_DATE, REVIEW_STATUS, REVIEW_COMMENT

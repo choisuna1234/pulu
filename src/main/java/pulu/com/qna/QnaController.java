@@ -1,16 +1,22 @@
 package pulu.com.qna;
 //소영 : QNA 페이지 
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
+
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,8 +35,8 @@ public class QnaController {
 	// 페이징 관련 변수
 	private int currentPage = 1;
 	private int totalCount;
-	private int blockCount = 10;
-	private int blockPage = 10;
+	private int blockCount = 5;
+	private int blockPage = 5;
 	private int startPage;
 	private int endPage;
 	private String pagingHtml;
@@ -38,12 +44,6 @@ public class QnaController {
 
 	@Resource(name = "QnaService") // Service 영억 접근을 위한 선언(qnaServiceImpl의 이름과 통일)
 	private QnaService qnaService; // 빈 수동 등록
-
-	// 메인페이지로 이동
-/*	@RequestMapping(value = "/main")
-	public String list() {
-		return "main";
-	}*/
 
 	// QNA 리스트
 	@RequestMapping(value = "/qnaList") // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
@@ -61,7 +61,9 @@ public class QnaController {
 		}
 
 		List<Map<String, Object>> qnaList = qnaService.qnaList(commandMap.getMap()); // service단의 qnaList
-																								// 로직 호출
+		Map<String, Object> map = qnaService.qnaDetail(commandMap.getMap());
+																
+		// 로직 호출
 		isSearch = request.getParameter("isSearch");
 
 		if (isSearch != null) {
@@ -71,7 +73,7 @@ public class QnaController {
 
 			if (searchNum == 0) { // 제목
 				qnaList = qnaService.qnaSearch0(commandMap.getMap());
-			} else if (searchNum == 1) { // 내용
+			} else if (searchNum == 1) { //작성자
 				qnaList = qnaService.qnaSearch1(commandMap.getMap());
 			}
 
@@ -96,6 +98,7 @@ public class QnaController {
 			mv.addObject("startPage", startPage);
 			mv.addObject("endPage", endPage);
 			mv.addObject("qnaList", qnaList);
+			mv.addObject("map", map);
 
 			return mv;
 
@@ -121,7 +124,8 @@ public class QnaController {
 			mv.addObject("startPage", startPage);
 			mv.addObject("endPage", endPage);
 			mv.addObject("qnaList", qnaList);
-
+			mv.addObject("map", map);
+			
 			return mv;
 		}
 	}
@@ -138,12 +142,25 @@ public class QnaController {
 
 	
 	//  QNA 등록
-	@RequestMapping(value = "/qnaInsert") // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
+	@RequestMapping(value = "/qnaInsert", method = RequestMethod.POST) // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
 	public ModelAndView qnaInsert(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:/qnaList.pulu"); // 등록 후 리스트로 돌아갈 수 있도록 리다이렉트를 통한 jsp 경로 설정
+		ModelAndView mv = new ModelAndView("redirect:/Detail.pulu?GOODS_NUM="+commandMap.get("GOODS_NUM")+"#here3"); // 등록 후 리스트로 돌아갈 수 있도록 리다이렉트를 통한 jsp 경로 설정
 
+		HttpSession session = request.getSession();
+		String QNA_ID = (String) session.getAttribute("loginId");
+		commandMap.getMap().put("QNA_ID", QNA_ID);
+		
+		System.out.println(commandMap.get("GOODS_NUM"));
 		qnaService.qnaInsert(commandMap.getMap(), request); // service단의 qnaInsert 로직 호출
-
+		Map<String, Object> map = qnaService.qnaDetail(commandMap.getMap());
+		
+		mv.addObject("totalCount", totalCount);
+		mv.addObject("pagingHtml", pagingHtml);
+		mv.addObject("currentPage", currentPage);
+		mv.addObject("startPage", startPage);
+		mv.addObject("endPage", endPage);
+		mv.addObject("map", map);
+		
 		return mv;
 	}
 
@@ -157,8 +174,11 @@ public class QnaController {
 		Map<String, Object> map = qnaService.qnaDetail(commandMap.getMap());
 
 		mv.addObject("map", map);
-//		mv.addObject("map", map.get("map"));
-//		mv.addObject("list", map.get("list"));
+		mv.addObject("totalCount", totalCount);
+		mv.addObject("pagingHtml", pagingHtml);
+		mv.addObject("currentPage", currentPage);
+		mv.addObject("startPage", startPage);
+		mv.addObject("endPage", endPage);
 
 		return mv;
 	}
@@ -168,15 +188,18 @@ public class QnaController {
 	@RequestMapping(value = "/qnaUpdateForm")
 	public ModelAndView qnaUpdateForm(CommandMap commandMap) throws Exception {
 //		ModelAndView mv = new ModelAndView("/goods/detail");
-		ModelAndView mv = new ModelAndView("/board/qnaUpdateForm");
+		ModelAndView mv = new ModelAndView("/goods/comment/qnaUpdateForm");
 		
 		Map<String, Object> map = qnaService.qnaDetail(commandMap.getMap());// 상세보기 정보를 맵에서 받아옴
 		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장
 
 		mv.addObject("map", map);
-//			mv.addObject("map", map.get("map"));
-//			mv.addObject("list", map.get("list"));
-
+		mv.addObject("totalCount", totalCount);
+		mv.addObject("pagingHtml", pagingHtml);
+		mv.addObject("currentPage", currentPage);
+		mv.addObject("startPage", startPage);
+		mv.addObject("endPage", endPage);
+		
 		System.out.println(map);
 		System.out.println("수정완료");
 		return mv;
@@ -184,52 +207,43 @@ public class QnaController {
 
 	
 	// QNA 수정
-	@RequestMapping(value = "/qnaUpdate")
+	@RequestMapping(value = "/qnaUpdate", method = RequestMethod.POST)
 	public ModelAndView qnaUpdate(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/qnaList.pulu");
 
-//		final String filePath =  "C:\\Java\\stsApp\\pulu\\src\\main\\webapp\\file\\qnaImage\\";
-//		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-//		
-//		if (multipartHttpServletRequest.getFile("QNA_IMAGE").getOriginalFilename() != "") {
-//	         MultipartFile file = multipartHttpServletRequest.getFile("QNA_IMAGE");
-//	         String fileName = "QNA_IMAGE" + commandMap.get("QNA_NUM").toString();
-//	        
-//	         String IMAGEExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-//	         System.out.println(IMAGEExtension);
-//	         
-//	         File file1 = new File(filePath);
-//	         if (file1.exists() == false) {
-//	            file1.mkdirs(); // 폴더가 존재하지 않으면 폴더 생성
-//	         }
-//
-//	         File uploadFile = new File(filePath + fileName + IMAGEExtension);
-//	         System.out.println(uploadFile);
-//	         try {
-//	        	 file.transferTo(uploadFile);
-//	         } catch (Exception e) {
-//
-//	         }
-//	         commandMap.put("QNA_IMAGE", fileName + IMAGEExtension);
-//	      }else {
-//	    	  commandMap.put("QNA_IMAGE","null");
-//	    	  //전달되는 이미지가없을경우 null로?? 전달
-//	      }
+		
 		 
 		qnaService.qnaUpdate(commandMap.getMap(), request);
+		Map<String, Object> map = qnaService.qnaDetail(commandMap.getMap());// 상세보기 정보를 맵에서 받아옴
+		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장
 
+		mv.addObject("map", map);
 		mv.addObject("QNA_NUM", commandMap.get("QNA_NUM"));
 		mv.addObject("QNA_GOODS_NUM",commandMap.get("QNA_GOODS_NUM"));
+		mv.addObject("totalCount", totalCount);
+		mv.addObject("pagingHtml", pagingHtml);
+		mv.addObject("currentPage", currentPage);
+		mv.addObject("startPage", startPage);
+		mv.addObject("endPage", endPage);
+		
+		System.out.println(commandMap.get("QNA_NUM"));
+		System.out.println(commandMap.get("QNA_GOODS_NUM"));
+		System.out.println(commandMap.get("QNA_CONTENTS"));
+		
 		return mv;
 	}
 
 	
 	// QNA 삭제하기
 	@RequestMapping(value = "/qnaDelete")
-	public ModelAndView qnaDelete(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:/qnaList.pulu");
+	public ModelAndView qnaDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/Detail.pulu?GOODS_NUM="+commandMap.get("GOODS_NUM")+"#here3");
 
-		qnaService.qnaDelete(commandMap.getMap());
+		qnaService.qnaDelete(commandMap.getMap(), request);
+		Map<String, Object> map = qnaService.qnaDetail(commandMap.getMap());// 상세보기 정보를 맵에서 받아옴
+		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장
+
+		mv.addObject("map", map);
 
 		return mv;
 	}

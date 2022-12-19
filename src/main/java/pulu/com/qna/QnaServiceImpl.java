@@ -29,7 +29,7 @@ public class QnaServiceImpl implements QnaService {
 	// 검색 1 - 아이디
 	@Override
 	public List<Map<String, Object>> qnaSearch1(Map<String, Object> map) throws Exception {
-		return qnaDAO.qnaSearch0(map);
+		return qnaDAO.qnaSearch1(map);
 	}
 
 	@Override
@@ -44,11 +44,11 @@ public class QnaServiceImpl implements QnaService {
 
 	@Override
 	public void qnaUpdate(Map<String, Object> map, HttpServletRequest request) throws Exception {
-		qnaDAO.adminqnaUpdate(map);
+		qnaDAO.qnaUpdate(map);
 	}
 
 	@Override
-	public void qnaDelete(Map<String, Object> map) throws Exception {
+	public void qnaDelete(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		qnaDAO.qnaDelete(map);
 	}
 	

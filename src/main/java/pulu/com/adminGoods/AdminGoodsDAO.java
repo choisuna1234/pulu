@@ -29,26 +29,20 @@ public class AdminGoodsDAO extends AbstractDAO{
 
 	}
 
-
+	public void deleteAdminGoods(Map<String, Object> map) throws Exception{
+		update("adminGoods.deleteAdminGoods", map);
+	}
+	
+	//상품 수정 
 	public void adminGoodsUpdatePro(Map<String, Object> map) throws Exception{
 		update("adminGoods.adminGoodsUpdate", map);
 	}
 
-	public void deleteAdminGoods(Map<String, Object> map) throws Exception{
-		update("adminGoods.deleteAdminGoods", map);
-	}
-
-
-	//  파일 업로드,수정,삭제,목록
-
-
+    // 파일 수정
 	public void updateFile(Map<String, Object> map) throws Exception{
-		update("admingoods.updateFile", map);
+		update("adminGoods.updateFile", map);
 	}
 
-	public void deleteFileList(Map<String, Object> map) throws Exception{
-		update("adminGoods.deleteFileList", map);
-	}
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectFileList(Map<String, Object> map) throws Exception{

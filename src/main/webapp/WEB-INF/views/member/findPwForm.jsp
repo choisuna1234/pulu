@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- 선아: 비밀번호 찾기 -->
 <script>
 
 if('${message}' != ""){
@@ -75,13 +76,13 @@ if (id.value == "") {
 			<br>
 		</div>
 		<br>
-		<input type="button" value="로그인" onclick="location.href='loginForm'">&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="button" value="로그인" onclick="location.href='loginForm.pulu'">&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" value="비밀번호찾기" onclick="findform_check()">
-		<br>
-		<br>
-		<br>
 		
-
+		<input type="hidden" name="BLOCK" id="BLOCK" />
+		<br>
+		<br>
+		<br>
 	</form>
 	</center>
 </body>

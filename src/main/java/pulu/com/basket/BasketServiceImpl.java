@@ -58,5 +58,13 @@ public class BasketServiceImpl implements BasketService {
 		String LOGIN_ID = (String)(session.getAttribute("loginId"));
 		basketDAO.deleteBasketAll(LOGIN_ID);
 	}
+	
+	@Override
+	public int updateCount(Map<String, Object> map) throws Exception {
+		return basketDAO.updateCount(map);
+	}
 
+	
+	
+	
 }

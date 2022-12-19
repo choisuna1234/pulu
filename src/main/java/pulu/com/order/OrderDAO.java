@@ -7,6 +7,7 @@ import java.util.Map;
 import org.aspectj.org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 import org.springframework.stereotype.Repository;
 
+import pulu.com.basket.BasketListItemDTO;
 import pulu.com.common.AbstractDAO;
 
 @Repository("orderDAO")
@@ -22,12 +23,6 @@ public class OrderDAO extends AbstractDAO {
 		// map안의 상품번호에 해당하는 상품정보(번호/이름/가격)와 이미지정보 1개를 select 
 		Map<String, Object> goodsMap = (Map<String, Object>)selectOne("order.selectOrderGoodsInfo", map);
 
-//		memberMap.put("GOODS_NUM", goodsMap.get("GOODS_NUM"));  
-//		memberMap.put("GOODS_NAME", goodsMap.get("GOODS_NAME"));  
-//		memberMap.put("GOODS_PRICE", goodsMap.get("GOODS_PRICE"));  
-//		memberMap.put("IMAGE_STORED", goodsMap.get("IMAGE_STORED"));
-//		memberMap.put("SELECTED_GOODS_AMOUNT", map.get("SELECTED_GOODS_AMOUNT"));
-
 		// pOrder.jsp의 구조에 맞게 list로 반환
 		List<Map<String, Object>> mapList = new ArrayList<Map<String,Object>>();
 		mapList.add(memberMap);
@@ -37,8 +32,25 @@ public class OrderDAO extends AbstractDAO {
 		
 		return mapList;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectBasketListInfo(Map<String, Object> map) throws Exception {
+		return selectList("basket.basketList", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectMemberInfo(Map<String, Object> map) throws Exception {
+		Map<String, Object> memberMap = (Map<String, Object>)selectOne("member.selectId", map.get("ID"));
+		return memberMap;
+	}
 	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> getGoodsInfo(int GOODS_NUM) throws Exception {
+		Map<String, Object> memberMap = (Map<String, Object>)selectOne("order.getGoodsInfo", GOODS_NUM);
+		return memberMap;		
+	}
 	
+	//선아: 주문 값 DB에 넣기
 	public void insertOrderGoods (Map<String, Object> map) throws Exception {
 		insert("order.insertOrderGoods", map);
 	}

@@ -8,9 +8,12 @@
 <!-- 선아: 아이디 찾기 폼 -->
 <script>
 
+
+/* 컨트롤러에 있는 메세지 띄워주기 */
 if('${message}' != ""){
 	alert('${message}');
 }
+
 
 function findform_check() {
 	
@@ -27,14 +30,16 @@ if (name.value == "") {
     return false;
     email.focus();
   };
-  document.find_form.submit(); //find_form의 submit 찾아서 감
+  document.find_form.submit();
 }
 </script>
 
 <title>아이디 찾기</title>
 </head>
 <body>
-
+${message}
+    
+	
 	<div style="padding: 30px 10px 10px 10px;">
 		<center>
 			<h1>아이디 찾기</h1>
@@ -48,21 +53,24 @@ if (name.value == "") {
 			<!-- 아이디찾기 완료창으로 액션 넣어줌 -->
 			<br> <br>
 			<center>
-
+			
 				<div class="input-box">
-					<label for="username">이름 </label> &nbsp;&nbsp; <input type="text"
-						id="NAME" name="NAME" placeholder="userName"
-						style="width: 300px; height: 30px; font-size: 10px;"> <br>
+					<label for="username">이름 </label> &nbsp;&nbsp; 
+					<input type="text" id="NAME" name="NAME" placeholder="userName"
+						style="width: 300px; height: 30px; font-size: 10px;" /> <br>
 					<br>
 
 					<div class="input-box">
-						<label for="EMAIL">EMAIL</label>&nbsp; <input type="text"
-							id="EMAIL" name="EMAIL" placeholder="email"
+						<label for="EMAIL">EMAIL</label>&nbsp; 
+						<input type="text" id="EMAIL" name="EMAIL" placeholder="email"
 							style="width: 300px; height: 30px; font-size: 10px;" />
 					</div>
-					<br> <br> <input type="submit" name="submit"
-						class="insert_bt" value="작성완료" onclick="findform_check()"> 
-						<br> <br> <br> <br> <br>
+					<br> <br> 
+					<input type="submit" name="submit"
+						class="insert_bt" value="작성완료" onclick="findform_check()" />
+						
+						<input type="hidden" name="BLOCK" id="BLOCK" />
+ 						<br> <br> <br> <br> <br>
 				</div>
 	</div>
 	</form>

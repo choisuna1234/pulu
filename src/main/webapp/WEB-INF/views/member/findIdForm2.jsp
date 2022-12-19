@@ -7,12 +7,13 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>아이디 찾기 결과</title> <!-- 선아: 아이디 찾기 결과 창 -->
+<title>아이디 찾기 결과</title> 
+<!-- 선아: 아이디 찾기 결과 창 -->
 
 <div id="memberInfo">
 		<div id="findIdPwd_result" style="text-align: center;">
 			<br> <br>
-
+			
 			<center><h2 class="desc">아이디 찾기 </h2></center>
 			<br>
 			<hr width="40%" color="grey">

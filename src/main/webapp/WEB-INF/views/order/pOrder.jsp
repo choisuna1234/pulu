@@ -6,8 +6,7 @@
 <!-- 의종: 상품주문페이지 -->
 <html>
 <head>
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- 카카오 js -->
 <script src="webjars/jquery/3.5.1/dist/jquery.min.js"></script>
 <style>
@@ -62,7 +61,7 @@ input[type=text] {
 		
 		<!-- 결제수단 체크-->
 		$(document).ready(function() {
-			$("#pay_bt").click(function() {
+			$("#cddd").click(function() {
 		if (!$("input:checked[id='ORDER_PAY_TYPE']").is(":checked")){ 
 			alert("결제수단을 선택하세요."); 
 			return false;
@@ -72,9 +71,9 @@ input[type=text] {
 		<!-- 유효성검사 -->
 		function val_check() {
 			 var form = document.getElementById("orderMain");
-			 if(form.ORDER_MEMBER_ID.value.length == 0) {
+			 if(form.ORDER_MEMBER_NAME.value.length == 0) {
 					alert("이름을 입력하세요.");
-					form.ORDER_MEMBER_ID.focus(); 
+					form.ORDER_MEMBER_NAME.focus(); 
 					return false;
 					}
 			 else if(form.PHONE.value.length == 0) {
@@ -145,9 +144,7 @@ input[type=text] {
 </head>
 <body>
 	<div class="orderMain">
-		<form id="orderMain"
-			action="orderResult.pulu?GOODS_NUM=${list[0].GOODS_NUM}"
-			onsubmit="return val_check();" method="post">
+		<form id="orderMain" action="orderResult.pulu?GOODS_NUM=${list[0].GOODS_NUM}" onsubmit="return val_check();" method="post">
 
 			<div align="center" class="orderpage">
 				<h2>주문페이지</h2>
@@ -164,14 +161,16 @@ input[type=text] {
 					<tr>
 						<th>&nbsp; 이름</th>
 
-						<td><input type="text" id="ORDER_MEMBER_ID"
-							name="ORDER_MEMBER_ID" value="${map.NAME}" /></td>
+						<td>
+							<input type="text" id="ORDER_MEMBER_ID" value="${map.NAME}" />
+						</td>
 					</tr>
 
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="text" id="PHONE" name="PHONE" class="PHONE"
-							value="${map.PHONE}" /></td>
+						<td>
+							<input type="text" id="PHONE" name="PHONE" class="PHONE" value="${map.PHONE}" />
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -187,32 +186,35 @@ input[type=text] {
 					<br>
 					<tr>
 						<th>받으시는 분</th>
-						<td><input type="text" id="ORDER_RECEIVE_NAME"
-							name="ORDER_RECEIVE_NAME" value="${map.NAME}"></input></td>
+						<td>
+							<input type="text" id="ORDER_RECEIVE_NAME" name="ORDER_RECEIVE_NAME" value="${map.NAME}"></input>
+						</td>
 					</tr>
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="text" id="ORDER_RECEIVE_PHONE"
-							name="ORDER_RECEIVE_PHONE" class="ORDER_RECEIVE_PHONE"
-							value="${map.PHONE}" /></td>
+						<td>
+							<input type="text" id="ORDER_RECEIVE_PHONE" name="ORDER_RECEIVE_PHONE" class="ORDER_RECEIVE_PHONE" value="${map.PHONE}" />
+						</td>
 					</tr>
 					<tr>
 						<th>우편번호</th>
-						<td><input type="text" id="ORDER_RECEIVE_ZIPCODE"
-							name="ORDER_RECEIVE_ZIPCODE" class="ORDER_RECEIVE_ZIPCODE"
-							value="${map.ZIPCODE}" /> <input type="button" class="zipcodebt"
-							value="우편번호 찾기" onclick="kakaoPost()"> <!-- 선민: 버튼 클릭 시 kakaoPost() 함수 실행 -->
+						<td>
+							<input type="text" id="ORDER_RECEIVE_ZIPCODE" name="ORDER_RECEIVE_ZIPCODE" class="ORDER_RECEIVE_ZIPCODE" value="${map.ZIPCODE}" />
+							<input type="button" class="zipcodebt" value="우편번호 찾기" onclick="kakaoPost()">
+							<!-- 선민: 버튼 클릭 시 kakaoPost() 함수 실행 -->
 						</td>
 					</tr>
 					<tr>
 						<th>주소</th>
-						<td><input type="text" id="ORDER_RECEIVE_ADDR1"
-							name="ORDER_RECEIVE_ADDR1" value="${map.ADDR1}" /></td>
+						<td>
+							<input type="text" id="ORDER_RECEIVE_ADDR1" name="ORDER_RECEIVE_ADDR1" value="${map.ADDR1}" />
+						</td>
 					</tr>
 					<tr>
 						<th>상세주소</th>
-						<td><input type="text" id="ORDER_RECEIVE_ADDR2"
-							name="ORDER_RECEIVE_ADDR2" value="${map.ADDR2}" /></td>
+						<td>
+							<input type="text" id="ORDER_RECEIVE_ADDR2" name="ORDER_RECEIVE_ADDR2" value="${map.ADDR2}" />
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -227,104 +229,108 @@ input[type=text] {
 							<table align="center">
 								<tr>
 									<h2>주문 상품</h2>
-									<tr>
-									<td rowspan="5"><img class=""
-								src='./resources/file/${row.IMAGE_STORED}' width=200px;
-								height=150px;></td>
+								<tr>
+									<td rowspan="5">
+										<img class="" src='./resources/file/${row.IMAGE_STORED}' width=200px; height=150px;>
+									</td>
 
 									<!-- 이미지값 넣기 -->
-									<td><input type="hidden" id="ORDER_GOODS_IMAGE"
-								name="ORDER_GOODS_IMAGE" value="${row.IMAGE_STORED}" /></td>
+									<td>
+										<input type="hidden" id="ORDER_GOODS_IMAGE" name="ORDER_GOODS_IMAGE" value="${row.IMAGE_STORED}" />
+									</td>
 
 								</tr>
 								<tr>
-									<td><h4>${row.GOODS_NAME}</h4></td>
+									<td>
+										<h4>${row.GOODS_NAME}</h4>
+									</td>
 									<!-- 상품 이름 넣기 -->
-									<td><input type="hidden" id="ORDER_GOODS_NAME"
-								name="ORDER_GOODS_NAME" value="${row.GOODS_NAME}" /></td>
+									<td>
+										<input type="hidden" id="ORDER_GOODS_NAME" name="ORDER_GOODS_NAME" value="${row.GOODS_NAME}" />
+									</td>
 								</tr>
 								<tr>
-									<td><h4>
+									<td>
+										<h4>
 											상품가격 :
-											<fmt:formatNumber value="${row.GOODS_PRICE}"
-										pattern="#,###,###" />
+											<fmt:formatNumber value="${row.GOODS_PRICE}" pattern="#,###,###" />
 											<!-- 상품가격 넣기 -->
-											<td><input type="hidden" id="ORDER_GOODS_PRICE"
-										name="ORDER_GOODS_PRICE" value="${row.GOODS_PRICE}" />원</td> 
-										</h4></td>
+											<td>
+												<input type="hidden" id="ORDER_GOODS_PRICE" name="ORDER_GOODS_PRICE" value="${row.GOODS_PRICE}" />
+												원
+											</td>
+										</h4>
+									</td>
 								</tr>
 								<tr>
-									<td><h4>수량 : ${row.SELECTED_GOODS_AMOUNT}</h4></td>
-									<td><input type="hidden" id="ORDER_GOODS_AMOUNT"
-								name="ORDER_GOODS_AMOUNT" value="${row.SELECTED_GOODS_AMOUNT}" />개</td>
+									<td>
+										<h4>수량 : ${row.SELECTED_GOODS_AMOUNT}</h4>
+									</td>
+									<td>
+										<input type="hidden" id="ORDER_GOODS_AMOUNT" name="ORDER_GOODS_AMOUNT" value="${row.SELECTED_GOODS_AMOUNT}" />
+										개
+									</td>
 
 								</tr>
 								<tr>
-									<td><h4>
+									<td>
+										<h4>
 											결제금액 :
-											<fmt:formatNumber
-										value="${row.SELECTED_GOODS_AMOUNT * row.GOODS_PRICE}"
-										pattern="#,###,###" />
+											<fmt:formatNumber value="${row.SELECTED_GOODS_AMOUNT * row.GOODS_PRICE}" pattern="#,###,###" />
 
 											<!-- 총 결제 금액 -->
-											<td><input type="hidden" id="ORDER_SUM_MONEY"
-										name="ORDER_SUM_MONEY"
-										value="${row.SELECTED_GOODS_AMOUNT * row.GOODS_PRICE}" />원</td> 
+											<td>
+												<input type="hidden" id="ORDER_SUM_MONEY" name="ORDER_SUM_MONEY" value="${row.SELECTED_GOODS_AMOUNT * row.GOODS_PRICE}" />
+												원
+											</td>
 										</h4>
-									
-							<td>
-								
-						</tr>
+									<td>
+								</tr>
 								</tr>
 								<tr>
 									<td>
 										<h1>
 											총 결제 금액
-											<fmt:formatNumber
-										value="${row.SELECTED_GOODS_AMOUNT * row.GOODS_PRICE}"
-										pattern="#,###,###" />
+											<fmt:formatNumber value="${row.SELECTED_GOODS_AMOUNT * row.GOODS_PRICE}" pattern="#,###,###" />
 											원
-										</h1> <!-- 수량x상품가격 미구현 -->
+										</h1>
+										<!-- 수량x상품가격 미구현 -->
 									</td>
 								</tr>
 							</table>
 							<!-- 						<table> -->
 							<!-- 						</table> -->
-						
-	</div>
+
+						</div>
 					</c:forEach>
 				</c:when>
 			</c:choose>
 
-			<!-- 배송 -->
-									<!-- <td><input type="hidden" id="ORDER_STATUS"
-										name="ORDER_STATUS" value="입금대기중" /></td> -->
-										
-								<!-- 		<td><input type="hidden" id="ORDER_NUM"
-										name="ORDER_NUM" value="12345" /></td> -->
+
 
 
 
 			<div class="message" align="center">
 				<tr>
-					<td><select name="ORDER_MEMO" id="ORDER_MEMO"
-												style="width: 400px; height: 30px; padding-left: 70px; font-size: 15px;">
+					<td>
+						<select name="ORDER_MEMO" id="ORDER_MEMO" style="width: 400px; height: 30px; padding-left: 70px; font-size: 15px;">
 							<option value="배송 전에 미리 연락 바랍니다.">배송 전에 미리 연락 바랍니다.</option>
 							<option value="부재 시 경비실에 맡겨주세요.">부재 시 경비실에 맡겨주세요.</option>
 							<option value="부재 시 문 앞에 놓아주세요">부재 시 문 앞에 놓아주세요.</option>
 							<option value="배송 전에 미리 연락바랍니다.">배송 전에 미리 연락바랍니다.</option>
 							<option value="direct">내용을 입력하세요.</option>
-					</select></td>
+						</select>
+					</td>
 				</tr>
 
 				<!-- 직접입력 칸 -->
 				<tr>
-					<td><input type="messageText" id="selboxDirect"
-												name="selboxDirect"
-												style="width: 325px; height: 30px; padding-left: 70px; font-size: 15px;" /></td>
+					<td>
+						<input type="messageText" id="selboxDirect" name="selboxDirect" style="width: 325px; height: 30px; padding-left: 70px; font-size: 15px;" />
+					</td>
 				</tr>
-				
-							</table>
+
+				</table>
 			</div>
 
 
@@ -340,9 +346,7 @@ input[type=text] {
 
 			<!-- 수정 예정 -->
 			<div align="center">
-				<br> <br> 결제수단 선택 <br> <label><input
-								type="checkbox" id="ORDER_PAY_TYPE" name="ORDER_PAY_TYPE"
-								value="무통장 입금" onclick="cbList">무통장 입금</label>
+				<br> <br> 결제수단 선택 <br> <label><input type="checkbox" id="ORDER_PAY_TYPE" name="ORDER_PAY_TYPE" value="0" onclick="cbList">무통장 입금</label>
 			</div>
 
 			<div id="showResult"></div>
@@ -353,13 +357,11 @@ input[type=text] {
 
 
 			<div id="button" align="center">
-				<br> 
-				<br>
+				<br> <br>
 				<!-- 결제 완료페이지로 추후 수정 -->
-				<br> 
+				<br>
 				<input type="submit" id="cddd" value="결제하기" />
-				<input type="button" value="목록으로"
-								onclick="location.href='Detail.pulu?GOODS_NUM= ${map.GOODS_NUM}'" />
+				<input type="button" value="목록으로" onclick="location.href='Detail.pulu?GOODS_NUM= ${map.GOODS_NUM}'" />
 			</div>
 		</form>
 	</div>

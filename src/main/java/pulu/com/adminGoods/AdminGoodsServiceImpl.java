@@ -41,7 +41,8 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 	public List<Map<String, Object>> adminGoodsList(Map<String, Object> map) throws Exception {
 		return adminGoodsDAO.adminGoodsList(map);
 	}
-
+    
+	/* 상품수정 상세보기 */
 	@Override
 	public Map<String, Object> adminGoodsUpdateDetail(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -53,25 +54,27 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 
 		return resultMap;
 	}
-
+    
+	/* 상품 수정 */
 	@Override
 	public void adminGoodsUpdate(Map<String, Object> map,HttpServletRequest request) throws Exception {
 		adminGoodsDAO.adminGoodsUpdatePro(map);
 
-		adminGoodsDAO.deleteFileList(map);
+		adminGoodsDAO.updateFile(map);
 		List<Map<String,Object>> list = fileUtils.parseUpdateFileInfo(map, request);
-//		Map<String,Object> tempMap = null;
-//		for(int i=0, size=list.size(); i<size; i++){
-//			tempMap = list.get(i);
-//			if(tempMap.get("IS_NEW").equals("Y")){
-//				adminGoodsDAO.insertFile(tempMap);
-//			}
-//			else{
-//				adminGoodsDAO.updateFile(tempMap);
-//			}
-//		}
+		  Map<String,Object> tempMap = null;
+		   for(int i=0, size=list.size(); i<size; i++){
+		       tempMap = list.get(i);
+		    if(tempMap.get("IS_NEW").equals("Y")){
+				adminGoodsDAO.insertGoodsFile(tempMap);
+			}
+			else{
+				adminGoodsDAO.updateFile(tempMap);
+			}
+	  }
 	}
-
+    
+	/* 상품 삭제 */
 	@Override
 	public void deleteAdminGoods(Map<String, Object> map) throws Exception {
 

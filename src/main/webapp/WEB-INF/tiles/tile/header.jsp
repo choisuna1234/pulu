@@ -56,6 +56,7 @@
 						</c:choose>
 
 						<li><a class="loginLink" href="noticeList.pulu">고객센터</a></li>
+						<li><a class="loginLink" href="basketList.pulu">장바</a></li>
 							<li><a class="loginLink" href=""><img scr=""/></a></li>
 							<li><a class="loginLink" href=""><img scr=""/></a></li>
 						</ul>

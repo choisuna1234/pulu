@@ -27,15 +27,15 @@ table {
 				<tr>
 					<th scope="row">상품 번호</th>
 					<td>
-						${map.GOODS_NUM }
-						<input type="hidden" id="GOODS_NUM" name="GOODS_NUM" value="${map.GOODS_NUM }">
+			           ${map.GOODS_NUM }
+						<input type="hidden" id="GOODS_NUM" name="GOODS_NUM" value="${map.GOODS_NUM }"> 
 					</td>
 					<th scope="row">상품 이름</th>
-					<td>${map.GOODS_NAME }</td>
+					<td><input type="text" id="GOODS_NAME" name="GOODS_NAME" value="${map.GOODS_NAME }"></td>
 				</tr>
 				<tr>
 					<th scope="row">수량</th>
-					<td>${map.GOODS_AMOUNT }</td>
+					<td><input type="text" id="GOODS_AMOUNT" name="GOODS_AMOUNT" value="${map.GOODS_AMOUNT }"></td>
 					<th scope="row">카테고리</th>
 					<td>
 					<select name="GOODS_CATEGORY" id="GOODS_CATEGORY" align="right" >
@@ -194,4 +194,3 @@ function fn_addFile(){
 	}
 
 </script>
->

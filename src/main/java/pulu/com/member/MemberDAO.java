@@ -1,5 +1,6 @@
 package pulu.com.member;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,10 +25,10 @@ public class MemberDAO extends AbstractDAO {
 		log.info("memberDao의 insertMember() 동작");
 		insert("member.insertMember", map);
 	}
-	
+
 	// 선민: 아이디 중복확인
-	public String confirmId(String inputId) throws Exception { 
-		return (String)selectOne("member.confirmId", inputId);
+	public String confirmId(String inputId) throws Exception {
+		return (String) selectOne("member.confirmId", inputId);
 	}
 
 	/* ---------------------- (2) 로그인 ---------------------- */
@@ -35,7 +36,7 @@ public class MemberDAO extends AbstractDAO {
 	// 선민: 로그인 정보 불러오기
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectId(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>)selectOne("member.selectId", map);
+		return (Map<String, Object>) selectOne("member.selectId", map);
 	}
 
 	// 선아: 아이디 찾기
@@ -64,20 +65,61 @@ public class MemberDAO extends AbstractDAO {
 
 	/* ---------------------- (3) 마이페이지 ---------------------- */
 
-	//선아: 회원 수정페이지
-	public void memberInfo(Map<String, Object> map) throws Exception {
-	update("member.memberInfo", map);
+	// 선아: 회원 수정페이지
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> memberInfo(Map<String, Object> map) throws Exception {
+		log.info("memberDAO>>>>>>>>>>>>>>" + map);
+		return (Map<String, Object>) selectOne("member.memberInfo", map);
 	}
-	
 
-	
-	//선아: 회원탈퇴
+	// 선아: 회원탈퇴
 	public void memberDelete(Map<String, Object> map) throws Exception {
 		// return (Map<String,Object>)update("member.memberDelete",map);
-		log.info(map.get("str_Num")); //
+		log.info(map.get("str_Num"));
 		log.info("memberDao의 memberDelete() 동작");
 		update("member.memberDelete", map);
+	}
 
+	// 선아: 회원수정
+	public void memberUpdate(Map<String, Object> map) throws Exception {
+		update("member.memberUpdate", map);
+	}
+
+	// 선아: 새 비밀번호 변경
+	public void newPassword(Map<String, Object> map) throws Exception {
+		update("member.newPassword", map);
+	}
+	
+	// 병찬: 내가 쓴 후기 리스트
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> myReview(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("review.myReview", map);
+	}
+		
+	// 병찬: 마이페이지 주문 리스트
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> myInfoOrder(Map<String, Object> map) throws Exception {
+			
+		return (List<Map<String, Object>>) selectList("member.myInfoOrder", map);
+	}
+			
+	// 병찬: 마이페이지 주문 상세보기
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> myInfoOrderDetail(Map<String, Object> map) throws Exception {
+				
+		return (Map<String, Object>) selectOne("member.myInfoOrderDetail", map);
+	}
+			
+	// 병찬: 마이페이지 주문 수정
+	public void myInfoOrderUpdate(Map<String, Object> map) throws Exception {
+				
+		sqlSession.update("member.myInfoOrderUpdate", map);
+	}
+			
+	// 병찬: 마이페이지 주문 취소
+	public void myInfoOrderDelete(Map<String ,Object> map) throws Exception {
+				
+		sqlSession.delete("member.myInfoOrderDelete", map);
 	}
 
 }

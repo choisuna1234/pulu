@@ -3,8 +3,6 @@ package pulu.com.basket;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Repository;
 
 import pulu.com.common.AbstractDAO;
@@ -34,6 +32,13 @@ public class BasketDAO extends AbstractDAO {
 
 	public void deleteBasketAll(String LOGIN_ID) throws Exception {
 		delete("basket.deleteBasketAll", LOGIN_ID);
+	}
+
+	// 장바구니 리스트 수량 변경
+	public int updateCount(Map<String, Object> map) {
+		log.info("\nupdate - 장바구니리스트 수량 변경");
+		int result = (int)update("basket.updateCount", map);
+		return result;
 	}
 
 }

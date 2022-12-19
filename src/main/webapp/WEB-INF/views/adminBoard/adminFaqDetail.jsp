@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<title>FAQ</title>
+<link rel="stylesheet" href="resources/css/ui.css" type="text/css" />
 </head>
 <body>
 <h2 onclick="location.href='adminFaqList.pulu';">FAQ</h2><br>
@@ -69,14 +70,9 @@
 			var isSearch;
 			var searchNum;
 			
-/* 			if (isSearch === null) { 
-				comSubmit.setUrl("<c:url value='/adminFaqList.pulu?currentPage=${currentPage}'/>");
-			} else { */
-				comSubmit.setUrl("<c:url value='/adminFaqList.pulu?searchNum=${searchNum}&isSearch=${isSearch}&currentPage=${currentPage}'/>");
-/* 			}*/
+			comSubmit.setUrl("<c:url value='/adminFaqList.pulu?searchNum=${searchNum}&isSearch=${isSearch}&currentPage=${currentPage}'/>");
 			comSubmit.submit(); 
-			
-//			history.go(-1);
+
 		}
 		
 		function fn_adminFaqUpdate(){
