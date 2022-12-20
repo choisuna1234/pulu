@@ -102,6 +102,21 @@
 	<definition name="admin_notice_update_form" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminNoticeUpdateForm.jsp"/>
 	</definition>
+	
+	<definition name="admin_review_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminReviewList.jsp"/>
+	</definition>
+	
+	<definition name="admin_qna_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminQnaList.jsp"/>
+	</definition>
+	
+	<definition name="admin_order_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminOrderList.jsp"/>
+	</definition>
+	
+	
+	
 	<definition name="admin_faq_list" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminFaqList.jsp"/>
 	</definition>
@@ -117,6 +132,9 @@
 	<definition name="admin_member_list" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminMember/adminMemberList.jsp"/>
 	</definition>
+	
+	
+	
 	
 	<definition name="reviewInsertForm" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/board/reviewInsertForm.jsp"/>

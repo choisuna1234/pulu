@@ -2,6 +2,7 @@
 
 a:link, a:visited {text-decoration: none; color: #656565;}
 
+
 .board_list {width:100%;border-top:2px solid #252525;border-bottom:1px solid #ccc}
 .board_list thead th:first-child{background-image:none}
 .board_list thead th {border-bottom:1px solid #ccc;padding:12px 0 13px 0;color:#3b3a3a;vertical-align:middle}
@@ -21,3 +22,96 @@ a:link, a:visited {text-decoration: none; color: #656565;}
 .wdp_90 {width:90%}
 .btn {border-radius:3px;padding:5px 11px;color:#fff !important; display:inline-block; background-color:#6b9ab8; border:1px solid #56819d;vertical-align:middle}
 .pad_5 {padding: 5px;}
+
+/* QNA 게시글 아코디언 */
+ table {
+	font-family: PureunJeonnam;
+	padding: 10px;
+	}
+tr {
+	padding: 10px;
+}
+td {
+	padding: 10px;
+} 
+.hide {display: none;}
+.show {display: table-row;}
+.item td {cursor: pointer;}
+
+.hide2 {display: none;}
+
+@font-face { /* 나눔고딕 Regular */
+	font-family: PureunJeonnam;
+	font-style: normal;
+	font-weight: 400;
+	src: url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.eot);
+	src:
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.eot?#iefix)
+		format('embedded-opentype'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.woff2)
+		format('woff2'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.woff)
+		format('woff'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.ttf)
+		format('truetype');
+}
+
+/* 페이징 스타일 지정 */
+.paging{text-align:center;height:32px;margin-top:5px;margin-bottom:15px;}
+.paging a,
+.paging strong{display:inline-block;width:36px;height:32px;line-height:28px;font-size:14px;border:1px solid #e0e0e0;margin-left:5px;
+-webkit-border-radius:3px;
+   -moz-border-radius:3px;
+		border-radius:3px;
+-webkit-box-shadow:1px 1px 1px 0px rgba(235,235,235,1);
+	-moz-box-shadow:1px 1px 1px 0px rgba(235,235,235,1);
+		  box-shadow:1px 1px 1px 0px rgba(235,235,235,1);
+}
+.paging a:first-child{margin-left:0;}
+.paging strong{color:#fff;background:#337AB7;border:1px solid #337AB7;}
+.paging .page_arw{font-size:11px;line-height:30px;}
+
+
+/* 셀렉트 박스 스타일 */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  
+  
+  color: #444;
+  background-color: #fff;
+  
+  padding: .5em 1em .5em 1em;
+  margin: 0;
+  
+  border: 1px solid #aaa;
+  border-radius: .5em;
+  box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+}
+
+select:hover {
+  border-color: #888;
+}
+
+select:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222;
+  outline: none;
+}
+
+select:disabled {
+  opacity: 0.5;
+}
+
+label {
+  
+  color: #444;
+  
+  margin-right: 0.5em;
+}

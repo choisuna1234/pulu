@@ -8,49 +8,58 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">FAQ</h1>
+		</div>
+		
+		
+		<!-- /.row -->
+		<div class="row">
+			<div class="col-lg-10">
+				<div class="panel panel-default">
+					<div class="panel-heading">FAQ 수정하기</div>
+					<div class="panel-body">
+					
+					
 	<form id="frm">
-		<table class="board_view">
-			<colgroup>
-				<col width="15%"/>
-				<col width="35%"/>
-				<col width="15%"/>
-				<col width="35%"/>
-			</colgroup>
-			<caption>게시글 상세</caption>
+	<table class="table table-striped table-bordered table-hover" id="board_view">
+	
 			<tbody>
 				<tr>
-					<th scope="row">글 번호</th>
+					<th style="width: 7%">글 번호</th>
 					<td>
 						${map.FAQ_NUM }
 						<input type="hidden" id="FAQ_NUM" name="FAQ_NUM" value="${map.FAQ_NUM }">
 					</td>
-					<th scope="row">조회수</th>
+					<th style="width: 7%">조회수</th>
 					<td>${map.FAQ_READCOUNT }</td>
 				</tr>
 				<tr>
-					<th scope="row">작성자</th>
+					<th style="width: 7%">작성자</th>
 					<td>${map.FAQ_ID }</td>
-					<th scope="row">작성일</th>
+					<th style="width: 7%">작성일</th>
 					<td>${map.FAQ_DATE }</td>
 				</tr>
 				<tr>
-					<th scope="row">제목</th>
-					<td colspan="3">
-						<input type="text" id="FAQ_SUBJECT" name="FAQ_SUBJECT" class="wdp_90" value="${map.FAQ_SUBJECT }"/>
+				
+					<th style="width: 7%">제목</th>
+						<td colspan="3"><input type="text" id="FAQ_SUBJECT" name="FAQ_SUBJECT" class="form-control" value="${map.FAQ_SUBJECT }" />
 					</td>
 				</tr>
 				<tr>
 					<td colspan="4" class="view_text">
-						<textarea rows="20" cols="100" title="내용" id="FAQ_CONTENT" name="FAQ_CONTENT">${map.FAQ_CONTENT }</textarea>
+						<textarea class="form-control" rows="20" cols="100" title="내용" id="FAQ_CONTENT" name="FAQ_CONTENT">${map.FAQ_CONTENT }</textarea>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
 	
-	<a href="#this" class="btn" id="list">목록으로</a>
-	<a href="#this" class="btn" id="update">저장하기</a>
-	<a href="#this" class="btn" id="delete">삭제하기</a>
+	<a href="#this" class="btn btn-primary" id="list">목록으로</a>
+	<a href="#this" class="btn btn-primary" id="update">저장하기</a>
+	<a href="#this" class="btn btn-primary" id="delete">삭제하기</a>
 	
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>   
 	<script type="text/javascript">

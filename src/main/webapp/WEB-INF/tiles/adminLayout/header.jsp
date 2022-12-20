@@ -306,7 +306,7 @@
                                     <a href="adminReviewList.pulu">상품 후기</a>
                                 </li>
                                 <li>
-                                    <a href="adminQna.pulu">상품 문의</a>
+                                    <a href="adminQnaList.pulu">상품 문의</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -331,7 +331,7 @@
                             <a href="#"><i class="fa fa-th-list fa-fw"></i><strong>&nbsp 주문 관리</strong><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href=".pulu">일반상품 주문관리</a>
+                                    <a href="adminOrderList.pulu">일반상품 주문관리</a>
                                 </li>
                                 <li>
                                     <a href=".pulu">정기배송 주문관리</a>

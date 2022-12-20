@@ -43,7 +43,7 @@ public class AdminOrderController {
 	/* --- 관리자 주문 관리 : 리스트 --- */ 
 	@RequestMapping(value = "/adminOrderList")	// 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
 	public ModelAndView adminOrderList(CommandMap commandMap,HttpServletRequest request) throws Exception{
-		ModelAndView mv = new ModelAndView("/adminBoard/adminOrderList"); // jsp 경로 설정
+		ModelAndView mv = new ModelAndView("admin_order_list"); // jsp 경로 설정
 		
 		// 페이징 : 받아오는 현제페이지가 없으면 페이지 1부터시작
 		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()

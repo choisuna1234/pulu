@@ -4,31 +4,38 @@
 <html>
 
 <head>
-<title>REVIEW</title>
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 </head>
 <body>
-<h2>adminReview</h2>
-<table style="border:1px solid #ccc">
-	<colgroup>
-		<col width="10%"/>
-		<col width="15%"/>
-		<col width="*"/>
-		<col width="15%"/>
-		<col width="20%"/>
-	</colgroup>
+
+<body>
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">adminReview</h1>
+		</div>
+		
+		<!-- /.row -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">후기 관리</div>
+<div class="panel-body">
+
+<table width="100%" class="table table-striped table-bordered table-hover"
+							id="adminReviewList">
 	<thead>
 		<tr>
-			<th scope="col">후기번호</th>
-			<th scope="col">후기상품번호</th>
-			<th scope="col">후기작성자</th>
-			<th scope="col">후기내용</th>
-			<th scope="col">작성일</th>
-			<th scope="col">답변상태</th>
-			<th scope="col">답변내용</th>
+			<th>후기번호</th>
+			<th>후기상품번호</th>
+			<th>후기작성자</th>
+			<th>후기내용</th>
+			<th>작성일</th>
+			<th>답변상태</th>
+			<th>답변내용</th>
 		</tr>
 	</thead>
 	<tbody>
+	<tr class="odd gradeX">
 		<c:choose>
 			<c:when test="${fn:length(adminReviewList) > 0}">
 				<c:forEach items="${adminReviewList}" var="row">
@@ -51,7 +58,16 @@
 		</c:choose>
 	</tbody>
 </table>
-<div>
-</div>
+			</div>
+					<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- "row" -->
+
 </body>
 </html>    

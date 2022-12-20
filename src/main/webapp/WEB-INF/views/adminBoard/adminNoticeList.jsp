@@ -19,7 +19,9 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">공지사항</div>
 					<div class="panel-body">
-						<a href="#this" class="btn" id="insert">글쓰기</a>
+						<a href="#this" id="insert" class="btn btn-primary">글쓰기</a>
+						<br>
+						<br>
 						<table width="100%"
 							class="table table-striped table-bordered table-hover"
 							id="adminNoticeList">

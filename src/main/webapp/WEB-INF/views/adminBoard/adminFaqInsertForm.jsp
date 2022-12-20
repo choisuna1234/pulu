@@ -6,29 +6,54 @@
 <head>
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 </head>
+
 <body>
-	<form id="frm" name="frm" method="get" enctype="multipart/form-data" action="adminFaqInsert.pulu" onsubmit="return checkFaqInsertForm();">
-		<table class="board_view">
-			<colgroup>
-				<col width="15%">
-				<col width="*"/>
-			</colgroup>
-			<caption>게시글 작성</caption>
-			<tbody>
-				<tr>
-					<th scope="row">제목</th>
-					<td><input type="text" id="FAQ_SUBJECT" name="FAQ_SUBJECT" class="wdp_90"></input></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="view_text">
-						<textarea rows="20" cols="100" title="내용" id="FAQ_CONTENT" name="FAQ_CONTENT"></textarea>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		
-	<a href="#this" class="btn" id="insert" type="submit">작성하기</a>
-	<a href="#this" class="btn" id="list">목록으로</a>
+
+<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">FAQ</h1>
+		</div>
+
+<!-- /.row -->
+		<div class="row">
+			<div class="col-lg-10">
+				<div class="panel panel-default">
+					<div class="panel-heading">자주묻는질문 작성하기</div>
+					<div class="panel-body">
+
+						<form id="frm" name="frm" method="get"
+							enctype="multipart/form-data" action="adminFaqInsert.pulu"
+							onsubmit="return checkFaqInsertForm();">
+							<table class="board_view">
+
+								<tbody>
+									<tr>
+										<th style="width: 5%">제목</th>
+										<td><input type="text" id="FAQ_SUBJECT"
+											name="FAQ_SUBJECT" class="form-control" class="form-control"></input></td>
+									</tr>
+									<tr>
+										<th>내용</th>
+										<td colspan="2" class="view_text" height="30"><textarea
+												rows="20" class="form-control" cols="100" title="내용"
+												id="FAQ_CONTENT" name="FAQ_CONTENT"></textarea></td>
+									</tr>
+								</tbody>
+							</table>
+							</form>
+							
+							</div>
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- "row" -->
+
+		<a href="#this" class="btn btn-primary" id="insert" type="submit">작성하기</a>
+	<a href="#this" class="btn btn-primary" id="list">목록으로</a>
 	</form>
 	
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>

@@ -51,7 +51,7 @@ public class AdminReviewController {
 	// 관리자 후기 답변 리스트 
 	@RequestMapping(value="/adminReviewList")
 	public ModelAndView adminReviewList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("adminBoard/adminReviewList");
+		ModelAndView mv = new ModelAndView("admin_review_list");
 		
 		List<Map<String, Object>> adminReviewList = adminReviewService.adminReviewList(commandMap.getMap());
 		

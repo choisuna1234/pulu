@@ -49,7 +49,7 @@ public class AdminQnaController {
 	@RequestMapping(value = "/adminQnaList") // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
 	public ModelAndView adminQnaList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 //		ModelAndView mv = new ModelAndView("/goods/detail"); 
-		ModelAndView mv = new ModelAndView("/adminBoard/adminQnaList"); // jsp 경로 설정
+		ModelAndView mv = new ModelAndView("admin_qna_list"); // jsp 경로 설정
 
 		// 받아오는 현제페이지가 없으면 페이지 1부터시작
 		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()

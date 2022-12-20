@@ -1,36 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
 </head>
 <body>
-<form id="frm" name="frm" enctype="multipart/form-data">
-<table class="adminNoticeInsert">
-<colgroup>
-<col width="15%">
-<col width="*"/>
-</colgroup>
-<caption>공지사항 작성</caption>
-<tbody>
-<tr>
-<th scope="row">제목</th>
-<td><input type="text" id="NOTICE_SUBJECT" name="NOTICE_SUBJECT" class="wdp_90"></input></td>
-</tr>
-<tr>
-<th scope="row">내용</th>
-<td colspan="2" class="view_text">
-<textarea rows="20" cols="100" title="내용" id="NOTICE_CONTENT" name="NOTICE_CONTENT"></textarea>
-</td></tr>
-</tbody>
-</table>
-<br/><br/>
-<a href="#this" class="btn" id="write">작성하기</a>
-<a href="#this" class="btn" id="list">목록으로</a>
-</form>
-	<%@ include file="/WEB-INF/include/include-body.jspf" %>
-<script type="text/javascript">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Notice</h1>
+		</div>
+
+
+		<!-- /.row -->
+		<div class="row">
+			<div class="col-lg-10">
+				<div class="panel panel-default">
+					<div class="panel-heading">공지사항 작성하기</div>
+					<div class="panel-body">
+						<form id="frm" name="frm" enctype="multipart/form-data">
+							<table class="adminNoticeInsert">
+								<tbody>
+									<tr>
+										<th style="width: 5%">제목</th>
+										<td><input type="text" id="NOTICE_SUBJECT"
+											name="NOTICE_SUBJECT" class="form-control"></input></td>
+									</tr>
+
+									<tr>
+										<th>내용</th>
+										<td colspan="2" class="view_text" height="30">
+										<textarea rows="20" class="form-control" cols="100" title="내용"
+												id="NOTICE_CONTENT" name="NOTICE_CONTENT">
+										</textarea></td>
+
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+
+				</div>
+				<!-- /.panel -->
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- "row" -->
+
+	<a href="#this" class="btn btn-primary" id="write">작성하기</a>
+	<a href="#this" class="btn btn-primary" id="list">목록으로</a>
+
+
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
+	<script type="text/javascript">
 
 
 $(document).ready(function(){
