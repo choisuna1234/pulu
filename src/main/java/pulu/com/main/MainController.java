@@ -42,4 +42,23 @@ public class MainController {
 		return "admin_Main";
 	}
 	
+	
+	//선아: 매장지도 띄우기
+	@RequestMapping(value = "/burialMap")
+	public ModelAndView burialMap() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("burialMap");
+		return mv;
+	}
+	
+	//선아: 영양정보 띄우기
+		@RequestMapping(value = "/nutritionFacts")
+		public ModelAndView nutritionFacts() {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("nutritionFacts");
+			return mv;
+		}
+	
+	
+	
 } 

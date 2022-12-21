@@ -40,10 +40,16 @@
 	<definition name="pOrder" extends="layout">
       <put-attribute name="body" value="/WEB-INF/views/order/pOrder.jsp"/>
    </definition>
+   
+   <definition name="burialMap" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/burialMap/burialMap.jsp"/>
+   </definition>
+   
+   <definition name="nutritionFacts" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/nutritionFacts/nutritionFacts.jsp"/>
+   </definition>
+   
 
-
-
-	
 	<definition name="join" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/member/join.jsp"/>
 	</definition>

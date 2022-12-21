@@ -74,9 +74,10 @@
 											style="width: 80px;">
 											<option value="0">제목</option>
 											<option value="1">내용</option>
-										</select> <input class="form-control" type="text" name="isSearch"
-											id="isSearch" style="width: 190px;" /> <span
-											class="input-group-btn">
+										</select> 
+										<input class="form-control" type="text" name="isSearch"
+											id="isSearch" style="width: 190px;" />
+											 <span class="input-group-btn">
 											<button type="submit" class="btn btn-primary">
 												<i class="fa fa-search"></i>
 											</button>

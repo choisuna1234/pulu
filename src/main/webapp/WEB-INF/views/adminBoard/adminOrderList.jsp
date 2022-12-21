@@ -26,8 +26,9 @@
       <div class="col-sm-6">
          <a href="/adminOrderList.pulu">
          <button type="button" class="btn btn-primary">전체주문</button></a> 
-         
-         <select class="form-control" name="select" onchange="window.open(value,'_self');">
+         <br>
+         <br>
+         <select class="form-control" name="select" onchange="window.open(value,'_self');" style="width: 190px;">
             <option value="">--주문상태--</option>
             <option value="/adminOrderList.pulu?searchNum=0&isSearch=0">주문접수</option>
             <option value="/adminOrderList.pulu?searchNum=0&isSearch=1">결제완료</option>
@@ -36,7 +37,8 @@
             <option value="/adminOrderList.pulu?searchNum=0&isSearch=4">배송완료</option>
             <option value="/adminOrderList.pulu?searchNum=0&isSearch=5">주문취소</option>
          </select>
-
+         <br>
+         
       </div>
    </form>
    <!-- /.row -->
@@ -114,29 +116,37 @@
                   </tbody>
                </table>
                </form>
-               <div>
+               
                
                
                <!-- 페이징 -->
                <div class="paging">${pagingHtml}</div>
-               
-               <!-- 검색 -->
-               <div style="text-align: center;">
-                  <div id="dataTables-example_filter" class="dataTables_filter">
-                     <form action="">
-                        <select class="form-control" name="searchNum" id="searchNum">
-                           <option value="1">회원ID</option>
-                           <option value="2">주문번호</option>
-                        </select> 
-                           <input class="form-control" type="text" name="isSearch" id="isSearch" /> <span>
-                           <button type="submit" class="btn btn-primary">검색</button>
-                        </span>
-                     </form>
-                  </div>
-               </div>
-               </div>
 
-            </div>
+										<!-- 검색 -->
+										<div>
+											<div style="border: 1px; float: left; width: 400px;">
+												<div class="form-group input-group">
+
+													<form action="">
+										<select class="form-control" name="searchNum" id="searchNum"
+											style="width: 100px;">
+															<option value="1">회원ID</option>
+															<option value="2">주문번호</option>
+														</select> 
+														
+										<input class="form-control" type="text" name="isSearch"
+											id="isSearch" style="width: 190px;" />
+											 <span class="input-group-btn">
+											<button type="submit" class="btn btn-primary">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+													</form>
+												</div>
+											</div>
+										</div>
+
+									</div>
             <!-- /.panel-body -->
          </div>
          <!-- /.panel -->

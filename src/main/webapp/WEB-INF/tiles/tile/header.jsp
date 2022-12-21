@@ -27,8 +27,8 @@
 							<li class="topMenuLi"><a class="menuLink" href="List.pulu?categoryNo=2">샌드위치</a></li>
 							<li class="topMenuLi"><a class="menuLink" href="List.pulu?categoryNo=3">간식/음료</a></li>
 							<li class="topMenuLi"><a class="menuLink" href="">정기배송</a></li>
-							<li class="topMenuLi"><a class="menuLink" href="">영양정보</a></li>
-							<li class="topMenuLi"><a class="menuLink" href="">매장</a></li>
+							<li class="topMenuLi"><a class="menuLink" href="nutritionFacts.pulu">영양정보</a></li>
+							<li class="topMenuLi"><a class="menuLink" href="burialMap.pulu">매장</a></li>
 						</ul>
 					</div>
 
@@ -56,7 +56,7 @@
 						</c:choose>
 
 						<li><a class="loginLink" href="noticeList.pulu">고객센터</a></li>
-						<li><a class="loginLink" href="basketList.pulu">장바</a></li>
+						<li><a class="loginLink" href="basketList.pulu">장바구니</a></li>
 							<li><a class="loginLink" href=""><img scr=""/></a></li>
 							<li><a class="loginLink" href=""><img scr=""/></a></li>
 						</ul>
