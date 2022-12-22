@@ -37,18 +37,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsUpdateForm.jsp"/>
 	</definition>	
 	
-	<definition name="pOrder" extends="layout">
-      <put-attribute name="body" value="/WEB-INF/views/order/pOrder.jsp"/>
-   </definition>
-   
-   <definition name="burialMap" extends="layout">
-      <put-attribute name="body" value="/WEB-INF/views/burialMap/burialMap.jsp"/>
-   </definition>
    
    <definition name="nutritionFacts" extends="layout">
       <put-attribute name="body" value="/WEB-INF/views/nutritionFacts/nutritionFacts.jsp"/>
    </definition>
-   
 
 	<definition name="join" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/member/join.jsp"/>
@@ -60,6 +52,7 @@
 	<definition name="loginForm" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp"/>
 	</definition>
+	
 	
 	<definition name="myPage" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/member/myPage.jsp"/>
@@ -141,7 +134,6 @@
 	
 	
 	
-	
 	<definition name="reviewInsertForm" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/board/reviewInsertForm.jsp"/>
 	</definition>
@@ -155,5 +147,17 @@
 	</definition>
 	
 	
+	<definition name="pOrder" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/order/pOrder.jsp"/>
+   </definition>
+   
+   <definition name="burialMap" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/burialMap/burialMap.jsp"/>
+   </definition>
+   
+   <definition name="noticeList" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/board/noticeList.jsp"/>
+   </definition>
+   
 	
 </tiles-definitions> 

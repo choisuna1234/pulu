@@ -31,10 +31,9 @@
 									<tr>
 										<th>내용</th>
 										<td colspan="2" class="view_text" height="30">
-										<textarea rows="20" class="form-control" cols="100" title="내용"
-												id="NOTICE_CONTENT" name="NOTICE_CONTENT">
-										</textarea></td>
-
+										<textarea rows="20" cols="100" title="내용" id="NOTICE_CONTENT"
+												class="form-control" name="NOTICE_CONTENT"></textarea>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -61,16 +60,16 @@
 $(document).ready(function(){
 	$("#list").on("click", function(e){ // 목록으로 버튼
 		e.preventDefault();
+		alert("목록으로 넘어가시겠습니까?");
 	fn_adminNoticeList();
 	});
 	
 	$("#write").on("click", function(e){ // 작성하기 버튼
 		e.preventDefault();
-	fn_adminNoticeInsert();
+		fn_adminNoticeInsert();
 	
 	});
-	
-	
+
 });
 
 function fn_adminNoticeList(){
@@ -82,6 +81,18 @@ function fn_adminNoticeList(){
 
 function fn_adminNoticeInsert(){
 	var comSubmit = new ComSubmit("frm");
+
+    if (frm.NOTICE_SUBJECT.value.length == 0) {   //선아: 제목, 내용 유효성검사
+   	 frm.NOTICE_SUBJECT.focus();
+       alert("제목을 입력하세요.");
+       return false;
+    }
+    if (frm.NOTICE_CONTENT.value.length == 0) {
+       frm.NOTICE_CONTENT.focus();
+       alert("내용을 입력하세요.");
+       return false;
+    }
+	 
 	comSubmit.setUrl("<c:url value='/adminNoticeInsert.pulu' />");
 	comSubmit.submit();
 }

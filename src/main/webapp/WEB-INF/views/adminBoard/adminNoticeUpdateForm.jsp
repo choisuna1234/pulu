@@ -19,7 +19,7 @@
 					<div class="panel-heading">게시글 수정하기</div>
 					<div class="panel-body">
 
-						<form id="frm">
+						<form id="frm" name="frm" onsubmit="return checkValidation()">
 							<table class="table table-striped table-bordered table-hover"
 								id="adminNoticeList">
 
@@ -41,14 +41,18 @@
 									<tr>
 										<th style="width: 7%">제목</th>
 
-										<td colspan="3"><input type="text" id="NOTICE_SUBJECT"
-											name="NOTICE_SUBJECT" class="form-control"
-											value="${map.NOTICE_SUBJECT }" /></td>
+										<td colspan="3">
+										<input type="text" id="NOTICE_SUBJECT" name="NOTICE_SUBJECT" class="form-control"
+											value="${map.NOTICE_SUBJECT }" />
+											</td>
 									</tr>
 									<tr>
-										<td colspan="4" class="view_text"><textarea rows="20"
+									
+										<td colspan="4" class="view_text">
+										<pre><textarea rows="20"
 												cols="100" title="내용" id="NOTICE_CONTENT"
-												class="form-control" name="NOTICE_CONTENT">${map.NOTICE_CONTENT }</textarea>
+												class="form-control" name="NOTICE_CONTENT">${map.NOTICE_CONTENT }</textarea></pre>
+										
 										</td>
 									</tr>
 								</tbody>
@@ -74,16 +78,19 @@
 		$(document).ready(function() {
 			$("#list").on("click", function(e) { //목록으로 버튼
 				e.preventDefault();
+				alert("목록으로 넘어가시겠습니까?");
 				fn_adminNoticeList();
 			});
 
-			$("#update").on("click", function(e) { //저장하기 버튼
+			$("#update").on("click", function(e) { //수정하기 버튼
 				e.preventDefault();
+				alert("수정하시겠습니까?");
 				fn_adminNoticeUpdate();
 			});
 
 			$("#delete").on("click", function(e) { //삭제하기 버튼
 				e.preventDefault();
+				 alert("정말 삭제하시겠습니까?");
 				fn_adminNoticeDelete();
 			});
 		});
@@ -99,12 +106,6 @@
 			comSubmit.submit();
 		}
 
-		function fn_adminNoticeUpdate() {
-			var comSubmit = new ComSubmit("frm");
-			comSubmit.setUrl("<c:url value='/adminNoticeUpdate.pulu'/>");
-			comSubmit.submit();
-		}
-
 		function fn_adminNoticeDelete() {
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='/adminNoticeDelete.pulu'/>");
@@ -112,6 +113,27 @@
 			comSubmit.submit();
 
 		}
+		
+		 function fn_adminNoticeUpdate() {
+	         var comSubmit = new ComSubmit("frm");
+
+	         if (frm.NOTICE_SUBJECT.value.length == 0) {   //선아: 제목, 내용 유효성검사
+	        	 frm.NOTICE_SUBJECT.focus();
+	            alert("제목을 입력하세요.");
+	            return false;
+	         }
+	         if (frm.NOTICE_CONTENT.value.length == 0) {
+	            alert("내용을 입력하세요.");
+	            frm.NOTICE_CONTENT.focus();
+	            return false;
+	         }
+	         comSubmit.setUrl("<c:url value='/adminNoticeUpdate.pulu'/>");
+	         comSubmit.submit();
+	         opener.location.reload();
+
+	      }
+
+		
 	</script>
 </body>
 </html>

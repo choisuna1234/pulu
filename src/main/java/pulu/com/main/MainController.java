@@ -57,8 +57,7 @@ public class MainController {
 			ModelAndView mv = new ModelAndView();
 			mv.setViewName("nutritionFacts");
 			return mv;
-		}
-	
-	
+	}
+		
 	
 } 

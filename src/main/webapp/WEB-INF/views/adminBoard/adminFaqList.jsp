@@ -20,7 +20,7 @@
 
 		<!-- /.row -->
 		<div class="row">
-			<div class="col-lg-10">
+			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">자주 묻는 질문</div>
 					<div class="panel-body">
@@ -28,7 +28,7 @@
 						<a href="adminFaqDetail.pulu" class="btn btn-primary" id="insert">글쓰기</a>
 						<br> <br>
 
-						<table class="table table-striped table-bordered table-hover"
+						<table width="100%" class="table table-striped table-bordered table-hover"
 							id="adminNoticeList">
 
 

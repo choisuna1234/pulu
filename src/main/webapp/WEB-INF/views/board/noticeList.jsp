@@ -6,8 +6,8 @@
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 </head>
 <body>
-<h2>Notice</h2>
-<h2 onclick="location.href='faqList.pulu';">FAQ</h2>
+<h2>공지사항</h2>
+<h3 onclick="location.href='faqList.pulu';">자주 묻는 질문 바로가기</h3>
 <table class="noticeList">
 	<colgroup>
 		<col width="10%"/>

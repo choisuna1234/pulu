@@ -39,6 +39,14 @@
     text-align: center;
     padding: 15px;
 }
+.button {
+    background-color:#ddd;
+    color: #fff;
+    border:none;
+    border-radius:10px;
+  }
+  
+
 
 </style>
 
@@ -70,52 +78,53 @@
 	</center>
 <br>
 	<section class="section section4">
-						    <div class="parent">
-						    
-						    <div class="first">
-						    
-							<div class="icon"><img src="./resources/img/nutritionFacts/guide-icon1.jpg" alt=""></div>
-							<dl>
-								<h3>영양성분표</h3>
-								<h4>
-									본인의 식습관과 식단을 고려하여 알맞은 메뉴를 선택하고	 <br />
-									부족한 영양소는 토핑 추가 등을 통해 보완하세요.
-								</h4>
-							</dl>
-							<a href="./resources/img/nutritionFacts/nutritionPDF.pdf"  class="btn">영양성분표 보기</a>
-							</div>
-							
-							   
-						
-						<div class="second">
-							<div class="icon"><img src="./resources/img/nutritionFacts/guide-icon3.jpg" alt=""></div>
-							<dl>
-								<h3>칼로리표</h3>
-								<h4>
-									본인에게 맞는 열량을 확인하고 <br />
-									다른 끼니의 열량을 고려하여 샐러디 메뉴를 선택하세요.
-								</h4>
-							</dl>
-							<a href="./resources/img/nutritionFacts/caloriePDF.pdf"  class="btn">칼로리표 보기</a>
-						</div>
-					
-					  <div class="third">
-						
-							<div class="icon"><img src="./resources/img/nutritionFacts/guide-icon2.jpg" alt=""></div>
-							<dl>
-								<h3>알레르기 정보</h3>
-								<h4>
-									특정 음식에 대해 알레르기가 있으신 고객분께서는 <br />
-									메뉴 선택 전에 알레르기 정보를 꼭 확인하시기 바랍니다.
-								</h4>
-							</dl>
-							<a href="./resources/img/nutritionFacts/allergyPDF.pdf"  class="btn">알레르기 정보 보기</a>
-						</div>
-						
-						</div>
-		</section>
+		<div class="parent">
+			<div class="first">
+				<div class="icon">
+					<img src="./resources/img/nutritionFacts/guide-icon1.jpg" alt="">
+				</div>
+				<dl>
+					<h3>영양성분표</h3>
+					<h4>본인의 식습관과 식단을 고려하여 알맞은 메뉴를 선택하고 <br /> 부족한 영양소는 토핑 추가 등을 통해 보완하세요.</h4>
+				</dl>
+				<button type="button" class="button">
+					<a href="./resources/img/nutritionFacts/nutritionPDF.pdf"
+						class="btn-gradient red mini">영양성분표 보기</a>
+				</button>
+			</div>
 
+			<div class="second">
+				<div class="icon">
+					<img src="./resources/img/nutritionFacts/guide-icon3.jpg" alt="">
+				</div>
+				<dl>
+					<h3>칼로리표</h3>
+					<h4>
+						본인에게 맞는 열량을 확인하고 <br /> 다른 끼니의 열량을 고려하여 샐러디 메뉴를 선택하세요.
+					</h4>
+				</dl>
+				<button type="button" class="button">
+					<a href="./resources/img/nutritionFacts/caloriePDF.pdf"
+						class="btn-gradient red mini">칼로리표 보기</a>
+				</button>
+			</div>
 
-
+			<div class="third">
+				<div class="icon">
+					<img src="./resources/img/nutritionFacts/guide-icon2.jpg" alt="">
+				</div>
+				<dl>
+					<h3>알레르기 정보</h3>
+					<h4>
+						특정 음식에 대해 알레르기가 있으신 고객분께서는 <br /> 메뉴 선택 전에 알레르기 정보를 꼭 확인하시기 바랍니다.
+					</h4>
+				</dl>
+				<button type="button" class="button">
+					<a href="./resources/img/nutritionFacts/allergyPDF.pdf"
+						class="btn-gradient red mini">알레르기 정보 보기</a>
+				</button>
+			</div>
+		</div>
+	</section>
 </body>
 </html>

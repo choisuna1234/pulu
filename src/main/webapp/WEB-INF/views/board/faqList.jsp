@@ -10,9 +10,11 @@
 <title>FAQ</title>
 </head>
 <body>
-<h2 onclick="location.href='faqList.pulu';">FAQ</h2><h3 onclick="location.href='main.pulu';">Main</h3>
 <div class="row">
-
+		<div class="col-lg-12">
+<h1 onclick="location.href='faqList.pulu';">고객센터</h1>
+<h3 onclick="location.href='main.pulu';">Main</h3>
+<div class="row">
 	<div style="text-align:center;">
 		<div id="dataTables-example_filter" class="dataTables_filter">
 			<form action="">
