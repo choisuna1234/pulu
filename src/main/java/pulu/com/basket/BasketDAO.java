@@ -41,4 +41,9 @@ public class BasketDAO extends AbstractDAO {
 		return result;
 	}
 
+	public void deleteBasketSelect(int BASKET_NUM) {
+		delete("basket.deleteBasketSelect", BASKET_NUM);
+		
+	}
+
 }

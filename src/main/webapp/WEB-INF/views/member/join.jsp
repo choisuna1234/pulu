@@ -136,7 +136,7 @@
 			return false;
 			} else { // 중복확인 팝업창 띄우기
 			window.name = "parentForm";
-			window.open(url, "childForm", "width=500, height=300, resizable=no");
+			window.open(url, "childForm", "width=430, height=250, status=no, toolbar=no, scrollbars=no");
 			}
 		}
 		

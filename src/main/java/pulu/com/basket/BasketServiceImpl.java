@@ -2,6 +2,7 @@ package pulu.com.basket;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j;
+import pulu.com.common.CommandMap;
 
 @Service("basketService")
 @Log4j
@@ -52,6 +54,15 @@ public class BasketServiceImpl implements BasketService {
 		
 		return basketDAO.basketList(map);
 	}
+	
+	@Override // 선민: 장바구니 선택 삭제
+	public void deleteBasketSelect(List<BasketListItemDTO> orders) {
+		for (BasketListItemDTO ord : orders) {
+			basketDAO.deleteBasketSelect(ord.getBASKET_NUM());
+		}
+	}
+	
+	
 
 	@Override // 선민: 장바구니 전체 삭제
 	public void deleteBasketAll(HttpSession session) throws Exception {
@@ -64,7 +75,6 @@ public class BasketServiceImpl implements BasketService {
 		return basketDAO.updateCount(map);
 	}
 
-	
 	
 	
 }

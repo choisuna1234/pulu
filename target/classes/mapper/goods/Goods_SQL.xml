@@ -115,6 +115,13 @@
 		order by GOODS_NUM desc 
     ]]>
 	</select>
+	
+	<!-- 선민: 주문처리 후 재고수량 감소 -->
+    <update id="updateGoodsAmount">
+		UPDATE GOODS
+		SET GOODS_AMOUNT = GOODS_AMOUNT - #{ORDER_GOODS_AMOUNT}
+		WHERE GOODS_NUM = #{ORDER_GOODS_NUM}
+	</update>
 
 
 </mapper>

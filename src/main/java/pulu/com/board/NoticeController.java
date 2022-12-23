@@ -38,7 +38,7 @@ Logger log = Logger.getLogger(this.getClass());
 	// 공지사항 목록
 		@RequestMapping(value="/noticeList") 
 		public ModelAndView noticeList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-			ModelAndView mv = new ModelAndView("/board/noticeList");
+			ModelAndView mv = new ModelAndView("notice_List");
 			
 			if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
 					|| request.getParameter("currentPage").equals("0")) {

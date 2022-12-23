@@ -318,7 +318,7 @@
 										<input type="hidden" name="SELECTED_GOODS_AMOUNT" class="selected_goods_amount">
 									</form>
 									<!-- 주문 form -->
-									<form action="pOrderBasketList.pulu" class="order_form">
+									<form action="pOrderBasketList.pulu" class="order_form" method="post">
 						
 									</form>
 								</c:forEach>

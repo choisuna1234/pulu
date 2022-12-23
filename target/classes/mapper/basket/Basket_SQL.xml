@@ -42,6 +42,21 @@
 	</update>
 	
 	
+	<!-- 장바구니 주문된 목록 존재확인 -->
+	<select id="checkBasketOrder" resultType="int">
+		SELECT COUNT(*)
+        FROM BASKET
+		WHERE BASKET_GOODS_NUM = #{ORDER_GOODS_NUM}
+		AND BASKET_MEMBER_ID = #{ORDER_MEMBER_ID}
+	</select>
+	
+	
+	<!-- 장바구니 주문된 목록만 삭제 -->
+	<delete id="deleteBasketOrder">
+		DELETE FROM BASKET
+		WHERE BASKET_GOODS_NUM = #{ORDER_GOODS_NUM}
+		AND BASKET_MEMBER_ID = #{ORDER_MEMBER_ID}
+	</delete>
 	
 	
 	<!-- 장바구니 전체 삭제 -->
@@ -62,5 +77,6 @@
 	    and GOODS_NUM = IMAGE_GOODS_NUM
 	    and IMAGE_CATEGORY = 1
 	</select>
+	
 	
 </mapper>

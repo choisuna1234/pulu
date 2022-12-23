@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import pulu.com.common.CommandMap;
+
 public interface BasketService {
 
 	// 선민: 사용자가 선택한 상품번호와 수량, 상품이미지를 DB에 등록
@@ -24,5 +26,8 @@ public interface BasketService {
 	
 	// 선민: 장바구니 전체 삭제
 	public void deleteBasketAll(HttpSession session) throws Exception;
+
+	// 선민: 장바구니 선택 삭제
+	public void deleteBasketSelect(List<BasketListItemDTO> orders);
 	
 }

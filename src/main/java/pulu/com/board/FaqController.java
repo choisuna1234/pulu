@@ -47,7 +47,7 @@ public class FaqController {
 	// FAQ 리스트
 	@RequestMapping(value = "/faqList") // 요청 URL. 주소는 @RequestMapping과 맵핑되어 해당 메서드 실행
 	public ModelAndView faqList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("/board/faqList"); // jsp 경로 설정
+		ModelAndView mv = new ModelAndView("faq_list"); // jsp 경로 설정
 
 		// 받아오는 현제페이지가 없으면 페이지 1부터시작
 		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
@@ -128,7 +128,7 @@ public class FaqController {
 	// FAQ 상세보기
 	@RequestMapping(value = "/faqDetail")
 	public ModelAndView faqDetail(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("/board/faqDetail");
+		ModelAndView mv = new ModelAndView("faq_detail");
 
 		Map<String, Object> map = faqService.faqDetail(commandMap.getMap());
 

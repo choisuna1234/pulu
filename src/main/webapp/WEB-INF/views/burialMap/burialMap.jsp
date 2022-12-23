@@ -31,7 +31,7 @@
 	<br>
 	<br>
 	
-	<div id="map" style="width: 1550px; height: 800px; padding:10px;" ></div>
+	<div id="map" style="width: 1500px; height: 800px; padding:10px;" ></div>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d755db02d1acdd0305ca6c22deaf0ad"></script>
 	

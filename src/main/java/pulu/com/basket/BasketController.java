@@ -1,5 +1,6 @@
 package pulu.com.basket;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,8 @@ public class BasketController {
 	@Resource(name = "basketService")
 	private BasketService basketService;
 
-	// 선민: 장바구니 중복 확인
+	
+	// 선민: 장바구니 중복 확인 (select)
 	@RequestMapping(value = "/checkBasket", method = RequestMethod.POST)
 	public ModelAndView checkBasket(CommandMap commandMap, HttpSession session) throws Exception {
 
@@ -39,8 +41,9 @@ public class BasketController {
 			return mv;
 		}
 	}
+	
 
-	// 선민: 기존 장바구니 수량 추가 (update)
+	// 선민: 기존 장바구니 수량 추가 (update) 사용하는지 다시 확인
 	@RequestMapping(value = "/updateBasket", method = RequestMethod.POST)
 	public String updateBasket(CommandMap commandMap, HttpSession session) throws Exception {
 		log.info("\n업데이트 시작 : " + commandMap.getMap());
@@ -49,20 +52,42 @@ public class BasketController {
 	}
 
 	
+	// 선민: 장바구니 리스트 - 수량 변경 (update)
+	@RequestMapping(value = "/updateCount", method = RequestMethod.POST)
+	public String updateCount(CommandMap commandMap, HttpSession session) throws Exception {
+		int result = basketService.updateCount(commandMap.getMap());
+		log.info("수량변경 return == " + result);
+		return "redirect:/basketList.pulu";
+	}
 	
 	
-		// 장바구니 리스트 - 수량 변경
-		@RequestMapping(value = "/updateCount", method = RequestMethod.POST)
-		public String updateCount(CommandMap commandMap, HttpSession session) throws Exception {
-			int result = basketService.updateCount(commandMap.getMap());
-			log.info("수량변경 return == " + result);
-			return "redirect:/basketList.pulu";
-		}
-		
+	/* */
+
 	
+	// 선민: 장바구니 선택 삭제 (delete)
+	@RequestMapping(value = "/deleteBasketSelect")
+	public String deleteBasketSelect(HttpSession session, BasketListDTO bl) throws Exception {
+		
+		log.info("선택삭제 컨트롤러 == ");
+		
+//		Map<String, Object> memberMap = new HashMap<String, Object>();
+		Map<String, Object> basketMap = new HashMap<String, Object>();
+		
+		basketService.deleteBasketSelect(bl.getOrders());
+
+
+
 		
 		
 		
+//		basketService.deleteBasketSelect(commandMap, session);
+		return "redirect:/basketList.pulu";
+	}
+	
+	
+	
+	
+	
 	// 선민: 장바구니 전체 삭제 (delete)
 	@RequestMapping(value = "/deleteBasketAll")
 	public String deleteBasketAll(HttpSession session) throws Exception {
@@ -76,7 +101,7 @@ public class BasketController {
 		return "/basket/basketSuccess";
 	}
 
-	// 명식: 장바구니 리스트 불러오기
+	// 명식: 장바구니 리스트 불러오기 (select)
 	@RequestMapping(value = "/basketList")
 	public ModelAndView basketList(CommandMap commandMap, HttpSession session) throws Exception {
 
