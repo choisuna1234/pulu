@@ -320,7 +320,7 @@ strong {
 	      form.submit(); // form안의 파라미터들을 post방식으로 insertBasket.pulu에 보내기
 	      
 	      // 팝업 띄우기
-	      window.open('basketSuccess.pulu', 'window_basketCheck', 'width=400, height=250, location=no, status=no, scrollbars=no');
+	      window.open('basketSuccess.pulu', 'window_basketCheck', 'width=460, height=260, location=no, status=no, scrollbars=no');
 	   }
 	}
 	
