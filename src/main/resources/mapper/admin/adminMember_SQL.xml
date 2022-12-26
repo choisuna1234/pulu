@@ -5,40 +5,92 @@
 
 	<!-- 선민: 전체 회원목록을 가져오기 -->
 	<!-- member테이블의 인덱스이름을 PK_NUM으로 변경해야 작동 -->
-	<select id="selectMemberList" parameterType="hashmap" resultType="hashmap">
-	select
+	<select id="selectMemberList" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+		select
 		/*+ index_asc (member PK_NUM) */
-		rownum, num, id, name, phone, email, zipcode, addr1, addr2, grade 
-	from member
+		rownum, num, id,
+		name, phone, email,
+		zipcode, addr1, addr2, grade, block
+		from member
+		]]>
 	</select>
-	
+
+
 	<!-- 선민: 개인 회원정보를 가져오기 -->
-	<select id="selectMemberInfo" parameterType="String" resultType="hashmap">
-	select *
-	from member
-	where id = #{ID}
+	<select id="selectMemberInfo" parameterType="String"
+		resultType="hashmap">
+		select *
+		from member
+		where id = #{ID}
 	</select>
-	
+
+
 	<!-- 선민: 개인 회원정보를 수정하기 -->
 	<select id="updateMemberInfo" parameterType="hashmap">
-	update member
-	set
+		update member
+		set
 		phone = #{PHONE},
 		email = #{EMAIL},
 		zipcode = #{ZIPCODE},
-		addr1 = #{ADDR1},
+		addr1 =
+		#{ADDR1},
 		addr2 = #{ADDR2}
-	where id = #{ID}
+		where id = #{ID}
 	</select>
-	
-	
+
+
 	<!-- 선민: 개인 회원정보를 삭제하기 -->
 	<delete id="deleteMemberInfo" parameterType="String">
-	delete
-	from member
-	where id = #{ID}
+		delete
+		from member
+		where id = #{ID}
 	</delete>
-	
-	
-	
+
+
+	<!-- 선민: 회원검색 (아이디) -->
+	<select id="searchMemberInfoById" resultType="hashmap">
+		<![CDATA[
+		SELECT *
+	    FROM MEMBER
+	    WHERE ID LIKE '%' || #{SEARCH_KEYWORD} || '%'
+		]]>
+	</select>
+
+
+	<!-- 선민: 회원검색 (이름) -->
+	<select id="searchMemberInfoByName" resultType="hashmap">
+		<![CDATA[
+		SELECT *
+	    FROM MEMBER
+	    WHERE NAME LIKE '%' || #{SEARCH_KEYWORD} || '%'
+		]]>
+	</select>
+
+
+	<!-- 선민: 회원검색 (연락처) -->
+	<select id="searchMemberInfoByPhone" resultType="hashmap">
+		<![CDATA[
+		SELECT *
+	    FROM MEMBER
+	    WHERE PHONE LIKE '%' || #{SEARCH_KEYWORD} || '%'
+		]]>
+	</select>
+
+
+	<!-- 선민: 회원검색 (전체) -->
+	<select id="searchMemberInfoByAll" resultType="hashmap">
+		<![CDATA[
+		SELECT *
+	    FROM MEMBER
+	    WHERE ID LIKE '%' || #{SEARCH_KEYWORD} || '%'
+	    OR NAME LIKE '%' || #{SEARCH_KEYWORD} || '%'
+	    OR PHONE LIKE '%' || #{SEARCH_KEYWORD} || '%'
+		]]>
+	</select>
+
+
+
+
 </mapper>

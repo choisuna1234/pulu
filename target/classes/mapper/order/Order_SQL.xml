@@ -6,39 +6,39 @@
 	<!-- 선아: 상품주문시, 회원정보 가져오기 -->
 	<select id="orderMember" parameterType="hashMap"
 		resultType="hashMap">
-		<![CDATA[
-			SELECT 
-                        ID,
-                        NAME,
-                        PHONE,
-                        EMAIL,
-                        ZIPCODE,
-                        ADDR1,
-                        ADDR2
-			FROM MEMBER
-			WHERE ID = #{ID}
-			GROUP BY 
-                        ID, 
-                        NAME,
-                        PHONE,
-                        EMAIL,
-                        ZIPCODE,
-                        ADDR1,
-                        ADDR2
-     		   ]]>
+	<![CDATA[
+		SELECT 
+				ID,
+				NAME,
+				PHONE,
+				EMAIL,
+				ZIPCODE,
+				ADDR1,
+				ADDR2
+		FROM MEMBER
+		WHERE ID = #{ID}
+		GROUP BY 
+				ID, 
+				NAME,
+				PHONE,
+				EMAIL,
+				ZIPCODE,
+				ADDR1,
+				ADDR2
+    		   ]]>
 	</select>
 
 	<!-- 상품 정보들 가져오기 -->
 	<select id="orderGoods" resultType="hashMap">
-		<![CDATA[
-			SELECT 
-				GOODS_NUM,
-				GOODS_NAME,
-				GOODS_PRICE,
-				GOODS_AMOUNT
-			FROM GOODS
-			WHERE GOODS_NUM = #{GOODS_NUM}
-		]]>
+	<![CDATA[
+		SELECT 
+			GOODS_NUM,
+			GOODS_NAME,
+			GOODS_PRICE,
+			GOODS_AMOUNT
+		FROM GOODS
+		WHERE GOODS_NUM = #{GOODS_NUM}
+	]]>
 	</select>
 
 	<!-- 선민: (Map) 주문할 상품의 번호, 이름, 가격, 이미지정보 1개를 select -->
@@ -71,70 +71,89 @@
 			resultType="int">
 			select ORDER_NUM_SEQ.nextval from dual
 		</selectKey>
-   <![CDATA[
-   INSERT INTO ORDER_DELI
-      (
-	   ORDER_NUM, 
-	   ORDER_PAY_TYPE, 
-	   ORDER_MEMBER_ID,
-	   ORDER_MEMBER_NAME, 
-	   ORDER_MEMBER_ADDR1, 
-	   ORDER_MEMBER_ADDR2, 
-	   ORDER_MEMBER_PHONE, 
-	   ORDER_MEMBER_ZIPCODE, 
-	   ORDER_RECEIVE_NAME, 
-	   ORDER_RECEIVE_ADDR1, 
-	   ORDER_RECEIVE_ADDR2, 
-	   ORDER_RECEIVE_PHONE, 
-	   ORDER_RECEIVE_ZIPCODE, 
-	   ORDER_MEMO, 
-	   ORDER_SUM_MONEY
-      )
-      values
-      (
-         #{ORDER_NUM},  
-         #{ORDER_PAY_TYPE}, 
-         #{ORDER_MEMBER_ID},
-         #{ORDER_MEMBER_NAME},
-         #{ORDER_MEMBER_ADDR1},
-         #{ORDER_MEMBER_ADDR2},
-         #{ORDER_MEMBER_PHONE},
-         #{ORDER_MEMBER_ZIPCODE},
-         #{ORDER_RECEIVE_NAME},
-         #{ORDER_RECEIVE_ADDR1},
-         #{ORDER_RECEIVE_ADDR2},
-         #{ORDER_RECEIVE_PHONE},
-         #{ORDER_RECEIVE_ZIPCODE},
-         #{ORDER_MEMO},
-         #{ORDER_SUM_MONEY}
-      )
-   ]]>
+		<![CDATA[
+		INSERT INTO ORDER_DELI
+		(
+			ORDER_NUM, 
+			ORDER_PAY_TYPE, 
+			ORDER_MEMBER_ID,
+			ORDER_MEMBER_NAME, 
+			ORDER_MEMBER_ADDR1, 
+			ORDER_MEMBER_ADDR2, 
+			ORDER_MEMBER_PHONE, 
+			ORDER_MEMBER_ZIPCODE, 
+			ORDER_RECEIVE_NAME, 
+			ORDER_RECEIVE_ADDR1, 
+			ORDER_RECEIVE_ADDR2, 
+			ORDER_RECEIVE_PHONE, 
+			ORDER_RECEIVE_ZIPCODE, 
+			ORDER_MEMO, 
+			ORDER_SUM_MONEY
+		)
+		values
+		(
+			#{ORDER_NUM},  
+			#{ORDER_PAY_TYPE}, 
+			#{ORDER_MEMBER_ID},
+			#{ORDER_MEMBER_NAME},
+			#{ORDER_MEMBER_ADDR1},
+			#{ORDER_MEMBER_ADDR2},
+			#{ORDER_MEMBER_PHONE},
+			#{ORDER_MEMBER_ZIPCODE},
+			#{ORDER_RECEIVE_NAME},
+			#{ORDER_RECEIVE_ADDR1},
+			#{ORDER_RECEIVE_ADDR2},
+			#{ORDER_RECEIVE_PHONE},
+			#{ORDER_RECEIVE_ZIPCODE},
+			#{ORDER_MEMO},
+			#{ORDER_SUM_MONEY}
+		)
+		]]>
 	</insert>
 
 
 	<!-- 주문 내역 넣기 2 (ORDER_DELI) -->
 	<insert id="insertOrderGoods" parameterType="hashmap">
-   <![CDATA[
-   INSERT INTO ORDER_GOODS
-      (
-	ORDER_NUM, 
-	ORDER_GOODS_NUM, 
-	ORDER_GOODS_NAME,
-	ORDER_GOODS_PRICE,
-	ORDER_GOODS_AMOUNT,
-	ORDER_GOODS_IMAGE
-      )
-      values
-      (
-         #{ORDER_NUM},  
-         #{ORDER_GOODS_NUM}, 
-         #{ORDER_GOODS_NAME}, 
-         #{ORDER_GOODS_PRICE},
-         #{ORDER_GOODS_AMOUNT},
-         #{ORDER_GOODS_IMAGE}
-      )
-   ]]>
+	<![CDATA[
+	INSERT INTO ORDER_GOODS
+	(
+		ORDER_NUM, 
+		ORDER_GOODS_NUM, 
+		ORDER_GOODS_NAME,
+		ORDER_GOODS_PRICE,
+		ORDER_GOODS_AMOUNT,
+		ORDER_GOODS_IMAGE
+	)
+	values
+	(
+		#{ORDER_NUM},  
+		#{ORDER_GOODS_NUM}, 
+		#{ORDER_GOODS_NAME}, 
+		#{ORDER_GOODS_PRICE},
+		#{ORDER_GOODS_AMOUNT},
+		#{ORDER_GOODS_IMAGE}
+	)
+	 ]]>
 	</insert>
+	
+	
+	
+	<!-- 선민: 주문완료페이지에 보여줄 주문건에 대한 정보 DB로부터 가져오기 -->
+	<select id="selectOrderDeliSuccess" resultType="hashmap">
+	<![CDATA[
+		select * from ORDER_DELI 
+		where ORDER_NUM = (select max(ORDER_NUM) from ORDER_DELI) 
+		and ORDER_MEMBER_ID = #{ID}
+	]]>
+	</select>
+	
+	<!-- 선민: 주문완료페이지에 보여줄 모든 주문상품 정보 DB로부터 가져오기 -->
+	<select id="selectOrderGoodsSuccess" resultType="hashmap">
+	<![CDATA[
+		select * from ORDER_GOODS 
+		where ORDER_NUM = #{ORDER_NUM}
+	]]>
+	</select>
 
 
 

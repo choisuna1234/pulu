@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 
@@ -26,7 +26,6 @@
 							<li class="topMenuLi"><a class="menuLink" href="List.pulu?categoryNo=1">샐러드<span class="circle"></span></a></li>
 							<li class="topMenuLi"><a class="menuLink" href="List.pulu?categoryNo=2">샌드위치</a></li>
 							<li class="topMenuLi"><a class="menuLink" href="List.pulu?categoryNo=3">간식/음료</a></li>
-							<li class="topMenuLi"><a class="menuLink" href="">정기배송</a></li>
 							<li class="topMenuLi"><a class="menuLink" href="nutritionFacts.pulu">영양정보</a></li>
 							<li class="topMenuLi"><a class="menuLink" href="burialMap.pulu">매장</a></li>
 						</ul>
@@ -39,26 +38,29 @@
 							<c:when test="${loginStatus == null}">	<!-- 로그인하지 않았을 때 -->
 								<li><a class="loginLink" href="loginForm.pulu">로그인</a></li>
 								<li><a class="loginLink" href="joinForm.pulu">회원가입</a></li>
+								<li><a class="loginLink" href="noticeList.pulu">고객센터</a></li>
 							</c:when>
 							<c:otherwise>
 									 
 								<c:if test="${loginGrade == 'Admin'}">	<!-- 로그인한 사람이 관리자일 때 -->
 									<li><strong>${loginName }</strong>님 </li> 
 									<li><a class="loginLink" href="logout.pulu">로그아웃</a></li>
-									<li><a class="loginLink" href="adminMain.pulu">관리자페이지</a></li>
+									<li><a class="loginLink" href="noticeList.pulu">고객센터</a></li>
+									<li><a class="loginLink" href="adminMain.pulu"><img src="./resources/img/icon/head_icon_01.png" class="headicon" width="23px"></a></li>
+									<li><a class="loginLink" href="basketList.pulu"><img src="./resources/img/icon/head_icon_02.png" class="headicon" width="29px"></a></li>
 								</c:if>
 								<c:if test="${loginGrade != 'Admin'}">	<!-- 로그인한 사람이 관리자가 아닐 때 -->
 									<li><strong>${loginName }</strong>님 </li> 
 									<li><a class="loginLink" href="logout.pulu">로그아웃</a></li>
-									<li><a class="loginLink" href="myPage.pulu">마이페이지</a></li>
+									<li><a class="loginLink" href="noticeList.pulu">고객센터</a></li>
+									<li><a class="loginLink" href="myPage.pulu"><img src="./resources/img/icon/head_icon_01.png" class="headicon" width="23px"></a></li>
+									<li><a class="loginLink" href="basketList.pulu"><img src="./resources/img/icon/head_icon_02.png" class="headicon" width="29px"></a></li>
 								</c:if>
 							</c:otherwise>
 						</c:choose>
 
-						<li><a class="loginLink" href="noticeList.pulu">고객센터</a></li>
-						<li><a class="loginLink" href="basketList.pulu">장바구니</a></li>
-							<li><a class="loginLink" href=""><img scr=""/></a></li>
-							<li><a class="loginLink" href=""><img scr=""/></a></li>
+						
+
 						</ul>
 						
 

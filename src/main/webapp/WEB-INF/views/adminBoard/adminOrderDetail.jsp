@@ -1,26 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html> 
-<html>
-<head>
-<meta charset="UTF-8">
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
-<title>주문관리</title>
-	<!-- <link rel="stylesheet" href="resources/css/ui.css" type="text/css" /> -->
-  
-    <!-- Bootstrap Core CSS -->
-    <link href="/resources/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-    <!-- MetisMenu CSS -->
-    <link href="/resources/sbadmin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="/resources/sbadmin/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="/resources/sbadmin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-</head>
-<body>
  <div id="wrapper">
         <div id="page-wrapper">
             <div class="row">
@@ -113,5 +95,3 @@
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-</body>
-</html>

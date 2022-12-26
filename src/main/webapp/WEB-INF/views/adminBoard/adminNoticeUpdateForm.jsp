@@ -1,139 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
-</head>
-<body>
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header">Notice</h1>
-		</div>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-		<!-- /.row -->
-		<div class="row">
-			<div class="col-lg-10">
-				<div class="panel panel-default">
-					<div class="panel-heading">게시글 수정하기</div>
-					<div class="panel-body">
-
-						<form id="frm" name="frm" onsubmit="return checkValidation()">
-							<table class="table table-striped table-bordered table-hover"
-								id="adminNoticeList">
-
-								<tbody>
-									<tr>
-										<th style="width: 7%">글 번호</th>
-										<td>${map.NOTICE_NUM } <input type="hidden"
-											id="NOTICE_NUM" name="NOTICE_NUM" value="${map.NOTICE_NUM }">
-										</td>
-										<th style="width: 7%">조회수</th>
-										<td>${map.NOTICE_READCOUNT }</td>
-									</tr>
-									<tr>
-										<th style="width: 7%">작성자</th>
-										<td>${map.NOTICE_ID }</td>
-										<th style="width: 7%">작성일</th>
-										<td>${map.NOTICE_DATE }</td>
-									</tr>
-									<tr>
-										<th style="width: 7%">제목</th>
-
-										<td colspan="3">
-										<input type="text" id="NOTICE_SUBJECT" name="NOTICE_SUBJECT" class="form-control"
-											value="${map.NOTICE_SUBJECT }" />
-											</td>
-									</tr>
-									<tr>
-									
-										<td colspan="4" class="view_text">
-										<pre><textarea rows="20"
-												cols="100" title="내용" id="NOTICE_CONTENT"
-												class="form-control" name="NOTICE_CONTENT">${map.NOTICE_CONTENT }</textarea></pre>
-										
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-					</div>
-				</div>
-				<!-- /.panel -->
-			</div>
-			<!-- /.col-lg-12 -->
-		</div>
-		<!-- /.row -->
-	</div>
-	<!-- "row" -->
-
-	<a href="#this" class="btn btn-success" id="list">목록으로</a>
-	<a href="#this" class="btn btn-primary" id="update">수정하기</a>
-	<a href="#this" class="btn btn-primary" id="delete">삭제하기</a>
-
-
-	<%@ include file="/WEB-INF/include/include-body.jspf"%>
+	<form id="frm">
+		<table class="board_view">
+			<colgroup>
+				<col width="15%"/>
+				<col width="35%"/>
+				<col width="15%"/>
+				<col width="35%"/>
+			</colgroup>
+			<caption>게시글 상세</caption>
+			<tbody>
+				<tr>
+					<th scope="row">글 번호</th>
+					<td>
+						${map.NOTICE_NUM }
+						<input type="hidden" id="NOTICE_NUM" name="NOTICE_NUM" value="${map.NOTICE_NUM }">
+					</td>
+					<th scope="row">조회수</th>
+					<td>${map.NOTICE_READCOUNT }</td>
+				</tr>
+				<tr>
+					<th scope="row">작성자</th>
+					<td>${map.NOTICE_ID }</td>
+					<th scope="row">작성일</th>
+					<td>${map.NOTICE_DATE }</td>
+				</tr>
+				<tr>
+					<th scope="row">제목</th>
+					<td colspan="3">
+						<input type="text" id="NOTICE_SUBJECT" name="NOTICE_SUBJECT" class="wdp_90" value="${map.NOTICE_SUBJECT }"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="view_text">
+						<textarea rows="20" cols="100" title="내용" id="NOTICE_CONTENT" name="NOTICE_CONTENT">${map.NOTICE_CONTENT }</textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	
+	<a href="#this" class="btn" id="list">목록으로</a>
+	<a href="#this" class="btn" id="update">수정하기</a>
+    <a href="#this" class="btn" id="delete">삭제하기</a>
+	<%@ include file="/WEB-INF/include/include-body.jspf" %>   
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#list").on("click", function(e) { //목록으로 버튼
+		$(document).ready(function(){
+			$("#list").on("click", function(e){ //목록으로 버튼
 				e.preventDefault();
-				alert("목록으로 넘어가시겠습니까?");
 				fn_adminNoticeList();
 			});
-
-			$("#update").on("click", function(e) { //수정하기 버튼
+			
+			$("#update").on("click", function(e){ //저장하기 버튼
 				e.preventDefault();
-				alert("수정하시겠습니까?");
 				fn_adminNoticeUpdate();
 			});
-
-			$("#delete").on("click", function(e) { //삭제하기 버튼
-				e.preventDefault();
-				 alert("정말 삭제하시겠습니까?");
-				fn_adminNoticeDelete();
-			});
+			
+			$("#delete").on("click", function(e){ //삭제하기 버튼
+	            e.preventDefault();
+	            fn_adminNoticeDelete();
+	        });
 		});
-
-		function fn_adminNoticeList() {
+		
+		function fn_adminNoticeList(){
 			var comSubmit = new ComSubmit();
 			var currentPage = 0;
 			var isSearch;
 			var searchNum;
-
-			comSubmit
-					.setUrl("<c:url value='/adminNoticeList.pulu?searchNum=${searchNum}&isSearch=${isSearch}&currentPage=${currentPage}'/>");
+			
+			comSubmit.setUrl("<c:url value='/adminNoticeList.pulu?searchNum=${searchNum}&isSearch=${isSearch}&currentPage=${currentPage}'/>");
 			comSubmit.submit();
-		}
-
-		function fn_adminNoticeDelete() {
-			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/adminNoticeDelete.pulu'/>");
-			comSubmit.addParam("NOTICE_NUM", $("#NOTICE_NUM").val());
-			comSubmit.submit();
-
 		}
 		
-		 function fn_adminNoticeUpdate() {
-	         var comSubmit = new ComSubmit("frm");
-
-	         if (frm.NOTICE_SUBJECT.value.length == 0) {   //선아: 제목, 내용 유효성검사
-	        	 frm.NOTICE_SUBJECT.focus();
-	            alert("제목을 입력하세요.");
-	            return false;
-	         }
-	         if (frm.NOTICE_CONTENT.value.length == 0) {
-	            alert("내용을 입력하세요.");
-	            frm.NOTICE_CONTENT.focus();
-	            return false;
-	         }
-	         comSubmit.setUrl("<c:url value='/adminNoticeUpdate.pulu'/>");
+		function fn_adminNoticeUpdate(){
+			var comSubmit = new ComSubmit("frm");
+			comSubmit.setUrl("<c:url value='/adminNoticeUpdate.pulu'/>");
+			comSubmit.submit();
+		}
+		
+		function fn_adminNoticeDelete(){
+	         var comSubmit = new ComSubmit();
+	         comSubmit.setUrl("<c:url value='/adminNoticeDelete.pulu'/>");
+	         comSubmit.addParam("NOTICE_NUM", $("#NOTICE_NUM").val());
 	         comSubmit.submit();
-	         opener.location.reload();
-
+	         
 	      }
-
-		
 	</script>
-</body>
-</html>

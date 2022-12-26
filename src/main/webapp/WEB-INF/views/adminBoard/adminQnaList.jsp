@@ -2,323 +2,404 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
+
 <!--소영: QNA jsp 테스트 -->
-<html>
-<head>
+<style type="text/css">
+html, body {
+	margin: 0;
+}
 
-<!-- <style type="text/css">
-table {width: 500px;}
-.hide {display: none;}
-.show {display: table-row;}
-.item td {cursor: pointer;}
-</style> -->
+table.table.table-bordered.table-hover {
+    border: 1px solid #ddd;
+}
+td.bannertd {
+    padding: 0px !important;
+}
 
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
-<title>QNA</title>
-<link rel="stylesheet" href="resources/css/ui.css" type="text/css" />
+.col-sm-3\; {
+    display: inline-flex;
+}
 
-</head>
 
-<body>
+.form-control {
+    display: inline-flex;
+}
 
-<div class="row">
+
+.panel-qna-container {
+	margin-bottom: -16px;
+}
+
+.panel-qna-title {
+	
+}
+
+.panel-qna-answer {
+	display: none;
+	/* 변화가 시작되는 쪽에다가 transition 적용해준다 0 -> 300px 
+		  왜? 닫기 버튼을 누를 때 변화가 티남 */
+	transition: all 1s;
+}
+
+.panel-comment-container {
+	margin-bottom: -16px;
+}
+
+.panel-comment-title {
+	
+}
+
+.panel-comment-answer {
+	display: none;
+	/* 변화가 시작되는 쪽에다가 transition 적용해준다 0 -> 300px 
+		  왜? 닫기 버튼을 누를 때 변화가 티남 */
+	transition: all 1s;
+}
+
+#btn-all-close {
+	margin-bottom: 10px;
+	background-color: #337AB7;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	padding: 10px 25px;
+
+}
+
+#btn-all-close:hover {
+	background-color: #e0e0e0;
+	color: #000;
+	transition: all 0.35s;
+}
+
+.active {
+	display: block;
+	/* 높이를 정해줘야지만 transition이 적용됨 */
+	height: 115%;
+}
+</style>
+
+
+
+<div>
+
+	<div class="row">
 		<div class="col-lg-12">
-			<h2 class="page-header" onclick="location.href='adminQnaList.pulu';" >Notice</h2>
+			<h2 class="page-header" onclick="location.href='adminQnaList.pulu';">QNA</h2>
 		</div>
+	</div>
 
 	<!-- /.row -->
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">문의</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">문의</div>
+				<div class="panel-body">
 					
-		<!--------------- 글쓰기 버튼 --------------->
-<!-- 		<a href="#this" class="btn" id="insert">글쓰기</a> -->
-
-	<form action="" method="post">
-			<div class="col-sm-3">
-				<a href="/adminQnaList.pulu">
-				<br>
-				<button type="button" class="btn btn-outline btn-default">전체주문</button></a> 
-				
-				<select class="form-control" name="select" onchange="window.open(value,'_self');">
-					<option value="">--답변상태--</option>
-					<option value="/adminQnaList.pulu?searchNum=3&isSearch=%EB%8C%80%EA%B8%B0">답변대기</option>
-					<option value="/adminQnaList.pulu?searchNum=3&isSearch=%EC%99%84%EB%A3%8C">답변완료</option>
-				</select>
-				
-			</div>
-		</form>
-		
-
-		<!--------------- 검색 --------------->
-<br>
-					<div>
-						<div style="border: 1px; float: left; width: 310px;">
-							<div class="form-group input-group">
-
-									<form action="">
-										<select class="form-control" name="searchNum" id="searchNum">
-											<option value="0">상품번호</option>
-											<option value="1">제목</option>
-											<option value="2">작성자</option>
-											<option value="3">답변상태</option>
-										</select> <input class="form-control" type="text" name="isSearch"
-											id="isSearch" /> <span>
-											<button type="submit" class="btn btn-primary">검색</button>
-										</span>
-									</form>
-									
+					<!--------------- 리스트 위 버튼--------------->
+					<div class="row">
+						<div class="container">
+							<form action="" method="post">
+								<div class="col-sm-3;">
+									<a href="/adminQnaList.pulu">
+										<button type="button" class="btn btn-default">전체주문</button>
+									</a> <select class="form-control" name="select"
+										onchange="window.open(value,'_self');" style="width: 120px; height: 40px; ">
+										<option value="">--답변상태--</option>
+										<option
+											value="/adminQnaList.pulu?searchNum=3&isSearch=%EB%8C%80%EA%B8%B0">답변대기</option>
+										<option
+											value="/adminQnaList.pulu?searchNum=3&isSearch=%EC%99%84%EB%A3%8C">답변완료</option>
+									</select>
 								</div>
+								<button id="btn-all-close">QNA ALL Close</button>
+							</form>
+						</div>
+					</div>
+					<!--------------- 리스트 --------------->
+					<table class="table table-bordered table-hover"
+						style="border-collapse: collapse;">
+						<thead>
+							<tr align="center">
+								<th>문의번호</th>
+								<th>상품번호</th>
+								<th>답변상태</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
+							</tr>
+						</thead>
+						<c:choose>
+							<c:when test="${fn:length(qnaList) > 0}">
+								<c:forEach items="${qnaList}" var="row">
+									<tbody class="text-center">
+										<tr>
+											<td width="10%">${row.QNA_NUM }</td>
+											<td width="10%">${row.QNA_GOODS_NUM }</td>
+	
+											<c:choose>
+												<c:when test="${row.QNA_COMMENT != NULL}">
+													<td width="10%">답변완료</td>
+												</c:when>
+												<c:otherwise>
+													<td style="color: blue;" width="10%">답변대기</td>
+												</c:otherwise>
+											</c:choose>
+	
+											<td class="text-left" width="50%">
+												<div class="panel-qna-container">
+													<p class="panel-qna-title">${row.QNA_SUBJECT}</p>
+												</div>
+											</td>
+											<td width="8%">${row.QNA_ID}</td>
+											<td width="12%">${row.QNA_DATE}</td>
+										</tr>
+										<tr>
+											<td colspan="6" class="bannertd">
+												<!--------------- 제목 클릭시 나타나는 창 --------------->
+												<div class="panel-qna-answer">
+													<table style="width: 100%; border-collapse: collapse;">
+														<c:choose>
+															<c:when test="${row.QNA_COMMENT == null}">
+																<tbody style="background-color: #f0f0f0">
+																	<tr>
+																		<td width="10%"><img alt="q"
+																			src="resources/img/icon/qq.png" width="30" height="30">
+																		</td>
+																		<td width="*%"><pre>${row.QNA_CONTENTS}</pre> <input
+																			style="text-align: left;" type="button"
+																			class="btn btn-default" value="X"
+																			onclick="adminQnaDelete(${row.QNA_NUM})"></td>
+																	</tr>
+																	<!-- <tr>
+																						<td colspan="2"><hr style="width: 100%; padding: 0"></td>
+																					</tr> -->
+																	<tr>
+																		<td width="10%"><img alt="a"
+																			src="resources/img/icon/a.png" width="30" height="30">
+																		</td>
+																		<td width="*%" height="10px">
+																			<!--------------- 댓글 입력 창 --------------->
+																			<form role="form" id="adminQnaComInsert" method="post"
+																				action="adminQnaComInsert.pulu"
+																				onsubmit="adminQnaInsertAlert();">
+																				<input type="hidden" name="QNA_NUM" id="QNA_NUM"
+																					value="${row.QNA_NUM}" />
+																				<table class="comInsert"
+																					style="width: 100%; height: 100%; padding: 0px; border: 0px; border-collapse: collapse;">
+																					<tr height="5px">
+																						<td style="text-align: left; padding: 0px;"
+																							height="100%" width="100%"><textarea
+																								id="QNA_COMMENT" name="QNA_COMMENT" rows="10"
+																								style="width: 98%; height: 100%; border: 0px; background: #fff; padding: 10px; margin: 10px; border-radius: 10px;"
+																								placeholder="${row.QNA_COMMENT}"
+																								placeholder="답변을 작성하세요"></textarea></td>
+																					</tr>
+																				</table>
+																				<input type="submit" class="btn btn-default"
+																					value="답변완료" onclick="adminQnaComInsert()">
+																				<%-- <input type="button" class="btn btn-default" value="수정완료" onclick="adminQnaComInsert('${row.QNA_COMMENT}','${row.QNA_NUM}')">
+																					<input type="hidden" name="QNA_COMMENT" id="QNA_COMMENT" value="${row.QNA_COMMENT}" /> --%>
+																				<!-- <a href="#this" class="btn" id="insertCom">답변등록
+																						<input type="hidden" name="QNA_NUM" id="QNA_NUM" value="${row.QNA_NUM}" />
+																					</a> -->
+																			</form> <!--------------- /댓글 입력 창 --------------->
+																		</td>
+																	</tr>
+																</tbody>
+															</c:when>
+															<c:otherwise>
+																<tbody>
+																	<tr>
+																		<td width="10%"><img alt="q"
+																			src="resources/img/icon/qq.png" width="30" height="30"></td>
+																		<td width="*%"><pre>${row.QNA_CONTENTS}</pre> <input
+																			type="button" class="btn btn-default" value="X"
+																			onclick="adminQnaDelete(${row.QNA_NUM})"></td>
+																	</tr>
+																	<!-- <tr>
+																			내용/ 답변 분리 선
+																			<td colspan="2"><hr style="width: 100%; padding: 0"></td>
+																		</tr> -->
+																	<tr id="comment">
+																		<td width="10%"><img alt="a"
+																			src="resources/img/icon/aa.png" width="30" height="30"></td>
+																		<!-- 이미지 추후 변경 필수!! -->
+																		<td width="*%">
+																			<!--------------- 댓글 창 --------------->
+																			<form role="form" id="adminQnaComDelete" method="post"
+																				action="adminQnaComDelete.pulu">
+																				<input type="hidden" name="QNA_NUM" id="QNA_NUM"
+																					value="${row.QNA_NUM}" />
+																				<pre>${row.QNA_COMMENT}</pre>
+																				<input type="button" class="btn btn-default"
+																					value="답변삭제"
+																					onclick="adminQnaComDelete('${row.QNA_COMMENT}','${row.QNA_NUM}')">
+																				<input type="button" class="panel-comment-container"
+																					id="comUpdate" name="comUpdate" value="답변수정" />
+																			</form>
+																		</td>
+																		<!--------------- /댓글 창 --------------->
+																	</tr>
+																	<tr style="padding: 0; margin: 0">
+																		<td colspan="6" style="padding: 0; margin: 0">
+																			<div class="panel-comment-answer">
+																				<table
+																					style="width: 100%; border: 0px; border-collapse: collapse; padding: 10px;">
+																					<!-- class="hide2" id="hide2" -->
+																					<!--------------- 댓글 수정 창 --------------->
+																					<tr>
+																						<td width="10%" style="padding: 0; margin: 0">
+																							<img alt="a" src="resources/img/icon/a.png"
+																							width="30" height="30">
+																						</td>
+																						<td width="*%" height="10px"
+																							style="padding: 0; margin: 0">
+	
+																							<form role="form" id="adminQnaComInsert"
+																								method="post" action="adminQnaComInsert.pulu">
+																								<input type="hidden" name="QNA_NUM" id="QNA_NUM"
+																									value="${row.QNA_NUM}" />
+																								<table class="comInsert"
+																									style="width: 100%; height: 100%; padding: 0px; border: 0px;">
+																									<tr height="5px">
+																										<td style="text-align: left; padding: 0px;"
+																											height="100%" width="100%"><textarea
+																												class="QNA_COMMENT" rows="5"
+																												style="width: 98%; height: 100%; border: 0px; background: #f0f0f0; padding: 10px; margin: 10px; border-radius: 10px;"
+																												placeholder="${row.QNA_COMMENT}"
+																												id="QNA_COMMENT" name="QNA_COMMENT">${row.QNA_COMMENT}</textarea>
+																										</td>
+																									</tr>
+																								</table>
+																								<input type="submit" class="btn btn-default"
+																									value="수정완료" onclick="adminQnaComInsert()">
+																								<%-- <input type="button" class="btn btn-default" value="수정완료" onclick="adminQnaComInsert('${row.QNA_COMMENT}','${row.QNA_NUM}')"> --%>
+																							</form>
+																					</tr>
+																				</table>
+																			</div>
+																		</td>
+																		<!--------------- /댓글 수정 창 --------------->
+																	</tr>
+																</tbody>
+															</c:otherwise>
+														</c:choose>
+														</tbody>
+													</table>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tbody>
+									<tr>
+										<td colspan="6"><c:choose>
+												<c:when test="${isSearch != null}"> 검색 결과가 없습니다 </c:when>
+												<c:otherwise> 작성된 후기가 없습니다 </c:otherwise>
+											</c:choose></td>
+									</tr>
+								</tbody>
+							</c:otherwise>
+						</c:choose>
+						</tbody>
+					</table>
+					<!-------------------------------------------------------------------------------------------------------------------- -->
+	
+	
+	
+					<!--------------- 검색 + 페이징--------------->
+					<div>
+						<div style="border: 1px; float: left; width: 350px;">
+							<div class="form-group input-group">
+	
+	
+								<form action="">
+									<select style="width: 110px;" class="form-control"
+										name="searchNum" id="searchNum">
+										<option value="0">상품번호</option>
+										<option value="1">제목</option>
+										<option value="2">작성자</option>
+									</select> <input class="form-control" type="text" name="isSearch"
+										id="isSearch" style="width: 190px;" /> <span
+										class="input-group-btn">
+										<button type="submit" class="btn btn-primary">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</form>
 							</div>
 						</div>
-						<!--------------- 리스트 --------------->
-
-						<div class="panel-body">
-							<table width="100%"
-								class="table table-striped table-bordered table-hover"
-								id="QNAList">
-
-								<thead>
-									<tr>
-										<th style="width: 3%" >문의번호</th>
-										<th style="width: 5%">상품번호</th>
-										<th style="width: 5%">답변상태</th>
-										<th style="width: 5%">제목</th>
-										<th style="width: 5%">작성자</th>
-										<th style="width: 5%">작성일</th>
-
-									</tr>
-								</thead>
-
-								<c:choose>
-									<c:when test="${fn:length(qnaList) > 0}">
-										<c:forEach items="${qnaList}" var="row">
-											<tbody>
-												<tr class="item">
-													<td align="center">${row.QNA_NUM }</td>
-													<td align="center">${row.QNA_GOODS_NUM }</td>
-													<%-- <td align="center">${row.QNA_STATUS }</td> --%>
-													<c:choose>
-														<c:when test="${row.QNA_STATUS == '답변완료'}">
-															<td>답변완료</td>
-														</c:when>
-														<c:when test="${row.QNA_STATUS == '답변대기'}">
-															<td style="color: blue;">답변대기</td>
-														</c:when>
-														<c:otherwise>
-															<td>결제방법(3)</td>
-														</c:otherwise>
-													</c:choose>
-													<td align="left">${row.QNA_SUBJECT}<input
-														type="hidden" id="QNA_NUM" value="${row.QNA_NUM }"></td>
-													<td align="center">${row.QNA_ID }</td>
-													<td align="center">${row.QNA_DATE }</td>
-												</tr>
-												<!--------------- 제목 클릭시 나타는 창 --------------->
-												<div>
-													<tr class="hide" bgcolor="#d4d4d4" height="10"
-														style="height: 5px; padding: 0; border: 0px;">
-														<td colspan="2" bgcolor="white"></td>
-														<td colspan="3">
-															<table>
-																<c:choose>
-																	<c:when test="${row.QNA_COMMENT == null}">
-																		<tbody>
-																			<tr>
-																				<td width="15%"><img alt="q"
-																					src="resources/img/icon/qq.png" width="30"
-																					height="30"></td>
-																				<td width="*%"><pre>${row.QNA_CONTENTS}</pre> <input
-																					type="button" class="btn btn-default" value="X"
-																					onclick="adminQnaDelete(${row.QNA_NUM})"></td>
-																			</tr>
-																			<tr>
-																				<td colspan="2"><hr
-																						style="width: 100%; padding: 0"></td>
-																			</tr>
-																			<tr>
-																				<td width="15%"><img alt="a"
-																					src="resources/img/icon/a.png" width="30"
-																					height="30"></td>
-
-
-																				<td width="*%" height="10px">
-																					<!--------------- 댓글 입력 창 --------------->
-																					<form role="form" id="adminQnaComInsert"
-																						method="post" action="adminQnaComInsert.pulu">
-																						<input type="hidden" name="QNA_NUM" id="QNA_NUM"
-																							value="${row.QNA_NUM}" />
-																						<table class="comInsert"
-																							style="width: 100%; height: 100%; padding: 0px; border: 0px;">
-																							<tr height="5px">
-																								<td style="text-align: left; padding: 0px;"
-																									height="100%" width="100%"><textarea
-																										class="QNA_COMMENT" rows="10"
-																										style="width: 100%; height: 100%"
-																										placeholder="답변을 작성하세요" id="QNA_COMMENT"
-																										name="QNA_COMMENT"></textarea></td>
-																							</tr>
-																						</table>
-																						<input type="submit" class="btn btn-default"
-																							value="답변완료"
-																							onclick="adminQnaComInsert(${row.QNA_COMMENT},${row.QNA_NUM})">
-																					</form> <!--------------- /댓글 입력 창 --------------->
-																				</td>
-																			</tr>
-																		</tbody>
-																	</c:when>
-																	<c:otherwise>
-																		<tbody>
-																			<tr>
-																				<td width="15%"><img alt="q"
-																					src="resources/img/icon/qq.png" width="30"
-																					height="30"></td>
-																				<td width="*%"><pre>${row.QNA_CONTENTS}</pre> <input
-																					type="button" class="btn btn-default" value="X"
-																					onclick="adminQnaDelete(${row.QNA_NUM})"></td>
-																			</tr>
-																			<tr>
-																				<!-- 내용/ 답변 분리 선 -->
-																				<td colspan="2"><hr
-																						style="width: 100%; padding: 0"></td>
-																			</tr>
-																			<tr id="comment">
-																				<td width="15%"><img alt="a"
-																					src="resources/img/icon/aa.png" width="30"
-																					height="30"></td>
-																				<!-- 이미지 추후 변경 필수!! -->
-																				<td width="*%">
-																					<!--------------- 댓글 창 --------------->
-																					<form role="form" id="adminQnaComDelete"
-																						method="post" action="adminQnaComDelete.pulu">
-																						<input type="hidden" name="QNA_NUM" id="QNA_NUM"
-																							value="${row.QNA_NUM}" />
-																						<pre>${row.QNA_COMMENT}</pre>
-																						<br>
-																						<br>
-																						<br> <input type="submit"
-																							class="btn btn-default" value="답변삭제"
-																							onclick="adminQnaComDelete(${row.QNA_COMMENT},${row.QNA_NUM})">
-																						<input type="button" class="btn btn-primery"
-																							id="comUpdate" name="comUpdate" value="답변수정"
-																							onclick="adminQnaComUpdate()" />
-																					</form>
-																				</td>
-																				<!--------------- /댓글 창 --------------->
-																			</tr>
-																			<tr>
-																				<!-- class="hide2" id="hide2" -->
-																				<!--------------- 댓글 수정 창 --------------->
-																				<td width="15%"><img alt="a"
-																					src="resources/img/icon/a.png" width="30"
-																					height="30"></td>
-																				<td width="*%" height="10px">
-																					<form role="form" id="adminQnaComInsert"
-																						method="post" action="adminQnaComInsert.pulu">
-																						<input type="hidden" name="QNA_NUM" id="QNA_NUM"
-																							value="${row.QNA_NUM}" />
-																						<table class="comInsert"
-																							style="width: 100%; height: 100%; padding: 0px; border: 0px;">
-																							<tr height="5px">
-																								<td style="text-align: left; padding: 0px;"
-																									height="100%" width="100%"><textarea
-																										class="QNA_COMMENT" rows="5"
-																										style="width: 100%; height: 100%"
-																										placeholder="${row.QNA_COMMENT}"
-																										id="QNA_COMMENT" name="QNA_COMMENT">${row.QNA_COMMENT}</textarea>
-																								</td>
-																							</tr>
-																						</table>
-																						<input type="submit" class="btn btn-default"
-																							value="수정완료"
-																							onclick="adminQnaComInsert(${row.QNA_COMMENT},${row.QNA_NUM})">
-																					</form>
-																				</td>
-																				<!--------------- /댓글 수정 창 --------------->
-																			</tr>
-																		</tbody>
-																	</c:otherwise>
-																</c:choose>
-																</tbody>
-															</table>
-														</td>
-														<td colspan="1" bgcolor="white"></td>
-													</tr>
-											</tbody>
-										</c:forEach>
-									</c:when>
-									<c:otherwise>
-										<tbody>
-											<tr>
-												<td colspan="5"><c:choose>
-														<c:when test="${isSearch != null}"> 검색 결과가 없습니다 </c:when>
-														<c:otherwise> 작성된 후기가 없습니다 </c:otherwise>
-													</c:choose></td>
-											</tr>
-										</tbody>
-									</c:otherwise>
-								</c:choose>
-								</tbody>
-							</table>
-
-						</div>
-						<!-- /.panel-body -->
+						<div class="paging" style="border: 1px; float: right;">${pagingHtml}</div>
 					</div>
-					<!-- /.panel -->
+				</div>
+				<!-- /.panel -->
 			</div>
-			<!-- /.col-lg-12 -->
+			<!-- /.row -->
 		</div>
-		<!-- /.row -->
 	</div>
-	<!-- "row" -->
 
-	<!--------------- 검색 --------------->
+	<br />
+	<form id="commonForm" name="commonForm"></form>
+</div>
+<script type="text/javascript">
+		/* 테이블 아코디언 형식 적용 (show, hide : css 참고) */
+		// panel-qna-container
+		const panelQnaContainer = document.querySelectorAll(".panel-qna-container"); // NodeList 객체
+		// panel-qna-answer
+		let panelQnaAnswer = document.querySelectorAll(".panel-qna-answer");
+		// btn-all-close
+		const btnAllClose = document.querySelector("#btn-all-close");
+		 
+		// 반복문 순회하면서 해당 QNA제목 클릭시 콜백 처리
+		for( let i=0; i < panelQnaContainer.length; i++ ) {
+			panelQnaContainer[i].addEventListener("click", function() { // 클릭시 처리할 일
+			// QNA 제목 클릭시 -> 본문이 보이게끔 -> active 클래스 추가
+			panelQnaAnswer[i].classList.toggle("active");
+			});
+		};
+		  
+		btnAllClose.addEventListener("click", function() {
+		// 버튼 클릭시 처리할 일  
+			for(let i=0; i < panelQnaAnswer.length; i++) {
+				panelQnaAnswer[i].classList.remove("active");
+			};
+		});
 
-	<div>
-		<div style="border: 1px; float: left; width: 310px;">
-			<div class="form-group input-group">
-
-				<form action="">
-					<select style="width: 80px;" class="form-control" name="searchNum"
-						id="searchNum">
-						<option value="0">제목</option>
-						<option value="1">내용</option>
-					</select> <input class="form-control" type="text" name="isSearch" style="width: 190px;" 
-						id="isSearch" /> 	<span class="input-group-btn">
-						<button type="submit" class="btn btn-primary">
-						<i class="fa fa-search"></i>
-						</button>
-					</span>
-				</form>
-			</div>
-			</div>
-			</div>
+		/* QNA 코멘트 수정폼 열기 */
+		// panel-comment-container
+		const panelCommentContainer = document.querySelectorAll(".panel-comment-container"); // NodeList 객체
+		// panel-comment-answer
+		let panelCommentAnswer = document.querySelectorAll(".panel-comment-answer");
+			  
+		for( let i=0; i < panelCommentContainer.length; i++ ) {
+			panelCommentContainer[i].addEventListener("click", function() {     // 클릭시 처리할 일
+			// QNA 제목 클릭시 -> 본문이 보이게끔 -> active 클래스 추가
+			panelCommentAnswer[i].classList.toggle("active");
+			    });
+		  };
+	  
+		  
+		/* QNA 답변 등록 & 수정 */
+/*		function adminQnaComInsert(QNA_COMMENT,QNA_NUM){
+			var comSubmit = new ComSubmit("adminQnaComInsert");
+			comSubmit.setUrl("<c:url value='/adminQnaComInsert.pulu' />");
+			comSubmit.submit();
+			opener.location.reload();
+		}
+*/		/* QNA 답변 등록 */
+		function adminQnaComInsert(QNA_COMMENT, QNA_NUM){
+			var comSubmit = new ComSubmit();
+				comSubmit.setUrl("<c:url value='/adminQnaComInsert.pulu' />");
+				comSubmit.addParam("QNA_NUM", QNA_NUM);
+				comSubmit.addParam("QNA_COMMENT", QNA_COMMENT);
+				comSubmit.submit();
+				opener.location.reload();
+			}
 			
 
-			<!--------------- 페이징 --------------->
-			<div class="paging">${pagingHtml}</div>
-
-
-			<br />
-			<%@ include file="/WEB-INF/include/include-body.jspf"%>
-
-			<script type="text/javascript">
-		/* 테이블 아코디언 형식 적용 (show, hide : css 참고) */
-		$(function() {
-			var article = (".QNAList .show");
-			$(".QNAList .item  td").click(function() {
-				var myArticle =$(this).parents().next("tr");  
-                if($(myArticle).hasClass('hide')) {  
-                    $(article).removeClass('show').addClass('hide');  
-                    $(myArticle).removeClass('hide').addClass('show'); 
-                }  else {  
-                    $(myArticle).addClass('hide').removeClass('show'); 
-                }  
-            });  
-		});
-		
 		/* QNA 관리자 삭제 */
 		function adminQnaDelete(QNA_NUM){
 			var comSubmit = new ComSubmit();
@@ -329,58 +410,26 @@ table {width: 500px;}
 				opener.location.reload();
 			}
 		}
-	
-		
-		
-		/************** QNA 코멘트 **************/
-			
-	/* QNA 답변 수정하기 버튼 누르면 수정폼 보여지기 */
-		function adminQnaComUpdate() {
-			var comSubmit = new ComSubmit();
-			comSubmit.addParam("QNA_COMMENT",QNA_COMMENT);
-			comSubmit.addParam("QNA_NUM", QNA_NUM);
-			$.ajax({
-				type : 'post',
-				data : {
-						QNA_NUM : "QNA_NUM",
-						},
-//			$("#hide2").show();
-		 });
-		}
-		
-/*		$(function () {
-			$('#comUpdate').click(function() {
-				$("#hide2").show();
-			})
-		});*/
-/* 		function adminQnaComUpdate(QNA_COMMENT,QNA_NUM) {
-			document.getElementById("sampleDiv").style.display ='block';
-		} */
-		
-			
-		
 
-	
-		/* QNA 답변 등록 & 수정 */
-		function adminQnaComInsert(QNA_COMMENT,QNA_NUM){
-			var comSubmit = new ComSubmit("adminQnaComInsert");
-			comSubmit.setUrl("<c:url value='/adminQnaComInsert.pulu' />");
-			comSubmit.addParam("QNA_COMMENT",QNA_COMMENT);
-			comSubmit.addParam("QNA_NUM", QNA_NUM);
-			comSubmit.submit();
-			opener.location.reload();
-		}
-		
 		/* QNA 답변 삭제 */
-		function adminQnaComDelete(QNA_NUM){
-			var comSubmit = new ComSubmit("adminQnaComDelete");
+		function adminQnaComDelete(QNA_COMMENT, QNA_NUM){
+			var comSubmit = new ComSubmit();
+			if (confirm("삭제 하겠습니까?") == true) {
 				comSubmit.setUrl("<c:url value='/adminQnaComDelete.pulu' />");
-				comSubmit.addParam("QNA_COMMENT", QNA_COMMENT);
 				comSubmit.addParam("QNA_NUM", QNA_NUM);
+				comSubmit.addParam("QNA_COMMENT", QNA_COMMENT);
 				comSubmit.submit();
 				opener.location.reload();
+			}
 		}
 	</script>
-</body>
+<!-- 	<script type="text/javascript">
 
-</html>
+		function adminQnaInsertAlert(){
+			if(adminQnaComInsert.QNA_COMMENT.value == null) {
+				alert("내용을 입력하세요");
+				return false;
+			}
+			return true;
+		}
+	</script> -->

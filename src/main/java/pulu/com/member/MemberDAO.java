@@ -113,13 +113,13 @@ public class MemberDAO extends AbstractDAO {
 	// 병찬: 마이페이지 주문 수정
 	public void myInfoOrderUpdate(Map<String, Object> map) throws Exception {
 				
-		sqlSession.update("member.myInfoOrderUpdate", map);
+		update("member.myInfoOrderUpdate", map);
 	}
 			
 	// 병찬: 마이페이지 주문 취소
 	public void myInfoOrderDelete(Map<String ,Object> map) throws Exception {
 				
-		sqlSession.delete("member.myInfoOrderDelete", map);
+		delete("member.myInfoOrderDelete", map);
 	}
 
 }

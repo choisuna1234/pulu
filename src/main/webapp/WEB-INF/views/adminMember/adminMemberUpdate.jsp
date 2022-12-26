@@ -30,7 +30,7 @@
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 js -->
 	<script>
-	// 선민: 카카오 우편번호 api
+	<!-- 선민: 카카오 우편번호 api -->
 	function kakaoPost() {
 		new daum.Postcode({
 			oncomplete : function(data) {
@@ -39,9 +39,8 @@
 			}
 		}).open();
 	}
-	</script>
-	<script>
-	// 선민: 회원 삭제 알림 팝업
+	
+	<!-- 선민: 회원 삭제 알림 팝업 -->
 	function checkMemberDelete() {
 		var form = document.getElementById("memberUpdateForm");
 		if (confirm("해당 회원을 삭제하시겠습니까?") == true) {

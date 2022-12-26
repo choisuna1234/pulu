@@ -299,7 +299,7 @@ strong {
 
 <script language="javascript">
 
-	// 선민: basketController로 GOODS_NUM과 SELECTED_GOODS_AMOUNT 넘기기
+	<!-- 선민: basketController로 GOODS_NUM과 SELECTED_GOODS_AMOUNT 보내기 -->
 	function insertBasket(loginNum) {
 	   var goodsAmount = document.getElementById("selectedGoodsAmount");
 	   if (loginNum == null)
@@ -319,10 +319,11 @@ strong {
 	      form.method = "post";
 	      form.submit(); // form안의 파라미터들을 post방식으로 insertBasket.pulu에 보내기
 	      
-	      // 팝업 띄우기
-	      window.open('basketSuccess.pulu', 'window_basketCheck', 'width=460, height=260, location=no, status=no, scrollbars=no');
-	   }
-	}
+	
+	 // 팝업 띄우기
+        window.open('basketSuccess.pulu', 'window_basketCheck', 'width=460, height=260, location=no, status=no, scrollbars=no');
+     }
+  }
 	
    /* 선아: 바로 구매 연결 */
 	function openBuyCheck() {

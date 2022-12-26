@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override // 회원정보를 DB에 등록
 	public void insertMember(Map<String, Object> map) throws Exception {
-		log.info(map.get("ID")); //
-		log.info("ServiceImple의 insertMember() 동작");
+		//log.info(map.get("ID")); //
+		//log.info("ServiceImple의 insertMember() 동작");
 		memberDAO.insertMember(map);
 	}
 
@@ -66,8 +67,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override // 선아: 회원탈퇴
 	public void memberDelete(Map<String, Object> map) throws Exception {
-		log.info(map.get("str_Num"));
-		log.info("ServiceImple의 memberDelete() 동작");
+		//log.info(map.get("str_Num"));
+		//log.info("ServiceImple의 memberDelete() 동작");
 		memberDAO.memberDelete(map);
 	}
 
@@ -100,7 +101,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override // 병찬: 마이페이지 주문 수정
-	public void myInfoOrderUpdate(Map<String, Object> map) throws Exception {
+	public void myInfoOrderUpdate(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		
 		memberDAO.myInfoOrderUpdate(map);
 	}
@@ -108,7 +109,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override // 병찬: 마이페이지 주문 취소
 	public void myInfoOrderDelete(Map<String, Object> map) throws Exception {
 		
-		memberDAO.memberDelete(map);
+		memberDAO.myInfoOrderDelete(map);
 	}
 
 }

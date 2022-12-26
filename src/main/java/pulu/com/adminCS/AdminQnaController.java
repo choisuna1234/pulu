@@ -165,7 +165,7 @@ public class AdminQnaController {
 	// 관리자 QNA 수정폼 이동
 	@RequestMapping(value = "/adminQnaUpdateForm", method = RequestMethod.POST)
 	public ModelAndView adminQnaUpdateForm(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("admin_qna_update_form");
+		ModelAndView mv = new ModelAndView("admin_qna_list");
 
 		Map<String, Object> map = adminQnaService.adminQnaDetail(commandMap.getMap());// 상세보기 정보를 맵에서 받아옴
 		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장
@@ -184,7 +184,7 @@ public class AdminQnaController {
 	// 관리자 QNA 수정
 	@RequestMapping(value = "/adminQnaUpdate", method = RequestMethod.POST)
 	public ModelAndView adminQnaUpdate(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:/adminQnaDetail.pulu");
+		ModelAndView mv = new ModelAndView("redirect:/adminQnaList.pulu");
 
 		adminQnaService.adminQnaUpdate(commandMap.getMap(), request);
 		Map<String, Object> map = adminQnaService.adminQnaDetail(commandMap.getMap());

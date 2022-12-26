@@ -333,9 +333,7 @@
                                 <li>
                                     <a href="adminOrderList.pulu">일반상품 주문관리</a>
                                 </li>
-                                <li>
-                                    <a href=".pulu">정기배송 주문관리</a>
-                                </li>
+
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

@@ -21,7 +21,7 @@ font-weight: 900;
 </style>
 
 <body>
-<form id="frm" name="frm" enctype="multipart/form-data" >
+<form id="frm" name="frm" enctype="multipart/form-data"  >
 <tbody>
 <div class="subt">상품 등록</div>
 <div id="container1">
@@ -70,7 +70,7 @@ font-weight: 900;
 
 
 <a href="#this" class="btn" id="addFile">파일 추가</a>
-<a href="#this" class="btn" id="insert">등록하기</a>
+<a href="#this" class="btn" id="insert" >등록하기</a>
 <a href="#this" class="btn" id="adminList">목록으로</a>
 </div>
 </form>
@@ -79,6 +79,7 @@ font-weight: 900;
 <script type="text/javascript">
 		var gfv_count = 1;
 		
+		
 $(document).ready(function(){ //목록으로 버튼
 		$("#adminList").on("click", function(e){
 			e.preventDefault();
@@ -86,11 +87,40 @@ $(document).ready(function(){ //목록으로 버튼
 			
 		});
 	
-	
-$("#insert").on("click", function(e){ //등록하기 버튼
-	e.preventDefault();
-	fn_insertBoard();
-});
+	  <!-- 유효성검사, 상품등록버튼 -->
+	 
+	  $("#insert").on("click", function(e){ 
+		     var numCheck = RegExp(/[^0-9]$/);
+		     e.preventDefault();
+			 if($('#GOODS_NAME').val()==""){
+					alert("상품명을 입력해 주세요.");				
+					$("#GOODS_NAME").focus();
+					return false;
+			     }else if(numCheck.test($('#GOODS_AMOUNT').val())){
+				     alert("숫자를 입력하세요")
+				     return false;
+			     } else if($('#GOODS_AMOUNT').val()==""){
+					 alert("상품수량을 입력해 주세요.");
+					 $("#GOODS_AMOUNT").focus();
+					 return false;
+			     }else if(numCheck.test($('#GOODS_PRICE').val())){
+				     alert("숫자를 입력하세요")
+				     return false;		 
+			     } else if($('#GOODS_PRICE').val()==""){
+					 alert("상품가격을 입력해 주세요.");
+					 $("#GOODS_PRICE").focus();
+					 return false;
+			     }else if(numCheck.test($('#GOODS_CALORIE').val())){
+				     alert("숫자를 입력하세요")
+				     return false;		 
+				 } else if($('#GOODS_CALORIE').val()==""){
+					 alert("상품칼로리를 입력해 주세요.");
+					 $("#GOODS_CALORIE").focus();
+					 return false;
+				 } else{
+					 fn_insertBoard();
+				 }
+	   });
 
 $("#addFile").on("click", function(e){ //파일 추가 버튼
 	e.preventDefault();
@@ -129,6 +159,7 @@ $("a[name='delete']").on("click", function(e){ //삭제 버튼
 	}
 	
 	
+
 	function ComSubmit(opt_formId) {
 		this.formId = gfn_isNull(opt_formId) == true ? "commonForm" : opt_formId;
 		this.url = "";
@@ -150,10 +181,10 @@ $("a[name='delete']").on("click", function(e){ //삭제 버튼
 			var frm = $("#"+this.formId)[0];
 			frm.action = this.url;
 			frm.method = "post";
-			frm.submit();	
+			frm.submit();
 		};
 	}
-
+	
 
 </script>
 

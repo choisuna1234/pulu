@@ -134,7 +134,7 @@ public class AdminOrderController {
 	// 관리자 주문관리 상세보기
 	@RequestMapping(value = "/adminOrderDetail")
 	public ModelAndView adminOrderDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("/adminBoard/adminOrderDetail");
+		ModelAndView mv = new ModelAndView("admin_order_detail");
 
 //		List<Map<String,Object>> orderList = adminOrderService.adminOrderDetail(commandMap.getMap());
 //		int ORDER_NUM = (Integer)commandMap.get("ORDER_NUM");
@@ -155,7 +155,7 @@ public class AdminOrderController {
 	// 관리자 주문 관리 수정폼 이동
 	@RequestMapping(value = "/adminOrderUpdateForm", method = RequestMethod.POST)
 	public ModelAndView adminOrderUpdateForm(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("/adminBoard/adminOrderUpdate");
+		ModelAndView mv = new ModelAndView("admin_order_update");
 
 		//Map<String, Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());// 상세보기 정보를 맵에서 받아옴
 		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장

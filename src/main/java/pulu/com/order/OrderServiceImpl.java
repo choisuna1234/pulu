@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.selectOrderGoodsInfo(map);
 	}
 
-	@Override
+	@Override // 장바구니리스트->주문페이지 값 넘기기
 	public List<Map<String, Object>> selectGoodsInfo(List<BasketListItemDTO> orders) throws Exception {
 
 		Map<String, Object> goodsMap = new HashMap<String, Object>();
@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.selectMemberInfo(map);
 	}
 
-	// 선민: 주문 값 DB에 넣기
+	@Override // 선민: 주문 값 DB에 넣기
 	public void insertOrder(List<OrderListItemDTO> orders) throws Exception {
 
 		// 각 테이블마다 각자의 쿼리로 전달할 Map을 생성
@@ -99,6 +99,23 @@ public class OrderServiceImpl implements OrderService {
 			// ORDER_GOODS 테이블에 반복 insert
 			orderDAO.insertOrderGoods(orderGoods);
 		}
+	}
+
+	@Override // 선민: 주문완료페이지에 보여줄 주문건에 대한 정보 DB로부터 가져오기
+	public Map<String, Object> selectOrderDeliSuccess(HttpSession session) throws Exception {
+
+		// 세션에 존재하는 아이디를 DB에 접근할 map에 추가
+		String loginId = String.valueOf((session.getAttribute("loginId")));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("ID", loginId);
+
+		return orderDAO.selectOrderDeliSuccess(map);
+	}
+	
+	@Override // 선민: 주문완료페이지에 보여줄 모든 주문상품 정보 DB로부터 가져오기
+	public List<Map<String, Object>> selectOrderGoodsSuccess(Map<String, Object> map) throws Exception {
+
+		return orderDAO.selectOrderGoodsSuccess(map);
 	}
 
 }

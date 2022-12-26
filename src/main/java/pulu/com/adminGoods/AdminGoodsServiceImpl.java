@@ -42,7 +42,7 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 		return adminGoodsDAO.adminGoodsList(map);
 	}
     
-	/* »óÇ°¼öÁ¤ »ó¼¼º¸±â */
+	/* ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½ */
 	@Override
 	public Map<String, Object> adminGoodsUpdateDetail(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -55,26 +55,28 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 		return resultMap;
 	}
     
-	/* »óÇ° ¼öÁ¤ */
+	/* ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ */
 	@Override
 	public void adminGoodsUpdate(Map<String, Object> map,HttpServletRequest request) throws Exception {
 		adminGoodsDAO.adminGoodsUpdatePro(map);
 
 		adminGoodsDAO.updateFile(map);
 		List<Map<String,Object>> list = fileUtils.parseUpdateFileInfo(map, request);
+		
+		System.out.println("serviceìˆ˜ì •ì „ list===============" + list );
 		  Map<String,Object> tempMap = null;
-		   for(int i=0, size=list.size(); i<size; i++){
-		       tempMap = list.get(i);
-		    if(tempMap.get("IS_NEW").equals("Y")){
-				adminGoodsDAO.insertGoodsFile(tempMap);
-			}
-			else{
-				adminGoodsDAO.updateFile(tempMap);
-			}
-	  }
+			for(int i=0, size=list.size(); i<size; i++){     
+		      tempMap = list.get(i);
+		       if(tempMap.get("IS_NEW").equals("Y")){
+					adminGoodsDAO.insertGoodsFile(tempMap);				
+				}
+				else{
+					adminGoodsDAO.deleteFile(tempMap);				
+				}
+	     }						
 	}
     
-	/* »óÇ° »èÁ¦ */
+	/* ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ */
 	@Override
 	public void deleteAdminGoods(Map<String, Object> map) throws Exception {
 

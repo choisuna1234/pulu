@@ -87,11 +87,11 @@ Mypage</h1>
 <br>
 
         <div>
-          <h2><a href=".pulu"><span style="color:black">주문/결제 내역</h2></a>
+          <h2><a href="myInfoOrder.pulu"><span style="color:black">주문/결제 내역</h2></a>
         </div>
 <br>
         <div>
-           <h2><a href=".pulu"><span style="color:black">후기 작성</h2></a>
+           <h2><a href="myReview.pulu"><span style="color:black">후기 목록</h2></a>
 
         </div>
 <br>
@@ -104,7 +104,7 @@ Mypage</h1>
         </div>
         <br>
         <div>
-          <h2><a href="myInfoModify.pulu"><span style="color:black">정보 수정</h2></a>
+          <h2><a href="memberInfo.pulu"><span style="color:black">정보 수정</h2></a>
         </div>
         <br>
   </div>

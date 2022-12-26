@@ -38,8 +38,9 @@ table {
 					<td><input type="text" id="GOODS_AMOUNT" name="GOODS_AMOUNT" value="${map.GOODS_AMOUNT }"></td>
 					<th scope="row">카테고리</th>
 					<td>
-					<select name="GOODS_CATEGORY" id="GOODS_CATEGORY" align="right" >
-					<c:choose>
+					<select name="GOODS_CATEGORY" id="GOODS_CATEGORY" value=""${map.GOODS_CATEGORY}" align="right" >
+					   			
+					 <c:choose>
 						<c:when test="${map.GOODS_CATEGORY eq 2}">
 							<option value="1">샐러드</option>
 							<option value="2" selected>샌드위치</option>
@@ -76,9 +77,9 @@ table {
 						<div id="fileDiv">				
 							<c:forEach var="row" items="${list}" varStatus="var">
 								<p>
-									<input type="hidden" id="IMAGE_GOODS_NUM" name="IMAGE_GOODS_NUM_${var.index }" value="${row.IMAGE_GOODS_NUM }">
+									<input type="hidden" id="IDX_${var.index }" name="IDX_${var.index }" value="${row.IMAGE_NUM }">
 									<a href="#this" id="name_${var.index }" name="name_${var.index }">${row.IMAGE_IMG }</a>
-									<input type="file" id="file_${var.index }" name="file_${var.index }"> 
+									<input type="file" id="file_${row.index }" name="file_${var.index }"> 
 									<a href="#this" class="btn" id="delete_${var.index}" name="delete_${var.index }">삭제</a>
 								</p>
 							</c:forEach>
@@ -103,9 +104,38 @@ table {
 				fn_openBoardList();
 			});
 			
-			$("#update").on("click", function(e){ //저장하기 버튼
-				e.preventDefault();
-				fn_updateBoard();
+			<!-- 유효성검사, 저장하기버튼 -->
+			$("#update").on("click", function(e){ 
+				 var numCheck = RegExp(/[^0-9]$/);
+				 e.preventDefault();
+				 if($('#GOODS_NAME').val()==""){
+						alert("상품명을 입력해 주세요.");				
+						$("#GOODS_NAME").focus();
+						return false;
+				     } else if($('#GOODS_AMOUNT').val()==""){
+					     alert("상품수량을 입력해 주세요.");
+					     $("#GOODS_AMOUNT").focus();
+					    return false;	
+				     }else if(numCheck.test($('#GOODS_AMOUNT').val())){
+					     alert("숫자를 입력하세요")
+					     return false; 
+				     } else if($('#GOODS_PRICE').val()==""){
+					     alert("상품가격을 입력해 주세요.");
+					     $("#GOODS_PRICE").focus();
+					     return false;
+				     }else if(numCheck.test($('#GOODS_PRICE').val())){
+					     alert("숫자를 입력하세요")
+					     return false;    
+					 } else if($('#GOODS_CALORIE').val()==""){
+						 alert("상품칼로리를 입력해 주세요.");
+						 $("#GOODS_CALORIE").focus();
+						 return false;
+					 }else if(numCheck.test($('#GOODS_CALORIE').val())){
+					     alert("숫자를 입력하세요")
+					     return false; 	 
+					 } else{
+				        fn_updateBoard();
+				}
 			});
 			
 			$("#delete").on("click", function(e){ //삭제하기 버튼

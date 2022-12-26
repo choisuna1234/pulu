@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">    
@@ -30,6 +30,8 @@
 
     <!-- Custom Fonts -->
     <link href="/resources/sbadmin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -321,9 +323,7 @@
                                 <li>
                                     <a href="adminMemberList.pulu">회원 리스트</a>
                                 </li>
-                                <li>
-                                    <a href=".pulu"> </a>
-                                </li>
+
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -334,9 +334,6 @@
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="adminOrderList.pulu">일반상품 주문관리</a>
-                                </li>
-                                <li>
-                                    <a href=".pulu">정기배송 주문관리</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -351,12 +348,6 @@
                                 </li>
                                 <li>
                                     <a href="adminGoodsInsertForm.pulu">일반상품 등록</a>
-                                </li>
-                                <li>
-                                    <a href=".pulu">정기배송상품 목록</a>
-                                </li>
-                                <li>
-                                    <a href=".pulu">정기배송상품 등록</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

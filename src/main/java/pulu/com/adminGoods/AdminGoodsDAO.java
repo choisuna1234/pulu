@@ -42,6 +42,12 @@ public class AdminGoodsDAO extends AbstractDAO{
 	public void updateFile(Map<String, Object> map) throws Exception{
 		update("adminGoods.updateFile", map);
 	}
+	
+	//파일 삭제
+	public void deleteFile(Map<String, Object> map) throws Exception{
+		update("adminGoods.deleteFile", map);
+	}
+
 
 
 	@SuppressWarnings("unchecked")

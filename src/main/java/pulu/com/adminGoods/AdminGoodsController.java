@@ -67,14 +67,17 @@ public class AdminGoodsController {
 		return mv;
 	}
     
-	//°Ô½Ã±Û ¼öÁ¤
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/adminGoodsUpdate")
 	public ModelAndView adminGoodsUpdate(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/adminGoodsList.pulu");
 
 		adminGoodsService.adminGoodsUpdate(commandMap.getMap(), request);
-
-		mv.addObject("goodsnum", commandMap.get("goodsnum")); //image goodsnum À¸·Î
+        
+		mv.addObject("IMAGE_GOODS_NUM", commandMap.get("IDX"));
+		mv.addObject("goodsnum", commandMap.get("goodsnum"));
+		
+		
 		return mv;
 	}
 

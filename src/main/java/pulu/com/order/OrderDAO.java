@@ -1,13 +1,13 @@
 package pulu.com.order;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.aspectj.org.eclipse.jdt.internal.compiler.env.AccessRestriction;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Repository;
 
-import pulu.com.basket.BasketListItemDTO;
 import pulu.com.common.AbstractDAO;
 
 @Repository("orderDAO")
@@ -55,7 +55,7 @@ public class OrderDAO extends AbstractDAO {
 
 		int order_num = 0;
 		insert("order.insertOrderDeli", map);
-		order_num = (int) map.get("ORDER_NUM"); // selectKey로 ORDER_DELI 테이블의 ORDER_NUM(PK)값을 뽑아오기 
+		order_num = (int) map.get("ORDER_NUM"); // selectKey로 ORDER_DELI 테이블의 ORDER_NUM(PK)값을 뽑아오기
 		log.info("\n\n\n" + order_num + "\n\n\n");
 
 		return order_num; // selectKey로 뽑아온 값을 리턴 (ORDER_GOODS 테이블의 ORDER_NUM에도 같은 값을 삽입하기 위함)
@@ -64,14 +64,26 @@ public class OrderDAO extends AbstractDAO {
 	// 선민: 주문상품 값 DB에 넣기 (ORDER_GOODS) + 장바구니 삭제
 	public void insertOrderGoods(Map<String, Object> map) throws Exception {
 		insert("order.insertOrderGoods", map);
-		
-		int checkResult = (int)selectOne("basket.checkBasketOrder", map);
+
+		int checkResult = (int) selectOne("basket.checkBasketOrder", map);
 		log.info("01. select 결과 == " + checkResult);
-		if(checkResult != 0) {
+		if (checkResult != 0) {
 			delete("basket.deleteBasketOrder", map);
 		}
 		update("goods.updateGoodsAmount", map);
-		
+
+	}
+
+	// 선민: 주문완료페이지에 보여줄 주문건에 대한 정보 DB로부터 가져오기
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectOrderDeliSuccess(Map<String, Object> map) {
+		return (Map<String, Object>) selectOne("order.selectOrderDeliSuccess", map);
+	}
+	
+	// 선민: 주문완료페이지에 보여줄 모든 주문상품 정보 DB로부터 가져오기
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectOrderGoodsSuccess(Map<String, Object> map) {
+		return selectList("order.selectOrderGoodsSuccess", map);
 	}
 
 }

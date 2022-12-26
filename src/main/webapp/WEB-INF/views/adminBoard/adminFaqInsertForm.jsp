@@ -1,13 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<!-- 소영 :FAQ 입력폼 test -->
-<html>
-<head>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
-</head>
-
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="row">
 		<div class="col-lg-12">
@@ -34,9 +28,9 @@
 									</tr>
 									<tr>
 										<th>내용</th>
-										<td colspan="2" class="view_text" height="30"><textarea
-												rows="20" class="form-control" cols="100" title="내용"
-												id="FAQ_CONTENT" name="FAQ_CONTENT"></textarea></td>
+										<td colspan="2" class="view_text" height="30">
+											<pre><textarea rows="20" class="form-control" cols="100" title="내용"
+												id="FAQ_CONTENT" name="FAQ_CONTENT"></textarea></pre></td>
 									</tr>
 								</tbody>
 							</table>
@@ -117,6 +111,3 @@
 		 }  */
 	</script>
 
-
-</body>
-</html>

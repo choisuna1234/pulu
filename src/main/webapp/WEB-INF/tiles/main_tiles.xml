@@ -37,11 +37,19 @@
 		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsUpdateForm.jsp"/>
 	</definition>	
 	
+	<definition name="pOrder" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/order/pOrder.jsp"/>
+   </definition>
    
    <definition name="nutritionFacts" extends="layout">
       <put-attribute name="body" value="/WEB-INF/views/nutritionFacts/nutritionFacts.jsp"/>
    </definition>
+ <definition name="burialMap" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/burialMap/burialMap.jsp"/>
+   </definition>
 
+
+	
 	<definition name="join" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/member/join.jsp"/>
 	</definition>
@@ -52,7 +60,6 @@
 	<definition name="loginForm" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp"/>
 	</definition>
-	
 	
 	<definition name="myPage" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/member/myPage.jsp"/>
@@ -81,6 +88,22 @@
 	
 	
 	
+	<!-- board -->
+	<definition name="notice_list" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/board/noticeList.jsp"/>
+	</definition>
+	<definition name="notice_detail" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/board/noticeDetail.jsp"/>
+	</definition>
+	<definition name="faq_list" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/board/faqList.jsp"/>
+	</definition>
+	<definition name="faq_detail" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/board/faqDetail.jsp"/>
+	</definition>
+
+	
+	
 	
 	<definition name="layout_admin" template="/WEB-INF/tiles/layout/admin_layout.jsp">
 		<put-attribute name="body" value="/WEB-INF/views/main/adminMain.jsp"/>
@@ -101,21 +124,15 @@
 	<definition name="admin_notice_update_form" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminNoticeUpdateForm.jsp"/>
 	</definition>
-	
-	<definition name="admin_review_list" extends="layout_admin">
-		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminReviewList.jsp"/>
+	<definition name="admin_order_detail" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminOrderDetail.jsp"/>
 	</definition>
-	
-	<definition name="admin_qna_list" extends="layout_admin">
-		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminQnaList.jsp"/>
-	</definition>
-	
 	<definition name="admin_order_list" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminOrderList.jsp"/>
 	</definition>
-	
-	
-	
+	<definition name="admin_order_update" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminOrderUpdate.jsp"/>
+	</definition>
 	<definition name="admin_faq_list" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminFaqList.jsp"/>
 	</definition>
@@ -131,6 +148,14 @@
 	<definition name="admin_member_list" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminMember/adminMemberList.jsp"/>
 	</definition>
+	<definition name="admin_review_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminReviewList.jsp"/>
+	</definition>
+	<definition name="admin_qna_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminQnaList.jsp"/>
+	</definition>
+	
+	
 	
 	
 	
@@ -141,27 +166,19 @@
 	<definition name="basketList" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/basket/basketList.jsp"/>
 	</definition>
-	
+	<definition name="basketList" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/basket/basketList.jsp"/>
+	</definition>
 	<definition name="orderResult" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/order/orderResult.jsp"/>
 	</definition>
+	<definition name="admin_qna_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminQnaList.jsp"/>
+	</definition>
+	<definition name="admin_order_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminOrderList.jsp"/>
+	</definition>
 	
 	
-	<definition name="pOrder" extends="layout">
-      <put-attribute name="body" value="/WEB-INF/views/order/pOrder.jsp"/>
-   </definition>
-   
-   <definition name="burialMap" extends="layout">
-      <put-attribute name="body" value="/WEB-INF/views/burialMap/burialMap.jsp"/>
-   </definition>
-   
-   <definition name="notice_List" extends="layout">
-      <put-attribute name="body" value="/WEB-INF/views/board/noticeList.jsp"/>
-   </definition>
-   
-   <definition name="faq_detail" extends="layout">
-      <put-attribute name="body" value="/WEB-INF/views/board/faqDetail.jsp"/>
-   </definition>
-   
 	
 </tiles-definitions> 

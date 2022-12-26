@@ -3,6 +3,8 @@ package pulu.com.member;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface MemberService {
 
 	/* ---------------------- (1) 회원가입 ---------------------- */
@@ -54,7 +56,7 @@ public interface MemberService {
 	public Map<String, Object> myInfoOrderDetail(Map<String, Object> map) throws Exception;
 			
 	// 병찬: 마이페이지 주문 수정
-	public void myInfoOrderUpdate(Map<String, Object> map) throws Exception;
+	public void myInfoOrderUpdate(Map<String, Object> map, HttpServletRequest request) throws Exception;
 			
 	// 병찬: 마이페이지 주문 취소
 	public void myInfoOrderDelete(Map<String, Object> map) throws Exception;

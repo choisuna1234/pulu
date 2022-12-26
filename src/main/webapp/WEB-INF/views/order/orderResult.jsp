@@ -1,210 +1,627 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
- <!-- ¿«¡æ: ¡÷πÆøœ∑· ∆‰¿Ã¡ˆ -->
-<html>
+<!-- ÏùòÏ¢Ö: Ï£ºÎ¨∏ÏôÑÎ£å ÌéòÏù¥ÏßÄ -->
 <head>
+<link rel="stylesheet" href="./resources/sbadmin/vendor/bootstrap/css/bootstrap.min2.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- Ïπ¥Ïπ¥Ïò§ js -->
+<script src="webjars/jquery/3.5.1/dist/jquery.min.js"></script>
 <style>
-.bankBenefit { position:relative; margin:20px 0 0; padding:10px 5px 10px 105px; border:5px solid #e8e8e8; color:#353535; line-height:1.5; }
-.bankBenefit h3 { position:absolute; left:0; top:0; width:105px; height:100%; color:#353535; font-size:12px; text-align:center; }
- .bankBenefit h3 strong { display:table; width:105px; height:100%; }
- .bankBenefit h3 strong span { display:table-cell; vertical-align:middle; }
- .bankBenefit .info { padding:0 0 0 15px; border-left:1px solid #e8e8e8; }
- .bankBenefit .info .mileage { margin:6px 0 0; padding:10px 0 0; border-top:1px solid #e8e8e8; *zoom:1; }
- .bankBenefit .info .mileage:after { content:""; display:block; clear:both; }
- .bankBenefit .info .displaynone + .mileage { margin:0; padding:0; border:0; }
- .bankBenefit .info .mileage li { float:left; margin:0 40px 0 0; }
- .bankBenefit .info .mileage li a { text-decoration:none; }
- .bankBenefit .info .mileage li strong { color:#008bcc; }
-/* ¡÷πÆøœ∑· */
- .orderInfo { width:380px; margin:45px auto 0; padding:0 0 10px 130px; color:#353535; line-height:1.5; background:url("http://img.echosting.cafe24.com/skin/base_ko_KR/order/bg_result.gif") no-repeat 0 10px; }
- .orderInfo p { margin:0 0 20px; }
- .orderInfo p strong { display:block; margin:0 0 7px; color:#000; font-size:20px; font-family:gulim,sans-serif; }
- .orderInfo p a { color:#008bcc; text-decoration:underline; font-weight:bold; }
- .orderInfo li strong { font-size:14px; letter-spacing:-1px; } 
-/* Title */
- .title { margin:40px 0 10px 10px; }
- .title h3 { color:#353535; font-size:12px; }
-/* View */
- .boardView { border:1px solid #d7d5d5; }
-.boardView table { table-layout:fixed; color:#353535; line-height:1.5; }
- .boardView th { width:120px; padding:11px 0 10px 19px; border-top:1px solid #e9e9e9; border-right:1px solid #e9e9e9; font-weight:normal; text-align:left; background:#fbfafa; }
- .boardView td { width:auto; padding:11px 0 10px 10px; border-top:1px solid #e9e9e9; }
- .boardView img { vertical-align:middle; }  
-/* List */
-.orderArea table.areaBoard {
-  border-collapse: separate;
-  border-spacing: 1px;
-  text-align: left;
-  line-height: 1.5;
-  border-top: 1px solid #ccc;
-  margin: 20px 10px;
+@font-face {
+	font-family: 'NanumBarunGothic';
+	src: url('/fonts/NanumBarunGothic.eot');
+	src: url('/fonts/NanumBarunGothic.eot') format('embedded-opentype'),
+		url('/fonts/NanumBarunGothic.woff') format('woff');
 }
-.orderArea table.areaBoard th {
-  width: 150px;
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-  background: #efefef;
+
+.ordercontainer {
+	position: relative;
+	width: 100%;
+	min-width: 900px;
+	margin: 0px auto 0;
 }
-.orderArea table.areaBoard td {
-  width: 350px;
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
+
+.ordercontainer:after {
+	content: "";
+	display: block;
+	clear: both;
 }
- 
- }
- .btnArea { overflow:hidden; margin:20px 0 0; text-align:right; *zoom:1; }
- .btnArea span.left { float:left; }
- .btnArea span.right { float:right; }
+
+.wid900 {
+	width: 100%;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+.orderMain {
+	background: #EDEDED;
+	margin: 1px 0 -120px 0;
+	border-left: 1px solid #dadada;
+	border-right: 1px solid #dadada;
+}
+
+.panel-default {
+	text-align: left;
+}
+
+.orderpage {
+	width: 100%;
+	height: 40px;
+	font-size: 20px;
+	color: #fff;
+	background: #333;
+	padding: 12px 0 0 0;
+}
+
+.panel-group .panel {
+	margin-bottom: 0;
+	border-radius: 0px;
+}
+
+.panel {
+	border-radius: 0px;
+	border: 0px;
+}
+
+.panel-heading {
+	padding: 18px 22px;
+}
+
+.panel-title {
+	font-weight: 900;
+	font-size: 18px;
+	color: #223;
+}
+
+.ordertable {
+	width: 100%;
+	font-size: 15px;
+}
+
+.ordertable td {
+	position: relative;
+	padding: 8px 14px 7px 8px;
+}
+
+.orderinsert {
+	height: 42px;
+	width: 100%;
+	padding: 10px 11px 10px 10px;
+	font-weight: inherit;
+	border: 1px solid #E1E1E1;
+	outline-style: none;
+	line-height: 14px;
+	color: #000;
+	font-weight: 400;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.ordertable select {
+	width: 100%;
+	height: 42px;
+	margin: 0;
+	padding: 0 20px 0 10px;
+	line-height: 40px;
+	color: #333;
+	word-break: break-all;
+	border: 1px solid #C5C5C5;
+	background: #fff
+		url(//img.echosting.cafe24.com/skin/mobile/common/ico_select.gif)
+		no-repeat 100% 50%;
+	background-size: auto 40px;
+	-webkit-appearance: none;
+}
+
+.ordertable textarea {
+	width: 100%;
+	max-width: 100%;
+	padding: 7px;
+	font-weight: inherit;
+	border: 1px solid #E1E1E1;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	resize: none;
+}
+
+.zipcodebt {
+	position: absolute;
+	right: 15px;
+	color: #000;
+	border: 1px solid #A7A7A7;
+	background: #fff;
+	min-width: 80px;
+	height: 42px;
+}
+
+.orderpage span {
+	font-family: 'NotoSansKR', "ÎßëÏùÄ Í≥†Îîï", Malgun Gothic, AppleSDGothicNeo,
+		"ÎèãÏõÄ", Dotum, sans-serif;
+	font-weight: 600;
+}
+
+.icoRequired {
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	margin: -2px 0 0;
+	vertical-align: middle;
+	text-indent: 150%;
+	font-size: 0;
+	line-height: 0;
+	white-space: nowrap;
+	background: url(./resources/img/icon/bg_required.png) no-repeat 0 0;
+	background-size: auto 6px;
+}
+
+.prdName {
+	display: block;
+	margin: 0 0 9px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #000;
+}
+
+.prdText {
+	margin: 0 0 2px;
+	font-size: 14px;
+	color: #606060;
+}
+
+.ordergoodsimg {
+	width: 90px;
+	height: 90px;
+	border: solid 1px #A7A7A7;
+}
+
+.proPrice {
+	font-size: 15px;
+	font-weight: 700;
+	color: #000;
+}
+
+.pricetd {
+	vertical-align: text-top;
+}
+
+.ordergoodstable {
+	width: 100%;
+}
+
+.ordergoodstable td {
+	padding: 0px 14px 0px 8px;
+}
+
+.panel-body {
+	position: relative;
+}
+
+.total {
+	background: #F4F7FF;
+	position: absolute;
+	width: 100%;
+	font-size: 18px;
+	left: 0;
+	bottom: 0;
+	padding: 11px 0px 10px 0px;
+	font-family: 'NotoSansKR', "ÎßëÏùÄ Í≥†Îîï", Malgun Gothic, AppleSDGothicNeo,
+		"ÎèãÏõÄ", Dotum, sans-serif;
+}
+
+.total_title {
+	float: left;
+	padding: 4px 0 0 35px;
+}
+
+.priceTotal {
+	padding: 0 30px 0 0;
+	float: right;
+	color: #3971FF;
+	font-size: 22px;
+}
+
+.finalTotalPrice_span {
+	font-size: 25px;
+}
+
+.submitbtn {
+	font-size: 18px;
+	font-weight: 400;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	background-color: #3971FF;
+	margin: 0;
+	border: 0;
+}
+
+.orderPayText {
+	width: 100%;
+	height: 120px;
+}
+
+.oderpayDiv {
+	margin: 11px 32px 10px 32px;
+	font-size: 16px;
+}
+
+.payRight {
+	float: right;
+}
+
+.info {
+	padding: 0 0 0 15px;
+}
+
+.info .mileage {
+	margin: 6px 0 0;
+	padding: 10px 0 0;
+	*zoom: 1;
+}
+
+.info .mileage:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.info .displaynone+.mileage {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.info .mileage li {
+	float: left;
+	margin: 0 40px 0 0;
+}
+
+.info .mileage li a {
+	text-decoration: none;
+}
+
+.info .mileage li strong {
+	color: #008bcc;
+}
+
+.orderInfo {
+	width: 380px;
+	margin: 45px auto 0;
+	padding: 0 0 80px 130px;
+	color: #353535;
+	line-height: 1.5;
+	background:
+		url("http://img.echosting.cafe24.com/skin/base_ko_KR/order/bg_result.gif")
+		no-repeat 0 10px;
+}
+
+.orderInfo p {
+	/* margin: 64px 0 0 20px; */
+	padding: 25px 10px 10px 10px;
+}
+
+.orderInfo p strong {
+	display: block;
+	margin: 0 0 7px;
+	color: #000;
+	font-size: 20px;
+	font-family: gulim, sans-serif;
+}
+
+.orderInfo p a {
+	color: #008bcc;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.orderInfo li strong {
+	font-size: 14px;
+	letter-spacing: -1px;
+}
 </style>
 </head>
-<body>
-<div module="Order_result" unroll=1>
+<div class="ordercontainer">
+	<div class="wid900">
+		<div class="orderMain">
+			<div module="Order_result" unroll=1>
 
-    
-    <!-- «˝≈√¡§∫∏ -->
-    <div class="bankBenefit">
-      
-        <h3><strong><span>«˝≈√¡§∫∏</span></strong></h3>
-        <div class="info" >
-            <div class="member">
-                <p><strong></strong> ¥‘¿∫, ∫Í∑–¡Ó »∏ø¯¿ÃΩ ¥œ¥Ÿ.</p>           
-            </div>
-            <ul class="mileage">             
-                <li><a href="">ƒÌ∆˘ : <strong>0∞≥</strong></a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- ¡÷πÆøœ∑· -->
-    <div class="orderInfo">
-        <p>
-            <strong>∞Ì∞¥¥‘¿« ¡÷πÆ¿Ã øœ∑· µ«æ˙Ω¿¥œ¥Ÿ.</strong>
-            ¡÷πÆ≥ªø™ π◊ πËº€ø° ∞¸«— æ»≥ª¥¬ <a href="/">¡÷πÆ¡∂»∏</a> ∏¶ ≈Î«œø© »Æ¿Œ ∞°¥…«’¥œ¥Ÿ.
-       </p>
-        
-        <br><br><br><br>
-    </div>
-  
-    <!-- ∞·¡¶¡§∫∏ -->
-    <div class="orderArea">
-      
-        <div class="boardView">
-            <table border="0" align="center">
-            
-            <tbody>
-                <tr>
-                    <th scope="row">√÷¡æ∞·¡¶±›æ◊</th>
-                    <td class="price">
-                       ${map.ORDER_GOODS_PRICE * map.ORDER_GOODS_AMOUNT + 3000}
-                       </td>
-                </tr>
-                <tr>
-                    <th scope="row">∞·¡¶ºˆ¥‹</th>
-                    <td>
-                        <strong>π´≈Î¿Â ¿‘±›</strong>
-                       <h1 align="center">¥Î∏Ì¿∫«‡ 012-456789-01-123 (¡÷)«™∏£µ™</h1>
-                    </td>
-                </tr>
-            </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- ¡÷πÆ ªÛ«∞ ¡§∫∏ -->
-    <div class="orderListArea">
-        <div class="title">
-            <h3>¡÷πÆ ªÛ«∞ ¡§∫∏</h3>
-        </div>
-        <!-- ±‚∫ªπËº€ -->
-        <table border="0" class="boardList" align="center"  >
-            <thead>
-                <tr>
-                    <th scope="col" class="thumb">¿ÃπÃ¡ˆ</th>                  
-                    <th scope="col" class="product">ªÛ«∞¡§∫∏</th>
-                    <th scope="col" class="amount">ºˆ∑Æ</th> 
-                    <th scope="col" class="price">∆«∏≈∞°</th>          
-                </tr>
-            </thead>
-   
-            <tbody module="Order_normalresultlist">
-                <tr>
-                    <td class="thumb" >
-                       <img src='./resources/file/${map.ORDER_GOODS_IMAGE}' width=200px; height=200px;/>
-                    </td>
-                    <td class="product" width=200px; height=200px;>
-                       <strong>${map.ORDER_GOODS_NAME}</strong>         
-                    </td>
-                    <td class="amount" width=200px; height=200px;>
-                       <strong>${map.ORDER_GOODS_AMOUNT }</strong>
-                    </td>
-                    <td class="price" width=200px; height=200px;>
-                        <strong>${map.ORDER_GOODS_PRICE }</strong>
-                    </td>
-            </tbody>
-        </table>
-    
-   
-    <!-- πËº€¡ˆ¡§∫∏ -->
-    <div class="orderArea">
-        <div class="title">
-            <h3>πËº€¡ˆ¡§∫∏</h3>
-        </div>
-        <div class="boardView">
-            <table border="0" class="areaBoard" align="center" >      
-            <tbody>
-                <tr>
-                    <th scope="row">πﬁ¿∏Ω√¥¬∫–</th>
-                    <td>${map.ORDER_RECEIVE_NAME}</td>
-                </tr>                                    
-                <tr>
-                    <th scope="row">¡÷º“</th>
-                    <td>${map.ORDER_RECEIVE_ADDR1},${map.ORDER_RECEIVE_ADDR2}</td>                 
-                </tr>               
-                <tr>
-                    <th scope="row">»ﬁ¥Î¿¸»≠</th>
-                    <td>${map.PHONE}</td>
-                </tr>
-                <tr>
-                    <th scope="row">πËº€∏ﬁΩ√¡ˆ</th>
-                    <td>${map.ORDER_MEMO}</td>
-                </tr>          
-                <tr class="">
-                    <th scope="row">πËº€æ˜√º</th>
-                    <td>øÏ√º±π</td>
-                </tr>
-            </tbody>
-            </table>
-        </div>
-    </div>
-    
-    <div class="btnArea">
-        <span class="left">
-            <a href="#none" onclick="{$action_print_spec}" class="{$print_spec_display|display}"><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_order_spec.gif" alt="∞≈∑°∏Ìººº≠ ¿Œº‚" /></a>
-            <a href="#none" onclick="{$action_print_pg_card}" class="{$print_pg_card_display|display}"><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_order_card.gif" alt="ƒ´µÂ∏≈√‚¿¸«• ¿Œº‚" /></a>
-        </span>
-        <span class="right">
-           <!--  <a href="/"><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_order_ing.gif" alt="ºÓ«Œ∞Ëº”«œ±‚" /></a> -->
-            <a href="/main.pulu"><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_order_check.gif" alt="∏ﬁ¿Œ»≠∏È¿∏∑Œ" /></a>
-        </span>
-    </div>
-    <!-- ¿ÃøÎæ»≥ª -->
-    <div class="help">
-    <br><br>
-        <h3>¿ÃøÎæ»≥ª</h3>
-        <div class="content">
-            <ul>         
-                <li class="item2">πËº€¿∫ ∞·¡¶øœ∑· »ƒ ¡ˆø™ø° µ˚∂Û 3¿œ ~ 7¿œ ∞°∑Æ¿Ã º“ø‰µÀ¥œ¥Ÿ. </li>
-                <li class="item3">ªÛ«∞∫∞ ¿⁄ºº«— πËº€∞˙¡§¿∫ ¡÷πÆ¡∂»∏∏¶ ≈Î«œø© ¡∂»∏«œΩ« ºˆ ¿÷Ω¿¥œ¥Ÿ.</li>
-                <li class="item4">¡÷πÆ¿« √Îº“ π◊ »Ø∫“, ±≥»Øø° ∞¸«— ªÁ«◊¿∫ ¿ÃøÎæ»≥ª¿« ≥ªøÎ¿ª ¬¸∞Ì«œΩ Ω√ø¿.</li>
-            </ul>
-        </div>
-    </div>
-  
-</div>
-</body>
-</html>
+				<div align="center" class="orderpage">
+					<span>Ï£ºÎ¨∏ÏôÑÎ£å</span>
+				</div>
+				<!-- Ï£ºÎ¨∏ÏôÑÎ£å -->
+				<div class="orderInfo">
+					<p>
+						<strong>Í≥†Í∞ùÎãòÏùò Ï£ºÎ¨∏Ïù¥ ÏôÑÎ£å ÎêòÏóàÏäµÎãàÎã§.</strong> Ï£ºÎ¨∏ÎÇ¥Ïó≠ Î∞è Î∞∞ÏÜ°Ïóê Í¥ÄÌïú ÏïàÎÇ¥Îäî
+						<a href="/">Ï£ºÎ¨∏Ï°∞Ìöå</a>
+						Î•º ÌÜµÌïòÏó¨ ÌôïÏù∏ Í∞ÄÎä•Ìï©ÎãàÎã§.
+					</p>
+				</div>
+				<div class="panel panel-default">
+					<!-- Î™ÖÏãù : ÌåêÎÑ¨ ÌÅ¥Î¶≠Î∑∞ -->
+					<a role="button" data-toggle="collapse" href="#collapse4" aria-expanded="true">
+						<div class="panel-heading" role="tab">
+							<span class="panel-title">ÌòúÌÉùÏ†ïÎ≥¥</span>
+						</div>
+					</a>
+					<!-- Î™ÖÏãù : ÌåêÎÑ¨ ÎÇ¥Ïö© -->
+					<div id="collapse4" class="panel-collapse collapse in" role="tabpanel">
+						<div class="panel-body">
+							<div class="info">
+								<div class="member">
+									<p>
+										<strong></strong>${loginId }ÎãòÏùÄ, Î∏åÎ°†Ï¶à ÌöåÏõêÏù¥Ïã≠ÎãàÎã§.
+									</p>
+								</div>
+								<ul class="mileage">
+									<li><a href="">
+											Ïø†Ìè∞ : <strong>0Í∞ú</strong>
+										</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<!-- Î™ÖÏãù : ÌåêÎÑ¨ ÌÅ¥Î¶≠Î∑∞ -->
+					<a role="button" data-toggle="collapse" href="#collapse3" aria-expanded="true">
+						<div class="panel-heading" role="tab">
+							<span class="panel-title">Ï£ºÎ¨∏ ÏÉÅÏÑ∏ ${map.ORDER_DATE}</span>
+						</div>
+					</a>
+					<!-- Î™ÖÏãù : ÌåêÎÑ¨ ÎÇ¥Ïö© -->
+					<div id="collapse3" class="panel-collapse collapse in" role="tabpanel">
+						<div class="panel-body">
+							<div class="ordergoods">
+
+								<table>
+									<c:choose>
+										<c:when test="${fn:length(list) > 0}">
+											<c:forEach items="${list}" var="row" varStatus="status">
+												<tbody>
+													<tr>
+														<td rowspan="4" class="order_info">
+															<img src='./resources/img/dummy/sm1.jpg' class="ordergoodsimg">
+															<input type="hidden" id="ORDER_GOODS_AMOUNT" name="ORDER_GOODS_AMOUNT" class="ORDER_GOODS_AMOUNT" value="${row.ORDER_GOODS_AMOUNT}" />
+															
+															<input type="hidden" class="individual_totalPrice" value="${row.ORDER_GOODS_PRICE * row.ORDER_GOODS_AMOUNT}">
+														</td>
+														<td height="14px">
+															<strong class="prdName">${row.ORDER_GOODS_NAME}</strong>
+														</td>
+													</tr>
+													<tr>
+														<td height="10px"></td>
+													</tr>
+													<tr>
+														<td height="20px">
+															<span class="prdText">${row.ORDER_GOODS_AMOUNT}Í∞ú</span>
+														</td>
+													</tr>
+													<tr>
+														<td height="38px">
+															<span class="prdText">[Ï°∞Í±¥] / Í∏∞Î≥∏Î∞∞ÏÜ°</span>
+														</td>
+													</tr>
+													<tr>
+														<td></td>
+														<td height="42px" class="pricetd">
+															<span class="proPrice"><fmt:formatNumber value="${row.ORDER_GOODS_PRICE * row.ORDER_GOODS_AMOUNT}" pattern="#,###,###" />Ïõê
+															</span>
+														</td>
+													</tr>
+												</tbody>
+											</c:forEach>
+										</c:when>
+									</c:choose>
+								</table>
+
+								<%-- <table class="ordergoodstable">
+										<colgroup>
+											<col width="10%">
+											<col width="90%">
+										</colgroup>
+										<c:choose>
+											<c:when test="${fn:length(list) > 0}">
+												<c:forEach items="${list}" var="row" varStatus="status">
+													<tbody>
+														<tr>
+															<td rowspan="4" class="order_info">
+																<a href="./Detail.pulu?GOODS_NUM=${row.GOODS_NUM}" target='_blank'>
+																	<img src='./resources/file/${row.IMAGE_STORED}' class="ordergoodsimg">
+																</a>
+																<input type="hidden" id="ORDER_GOODS_NUM" name="ORDER_GOODS_NUM" value="${row.GOODS_NUM}" />
+																<input type="hidden" id="ORDER_GOODS_NAME" name="ORDER_GOODS_NAME" value="${row.GOODS_NAME}" />
+																<input type="hidden" id="ORDER_GOODS_IMAGE" name="ORDER_GOODS_IMAGE" value="${row.IMAGE_STORED}" />
+																<input type="hidden" id="ORDER_GOODS_AMOUNT" name="ORDER_GOODS_AMOUNT" class="ORDER_GOODS_AMOUNT" value="${row.SELECTED_GOODS_AMOUNT}" />
+																<input type="hidden" id="ORDER_GOODS_PRICE" name="ORDER_GOODS_PRICE" value="${row.GOODS_PRICE}" />
+																<input type="hidden" class="individual_totalPrice" value="${row.GOODS_PRICE * row.SELECTED_GOODS_AMOUNT}">
+															</td>
+															<td height="14px">
+																<strong class="prdName"><a href="./Detail.pulu?GOODS_NUM=${row.GOODS_NUM}" target='_blank'>${row.GOODS_NAME}</a></strong>
+															</td>
+														</tr>
+														<tr>
+															<td height="10px"></td>
+														</tr>
+														<tr>
+															<td height="20px">
+																<span class="prdText">ÏàòÎüâ: ${row.SELECTED_GOODS_AMOUNT}Í∞ú</span>
+															</td>
+														</tr>
+														<tr>
+															<td height="38px">
+																<span class="prdText">[Ï°∞Í±¥] / Í∏∞Î≥∏Î∞∞ÏÜ°</span>
+															</td>
+														</tr>
+														<tr>
+															<td></td>
+															<td height="42px" class="pricetd">
+
+																<span class="proPrice"><fmt:formatNumber value="${row.SELECTED_GOODS_AMOUNT * row.GOODS_PRICE}" pattern="#,###,###" />Ïõê </span>
+															</td>
+														</tr>
+													</tbody>
+													<!-- Í≤∞Ï†úÌïòÍ∏∞ form -->
+													<form id="orderMain" action="orderResult.pulu" class="order_main" method="post"></form>
+												</c:forEach>
+											</c:when>
+										</c:choose>
+										<tr>
+											<td height="60px"></td>
+										</tr>
+									</table> --%>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Î™ÖÏãù : Ï£ºÎ¨∏ Ï†ïÎ≥¥ ÌåêÎÑ¨ ÏãúÏûë -->
+				<div class="panel panel-default">
+					<!-- Î™ÖÏãù : ÌåêÎÑ¨ ÌÅ¥Î¶≠Î∑∞ -->
+					<a role="button" data-toggle="collapse" href="#collapse1" aria-expanded="true">
+						<div class="panel-heading" role="tab">
+							<span class="panel-title">Î∞õÏúºÏãúÎäîÎ∂Ñ Ï†ïÎ≥¥</span>
+						</div>
+					</a>
+					<!-- Î™ÖÏãù : ÌåêÎÑ¨ ÎÇ¥Ïö© -->
+					<div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
+						<div class="panel-body">
+							<table class="ordertable">
+								<colgroup>
+									<col width="12%">
+									<col width="29%">
+									<col width="29%">
+									<col width="30%">
+								</colgroup>
+								<tr>
+									<th>Î∞õÏúºÏãúÎäîÎ∂Ñ</th>
+									<td colspan="3">
+										<div class="orderinsert">${map.ORDER_RECEIVE_NAME}</div>
+									</td>
+								</tr>
+								<tr>
+									<th>Ï£ºÏÜå</th>
+									<td>
+										<div class="orderinsert">${map.ORDER_RECEIVE_ZIPCODE}</div>
+									</td>
+									<td colspan="2"></td>
+								</tr>
+								<tr>
+									<th></th>
+									<td colspan="3">
+										<div class="orderinsert">${map.ORDER_RECEIVE_ADDR1}</div>
+									</td>
+								</tr>
+								<tr>
+									<th></th>
+									<td colspan="3">
+										<div class="orderinsert">${map.ORDER_RECEIVE_ADDR2}</div>
+									</td>
+								</tr>
+								<tr>
+									<th>Ìú¥ÎåÄÏ†ÑÌôî</th>
+									<td colspan="3">
+										<div class="orderinsert">${map.ORDER_RECEIVE_PHONE}</div>
+									</td>
+								</tr>
+								<tr>
+									<th>Î∞∞ÏÜ°Î©îÏãúÏßÄ</th>
+									<td colspan="3">
+										<div class="orderinsert">${map.ORDER_MEMO}</div>
+									</td>
+								</tr>
+								<tr>
+									<th>Î∞∞ÏÜ°ÏóÖÏ≤¥</th>
+									<td colspan="3">
+										<div class="orderinsert">Ïö∞Ï≤¥Íµ≠</div>
+									</td>
+								</tr>
+
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- Î™ÖÏãù : Í≤∞Ï†úÏ†ïÎ≥¥ ÌåêÎÑ¨ ÏãúÏûë -->
+				<div class="panel panel-default">
+					<!-- Î™ÖÏãù : ÌåêÎÑ¨ ÌÅ¥Î¶≠Î∑∞ -->
+					<a role="button" data-toggle="collapse" href="#collapse4" aria-expanded="true">
+						<div class="panel-heading" role="tab">
+							<span class="panel-title">Í≤∞Ï†úÏ†ïÎ≥¥</span>
+						</div>
+					</a>
+					<!-- Î™ÖÏãù : ÌåêÎÑ¨ ÎÇ¥Ïö© -->
+					<div id="collapse4" class="panel-collapse collapse in" role="tabpanel">
+						<div class="panel-body">
+							<div class="paytextall">
+								<div class="orderPayText">
+									<div class="oderpayDiv">
+										<span class="payspanLeft">ÏÉÅÌíàÍ∏àÏï°</span><strong class="payRight"><span class="totalPrice_span"></span>Ïõê</strong>
+									</div>
+									<div class="oderpayDiv">
+										<span class="payspanLeft">Î∞∞ÏÜ°ÎπÑ</span><strong class="payRight"><span class="delivery_price">3,000</span>Ïõê</strong>
+									</div>
+								</div>
+							</div>
+							<!-- ÏàòÏ†ï ÏòàÏ†ï -->
+							<div class="total">
+								<strong class="total_title">ÏµúÏ¢Ö Í≤∞Ï†ú Í∏àÏï° </strong> <strong><span class="priceTotal"><span class="finalTotalPrice_span"><fmt:formatNumber value="${map.ORDER_SUM_MONEY}" pattern="#,###,###" /></span>Ïõê</span></strong>
+								<input type="hidden" id="ORDER_SUM_MONEY" name="ORDER_SUM_MONEY" value="100" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="button" align="center">
+					<!-- Í≤∞Ï†ú ÏôÑÎ£åÌéòÏù¥ÏßÄÎ°ú Ï∂îÌõÑ ÏàòÏ†ï -->
+					<button type="button" id="cddd" class="submitbtn" onclick="location.href = '/main.pulu' ">
+						<span>Î©îÏù∏ÌôîÎ©¥ÏúºÎ°ú</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+<script>
+$(document).ready(function(){
+	
+	/* Ï¢ÖÌï© Ï†ïÎ≥¥ ÏÑπÏÖò Ï†ïÎ≥¥ ÏÇΩÏûÖ */
+	setTotalInfo();
+});	
+
+/* Ï¥ù Ï£ºÎ¨∏ Ï†ïÎ≥¥ ÏÑ∏ÌåÖ(Î∞∞ÏÜ°ÎπÑ, Ï¥ù Í∞ÄÍ≤©, ÎßàÏùºÎ¶¨ÏßÄ, Î¨ºÌíà Ïàò, Ï¢ÖÎ•ò) */
+function setTotalInfo(){
+	let totalPrice = 0;				// Ï¥ù Í∞ÄÍ≤©
+	let totalCount = 0;				// Ï¥ù Í∞ØÏàò
+	let deliveryPrice = 0;			// Î∞∞ÏÜ°ÎπÑ
+	let finalTotalPrice = 0; 		// ÏµúÏ¢Ö Í∞ÄÍ≤©(Ï¥ù Í∞ÄÍ≤© + Î∞∞ÏÜ°ÎπÑ)
+
+	
+	$(".order_info").each(function(index, element){
+			// Ï¥ù Í∞ÄÍ≤©
+			totalPrice += parseInt($(element).find(".individual_totalPrice").val());
+			// Ï¥ù Í∞ØÏàò
+			totalCount += parseInt($(element).find(".ORDER_GOODS_AMOUNT").val());		
+
+	});
+	
+	
+	/* Î∞∞ÏÜ°ÎπÑ Í≤∞Ï†ï */
+
+		deliveryPrice = 3000;	
+	
+	
+	// Ï¥ù Í∞ÄÍ≤©
+	$(".totalPrice_span").text(totalPrice.toLocaleString());
+	// Î∞∞ÏÜ°ÎπÑ
+	$(".delivery_price").text(deliveryPrice);	
+}
+
+</script>

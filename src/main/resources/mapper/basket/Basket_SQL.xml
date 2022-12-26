@@ -4,7 +4,7 @@
 <mapper namespace="basket">
 
 
-	<!-- 장바구니 중복확인 -->
+	<!-- 선민: 장바구니 중복확인 -->
 	<select id="checkBasket" parameterType="hashmap" resultType="hashmap">
 		SELECT *
 		FROM BASKET
@@ -13,14 +13,14 @@
 	</select>
 	
 
-	<!-- 장바구니 등록 -->
+	<!-- 선민: 장바구니 등록 -->
 	<insert id="insertBasket" parameterType="hashmap">
 		INSERT INTO BASKET (BASKET_NUM, BASKET_MEMBER_ID, BASKET_GOODS_NUM, BASKET_GOODS_AMOUNT)
 		VALUES (BASKET_NUM_SEQ.NEXTVAL, #{LOGIN_ID}, #{GOODS_NUM}, #{SELECTED_GOODS_AMOUNT}) 
 	</insert>
 	
 	
-	<!-- 기존 장바구니 수량 추가 -->
+	<!-- 선민: 기존 장바구니 수량 추가 -->
 	<update id="updateBasket" parameterType="hashmap">
 <!-- 		UPDATE BASKET  -->
 <!-- 		SET BASKET_GOODS_AMOUNT = BASKET_GOODS_AMOUNT + #{SELECTED_GOODS_AMOUNT} -->
@@ -32,9 +32,7 @@
 	</update>
 	
 	
-	
-	
-	<!-- 장바구니 리스트 수량 변경 -->
+	<!-- 선민: 장바구니 리스트 수량 변경 -->
 	<update id="updateCount" parameterType="hashmap">
 		UPDATE BASKET
 		SET BASKET_GOODS_AMOUNT = #{SELECTED_GOODS_AMOUNT}
@@ -42,7 +40,7 @@
 	</update>
 	
 	
-	<!-- 장바구니 주문된 목록 존재확인 -->
+	<!-- 선민: 주문된 상품 장바구니 존재여부 확인 -->
 	<select id="checkBasketOrder" resultType="int">
 		SELECT COUNT(*)
         FROM BASKET
@@ -51,7 +49,7 @@
 	</select>
 	
 	
-	<!-- 장바구니 주문된 목록만 삭제 -->
+	<!-- 선민: 주문완료된 장바구니 삭제 -->
 	<delete id="deleteBasketOrder">
 		DELETE FROM BASKET
 		WHERE BASKET_GOODS_NUM = #{ORDER_GOODS_NUM}
@@ -59,13 +57,19 @@
 	</delete>
 	
 	
-	<!-- 장바구니 전체 삭제 -->
+	<!-- 선민: 장바구니 선택 삭제 -->
+	<delete id="deleteBasketSelect">
+		DELETE FROM BASKET WHERE BASKET_NUM = #{BASKET_NUM}
+	</delete>
+	
+	
+	<!-- 선민: 장바구니 전체 삭제 -->
 	<delete id="deleteBasketAll">
 		DELETE FROM BASKET WHERE BASKET_MEMBER_ID = #{LOGIN_ID}
 	</delete>
 	
 	
-	<!-- 장바구니 리스트 불러오기 -->
+	<!-- 명식: 장바구니 리스트 불러오기 -->
 	<select id="basketList" resultType="hashmap">
 		select /*+ index_asc (BASKET, PK_BASKET_NUM) */
 	    BASKET_NUM, BASKET_GOODS_NUM, BASKET_GOODS_AMOUNT,

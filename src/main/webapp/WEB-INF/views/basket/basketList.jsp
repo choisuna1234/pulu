@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
 <script src="webjars/jquery/3.5.1/dist/jquery.min.js"></script>
 
 <style>
@@ -268,6 +268,7 @@
 												<input type="hidden" class="individual_goods_amount" value="${row.BASKET_GOODS_AMOUNT}">
 												<input type="hidden" class="individual_totalPrice" value="${row.GOODS_PRICE * row.BASKET_GOODS_AMOUNT}">
 												<input type="hidden" class="individual_goods_num" value="${row.BASKET_GOODS_NUM}">
+												<input type="hidden" class="individual_basket_num" value="${row.BASKET_NUM}">
 											</td>
 
 											<!-- 썸네일이미지 -->
@@ -317,10 +318,10 @@
 										<input type="hidden" name="GOODS_NUM" class="goods_num">
 										<input type="hidden" name="SELECTED_GOODS_AMOUNT" class="selected_goods_amount">
 									</form>
-									<!-- 주문 form -->
-									<form action="pOrderBasketList.pulu" class="order_form" method="post">
-						
-									</form>
+									<!-- 상품주문 form -->
+									<form action="pOrderBasketList.pulu" class="order_form" method="post"></form>
+									<!-- 선택삭제 form -->
+									<form action="deleteBasketSelect.pulu" class="delete_form" method="post"></form>
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
@@ -354,30 +355,28 @@
 				</div>
 				<br />
 				<div class="btn left">
-					<a href='javascript:void(0);' onclick="chkAll2();">전체 선택</a>
-					<a href="">선택 삭제</a>
+					<a href='javascript:void(0);' class="delete_btn">선택 삭제</a>
 					<a href="deleteBasketAll.pulu">전체 삭제</a>
 				</div>
 				<div class="btn right">
 					<a href="list" class="btt">쇼핑 계속하기</a>
 					<a href='javascript:void(0);' class="order_btn">상품주문</a>
-<!-- 					<a href='javascript:void(0);' class="order_bt" onclick="orderBasket()">전체상품주문</a> -->
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<!-- 주문페이지 이동 --> <!-- https://kimvampa.tistory.com/272 -->
-<script>
 
+<script>
+<!-- 선민: 주문페이지 이동 -->
 $(".order_btn").on("click", function() {
 	let form_contents ='';
 	let orderNumber = 0;
 	
 	$(".basket_info").each(function(index, element) {
 		
-	    if($(element).find(".checkbox").is(":checked") === true){	// 체크여부
+	    if($(element).find(".checkbox").is(":checked") === true) {	// 체크된 항목만 주문페이지로 이동
 			let goodsNum = $(element).find(".individual_goods_num").val();
 			let goodsAmount = $(element).find(".individual_goods_amount").val();
 	
@@ -393,11 +392,114 @@ $(".order_btn").on("click", function() {
 	
 	$(".order_form").html(form_contents);
 	$(".order_form").submit();
-
 });
 
-</script>
+<!-- 선민: 체크박스 선택 삭제 -->
+$(".delete_btn").on("click", function() {
+	let form_contents ='';
+	let orderNumber = 0;
+	
+	$(".basket_info").each(function(index, element) {
+		
+	    if($(element).find(".checkbox").is(":checked") === true) {	// 체크여부
+			let basketNum = $(element).find(".individual_basket_num").val();
+	
+			let basketNum_input = "<input name='orders[" + orderNumber + "].BASKET_NUM' type='hidden' value='" + basketNum + "'>";
+			form_contents += basketNum_input;
+			
+			orderNumber += 1;
+	    }
+	});
+	
+	$(".delete_form").html(form_contents);
+	$(".delete_form").submit();
+});
 
+<!-- 선민: 수량변경 버튼 함수 (표시된 수량 변경 후 DB에 적용) -->
+function updateAmount(type, index) {
+	
+	let form = $(".amountForm");
+	const a = document.getElementById('amount_'+ index);
+	const bn = document.getElementById('order_basket_num_'+ index);		
+	
+	if(type === 'plus') {
+		let basket_num = bn.value;
+		let selected_goods_amount = 1;
+		$(".basket_num").val(basket_num);
+		$(".selected_goods_amount").val(selected_goods_amount);
+		form.submit();			
+	}
+	else if(type === 'minus') {
+		let basket_num = bn.value;
+		let selected_goods_amount = -1;
+		$(".basket_num").val(basket_num);
+		$(".selected_goods_amount").val(selected_goods_amount);
+		form.submit();	
+	}
+}
+
+<!-- 선민: 수량변경에 따른 단일항목의 총 상품금액 변경 -->
+function changeAmount(type, index)  {
+    
+	const a = document.getElementById('amount_'+ index);
+	const p = document.getElementById('price_'+ index);
+	const ps = document.getElementById('price_sum_'+ index);
+	const oa = document.getElementById('order_amount_'+ index);
+	
+	// 현재 화면에 표시된 값
+	let amount = a.innerText; 
+	let price = p.innerText;
+	let price_sum = ps.innerText;
+	
+	price = price.replace(/,/g, "");
+	price = price.replace("원", "");
+	price_sum = price_sum.replace(/,/g, "");
+	price_sum = price_sum.replace("원", "");
+	
+	if(type === 'plus') {
+		amount = parseInt(amount) + 1;
+		price_sum = parseInt(amount) * parseInt(price);
+		price_sum = price_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
+	}
+	else if(type === 'minus') {
+		amount = parseInt(amount) - 1;
+		price_sum =  parseInt(amount) * parseInt(price);
+		price_sum = price_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
+	}
+	
+	if(parseInt(amount) < 1) {
+		amount = 1;
+		price_sum = parseInt(price);
+		price_sum = price_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
+	}
+	
+	// 결과 출력
+	a.innerText = amount;
+	ps.innerText = price_sum;
+	
+	document.getElementById('order_amount_'+ index).value = amount;
+// 	alert("order amount == " + document.getElementById('order_amount_'+ index).value);
+
+	updateAmount(type, index);
+}
+
+<!-- 선민: 체크박스 전체 선택 -->
+function chkAll() {
+	if( $("#chkAll").is(':checked') ) {
+	$("input[name=checkRow]").prop("checked", true);
+	} else {
+	$("input[name=checkRow]").prop("checked", false);
+	}	 	 
+}
+
+function chkAll2() {
+	$("input[name=checkRow]").prop("checked", true);
+}
+
+function numberWithCommas(e) {
+	return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+</script>
 
 
 <script>
@@ -476,101 +578,4 @@ function setTotalInfo(){
 
 
 
-function changeAmount(type, index)  {
-	  
-	const a = document.getElementById('amount_'+ index);
-	const p = document.getElementById('price_'+ index);
-	const ps = document.getElementById('price_sum_'+ index);
-// 	const df = document.getElementById('delivery_fee_'+ index);
-	const oa = document.getElementById('order_amount_'+ index);
-	
-	// 현재 화면에 표시된 값
-	let amount = a.innerText; 
-	let price = p.innerText;
-	let price_sum = ps.innerText;
-// 	let hhh = 0;
-	
-	price = price.replace(/,/g, "");
-	price = price.replace("원", "");
-	price_sum = price_sum.replace(/,/g, "");
-	price_sum = price_sum.replace("원", "");
-
-	
-	if(type === 'plus') {
-		amount = parseInt(amount) + 1;
-		price_sum = parseInt(amount) * parseInt(price);
-// 		hhh = priceee;
-		price_sum = price_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
-	}
-	else if(type === 'minus') {
-		amount = parseInt(amount) - 1;
-		price_sum =  parseInt(amount) * parseInt(price);
-// 		hhh = priceee;
-		price_sum = price_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
-	}
-	if(parseInt(amount) < 1) {
-		amount = 1;
-		price_sum = parseInt(price);
-		price_sum = price_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
-// 		price_sum = '₩' + price_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
-	  
-		// 결과 출력
-		a.innerText = amount;
-		ps.innerText = price_sum;
-		
-		document.getElementById('order_amount_'+ index).value = amount;
-		alert("order amount == " + document.getElementById('order_amount_'+ index).value);
-		
-// 		if(hhh > 30000){
-// 			dp.append('무료');
-// 		}
-// 		if(hhh <= 30000){
-// 			dp.innerHtml = '3000원';
-// 		}
-		updateAmount(type, index);
-	}
-
-
-	/* 수량 수정 버튼 */
-	function updateAmount(type, index) {
-		
-		let form = $(".amountForm");
-		const a = document.getElementById('amount_'+ index);
-		const bn = document.getElementById('order_basket_num_'+ index);		
-		
-		if(type === 'plus') {
-			let basket_num = bn.value;
-			let selected_goods_amount = 1;
-			$(".basket_num").val(basket_num);
-			$(".selected_goods_amount").val(selected_goods_amount);
-			form.submit();			
-		}
-		else if(type === 'minus') {
-			let basket_num = bn.value;
-			let selected_goods_amount = -1;
-			$(".basket_num").val(basket_num);
-			$(".selected_goods_amount").val(selected_goods_amount);
-			form.submit();	
-		}
-	}
-
-</script>
-
-<script type="text/javascript">
-	function chkAll() {
-		if( $("#chkAll").is(':checked') ) {
-		$("input[name=checkRow]").prop("checked", true);
-		} else {
-		$("input[name=checkRow]").prop("checked", false);
-		}	 	 
-	}
-	
-	function chkAll2() {
-		$("input[name=checkRow]").prop("checked", true);
-	}
-	
-	function numberWithCommas(e) {
-		return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
 </script>

@@ -7,10 +7,11 @@
 	<select id="orderList" resultType="hashMap"
 		parameterType="hashMap">
 			<![CDATA[
-				SELECT ROW_NUMBER() OVER (ORDER BY ORDER_NUM DESC) AS RNUM, O.ORDER_NUM, O.ORDER_PAY_TYPE, O.ORDER_GOODS_NAME, O.ORDER_GOODS_AMOUNT,
-					   M.ID, O.ORDER_SUM_MONEY, O.ORDER_DATE, O.ORDER_STATUS, M.GRADE
-				FROM GOODS_ORDER O, MEMBER M
+				SELECT O.ORDER_NUM, O.ORDER_PAY_TYPE, 
+				       O.ORDER_MEMBER_ID, O.ORDER_SUM_MONEY, O.ORDER_DATE, O.ORDER_STATUS, M.GRADE
+				FROM ORDER_DELI O, MEMBER M, ORDER_GOODS G
 				WHERE O.ORDER_MEMBER_ID = M.ID
+				AND O.ORDER_NUM = G.ORDER_NUM
 				ORDER BY O.ORDER_DATE DESC
 			]]>
 	</select><!--  O, MEMBER M, GOODS G,  -->
@@ -20,13 +21,12 @@
 	<select id="orderDetail" resultType="hashMap" parameterType="hashMap">
 		<![CDATA[
 			SELECT O.ORDER_NUM, O.ORDER_PAY_TYPE, 
-				   O.ORDER_GOODS_NUM, O.ORDER_GOODS_NAME, O.ORDER_GOODS_PRICE, O.ORDER_GOODS_AMOUNT,
 				   M.ID, M.NAME, M.PHONE, O.ORDER_RECEIVE_NAME, O.ORDER_RECEIVE_ADDR1, O.ORDER_RECEIVE_ADDR2, O.ORDER_RECEIVE_PHONE, O.ORDER_RECEIVE_ZIPCODE, 
-				   O.ORDER_MEMO, O.ORDER_SUM_MONEY, O.ORDER_DATE, O.ORDER_STATUS, O.ORDER_GOODS_IMAGE, M.GRADE
-			FROM GOODS_ORDER O, MEMBER M
+				   O.ORDER_MEMO, O.ORDER_SUM_MONEY, O.ORDER_DATE, O.ORDER_STATUS, M.GRADE
+			FROM ORDER_DELI O, MEMBER M, ORDER_GOODS G
 			WHERE O.ORDER_NUM = #{ORDER_NUM}
-			
-			AND M.ID = O.ORDER_MEMBER_ID
+			AND O.ORDER_NUM = G.ORDER_NUM
+			AND O.ORDER_MEMBER_ID = M.ID
 		]]>
 	</select><!-- AND G.GOODS_NUM = O.ORDER_GOODS_NUM -->
 	
@@ -44,7 +44,7 @@
 	<!-- 관리자 주문처리 수정 -->
 	<update id="orderUpdate" parameterType="hashMap">
 		<![CDATA[
-			UPDATE GOODS_ORDER
+			UPDATE ORDER_DELI
 			SET	ORDER_RECEIVE_NAME = #{ORDER_RECEIVE_NAME},
 				ORDER_STATUS = #{ORDER_STATUS},
 				ORDER_RECEIVE_ADDR1 = #{ORDER_RECEIVE_ADDR1},
@@ -61,7 +61,7 @@
 	<!-- 관리자 주문처리 <주문상태> 수정 -->
 	<update id="orderStatusUpdate" parameterType="hashMap">
 		<![CDATA[
-			UPDATE GOODS_ORDER
+			UPDATE ORDER_DELI
 			SET ORDER_STATUS = #{ORDER_STATUS}
 			WHERE ORDER_NUM = #{ORDER_NUM}
 		]]>
@@ -71,7 +71,7 @@
 	<!-- 관리자 주문처리 삭제 = 주문취소 -->
 	<update id="orderDelete" parameterType="hashmap">
 		<![CDATA[
-			UPDATE GOODS_ORDER
+			UPDATE ORDER_DELI
 			SET ORDER_STATUS = 5
 			WHERE ORDER_NUM = #{ORDER_NUM}
 		]]>
@@ -86,9 +86,9 @@
 	<!-- 관리자 주문 검색 0(주문상태) - 상단 카테고리 -->
 	<select id="orderSearch0" resultType="hashMap" parameterType="hashMap">
 			<![CDATA[
-				SELECT ORDER_NUM, ORDER_PAY_TYPE, ORDER_GOODS_NAME, ORDER_GOODS_AMOUNT,
+				SELECT ORDER_NUM, ORDER_PAY_TYPE, 
 					   ORDER_MEMBER_ID, ORDER_SUM_MONEY, ORDER_DATE, ORDER_STATUS
-				FROM GOODS_ORDER  
+				FROM ORDER_DELI  
 				WHERE ORDER_STATUS = #{isSearch}  
 				ORDER BY ORDER_DATE DESC  
 			]]>
@@ -97,9 +97,9 @@
 	<!-- 관리자 주문처리 검색 1 - 아이디 -->
 	<select id="orderSearch1" resultType="hashMap" parameterType="hashMap">
 			<![CDATA[
-				SELECT ORDER_NUM, ORDER_PAY_TYPE, ORDER_GOODS_NAME, ORDER_GOODS_AMOUNT,
+				SELECT ORDER_NUM, ORDER_PAY_TYPE,
 					   ORDER_MEMBER_ID, ORDER_SUM_MONEY, ORDER_DATE, ORDER_STATUS
-				FROM GOODS_ORDER 
+				FROM ORDER_DELI  
 				WHERE ORDER_MEMBER_ID LIKE '%' || #{isSearch} || '%'  
 				ORDER BY ORDER_DATE DESC 
 			]]>
@@ -108,7 +108,7 @@
 	<!-- 관리자 주문처리 검색 2 - 주문 번호 -->
 	<select id="orderSearch2" resultType="hashMap" parameterType="hashMap">
 			<![CDATA[
-				SELECT ORDER_NUM, ORDER_PAY_TYPE, ORDER_GOODS_NAME, ORDER_GOODS_AMOUNT,
+				SELECT ORDER_NUM, ORDER_PAY_TYPE, 
 					   ORDER_MEMBER_ID, ORDER_SUM_MONEY, ORDER_DATE, ORDER_STATUS
 				FROM GOODS_ORDER
 				WHERE ORDER_NUM LIKE '%' || #{isSearch} || '%' 

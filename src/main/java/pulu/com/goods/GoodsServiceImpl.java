@@ -26,6 +26,8 @@ public class GoodsServiceImpl implements GoodsService {
 		Map<String, Object> tempMap = goodsDao.goodsDetail(map);
 		resultMap.put("map", tempMap);
 
+		System.out.println(map.get("GOODS_NUM"));
+
 		List<Map<String, Object>> list = goodsDao.selectFileList(map);
 		resultMap.put("list", list);
 
@@ -54,88 +56,32 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDao.searchOption2(map, categoryNo);
 	}
 
-	@Override // 후기 등록 조건 체크
-	public Map<String, Object> reviewInsertCheck0(Map<String, Object> map) throws Exception {
-
-		return goodsDao.reviewInsertCheck0(map);
-	}
-
-	@Override // 후기 등록 조건 체크
-	public Map<String, Object> reviewInsertCheck1(Map<String, Object> map) throws Exception {
-
-		return goodsDao.reviewInsertCheck1(map);
-	}
-
-	@Override // 후기 등록
-	public void reviewInsert(Map<String, Object> map, HttpServletRequest request) throws Exception {
-
-		goodsDao.reviewInsert(map);
-	}
-
 	@Override // 후기 목록
 	public List<Map<String, Object>> reviewList(Map<String, Object> map) throws Exception {
 
 		return goodsDao.reviewList(map);
 	}
-
-	@Override // 후기 수정
-	public void reviewUpdate(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Override // 후기 검색 (내용)
 	public List<Map<String, Object>> reviewSearch0(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return goodsDao.SearchContent(map);
 	}
-
-	@Override // 후기 삭제
-	public void reviewDelete(Map<String, Object> map) throws Exception {
-
-		goodsDao.reviewDelete(map);
-	}
-
-	@Override // QNA 목록
+	
+	@Override
 	public List<Map<String, Object>> qnaList(Map<String, Object> map) throws Exception {
-
 		return goodsDao.qnaList(map);
 	}
 
-	@Override // QNA 검색 (제목)
+	// 검색 1 - 제목
+	@Override
 	public List<Map<String, Object>> qnaSearch0(Map<String, Object> map) throws Exception {
+		return goodsDao.qnaSearch0(map);	}
 
-		return goodsDao.qnaSearch0(map);
-	}
-
-	@Override // QNA 검색 (내용)
+	// 검색 1 - 아이디
+	@Override
 	public List<Map<String, Object>> qnaSearch1(Map<String, Object> map) throws Exception {
-
 		return goodsDao.qnaSearch1(map);
-	}
-
-	@Override // QNA 등록
-	public void qnaInsert(Map<String, Object> map, HttpServletRequest request) throws Exception {
-
-		goodsDao.qnaInsert(map);
-	}
-
-	@Override // QNA 상세보기
-	public Map<String, Object> qnaDetail(Map<String, Object> map) throws Exception {
-
-		return goodsDao.qnaDetail(map);
-	}
-
-	@Override // QNA 수정
-	public void qnaUpdate(Map<String, Object> map, HttpServletRequest request) throws Exception {
-
-		goodsDao.qnaUpdate(map);
-	}
-
-	@Override // QNA 삭제
-	public void qnaDelete(Map<String, Object> map) throws Exception {
-
-		goodsDao.qnaDelete(map);
 	}
 
 }

@@ -1,54 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html> 
-<html>
-<head>
-<meta charset="UTF-8">
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
-<title>주문관리 수정</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 js -->
-<script>
-//카카오 우편번호 api
-function kakaoPost() {
-	new daum.Postcode({
-		oncomplete : function(data) {
-			document.querySelector("#zipcode").value = data.zonecode;
-			document.querySelector("#addr1").value = data.address
-		}
-	}).open();
-}
-</script>
-<script>
-//회원 삭제 알림 팝업
-function checkOrderDelete() {
-	var form = document.getElementById("adminOrderUpdateForm");
-	if (confirm("주문 취소 하겠습니까?") == true) {
-		form.action = "adminOrderDelete.pulu";
-		form.target = "_self";
-		form.method = "post";
-		form.submit();
-		opener.parent.location.reload();
-		window.close();
-	} else {}
-}
-</script>
 
-	<link rel="stylesheet" href="resources/css/ui.css" type="text/css" />
-  
-    <!-- Bootstrap Core CSS -->
-    <link href="/resources/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="/resources/sbadmin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/resources/sbadmin/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="/resources/sbadmin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-</head>
-<<body>
 <div id="wrapper">
         <div id="page-wrapper">
             <div class="row">
@@ -201,5 +156,34 @@ function checkOrderDelete() {
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-</body>
-</html>
+    
+    
+    
+    
+<script>
+//카카오 우편번호 api
+function kakaoPost() {
+	new daum.Postcode({
+		oncomplete : function(data) {
+			document.querySelector("#zipcode").value = data.zonecode;
+			document.querySelector("#addr1").value = data.address
+		}
+	}).open();
+}
+</script>
+<script>
+//회원 삭제 알림 팝업
+function checkOrderDelete() {
+	var form = document.getElementById("adminOrderUpdateForm");
+	if (confirm("주문 취소 하겠습니까?") == true) {
+		form.action = "adminOrderDelete.pulu";
+		form.target = "_self";
+		form.method = "post";
+		form.submit();
+		opener.parent.location.reload();
+		window.close();
+	} else {}
+}
+</script>
+
+	

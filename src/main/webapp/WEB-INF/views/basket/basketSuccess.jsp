@@ -6,9 +6,7 @@
 <meta charset="UTF-8">
 <title>장바구니 담기</title>
 <style>
-@import
-	url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap")
-	;
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 
 .basket1 {
 	width: 100%;

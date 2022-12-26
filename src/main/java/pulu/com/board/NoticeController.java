@@ -38,7 +38,7 @@ Logger log = Logger.getLogger(this.getClass());
 	// 공지사항 목록
 		@RequestMapping(value="/noticeList") 
 		public ModelAndView noticeList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-			ModelAndView mv = new ModelAndView("notice_List");
+			ModelAndView mv = new ModelAndView("notice_list");
 			
 			if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
 					|| request.getParameter("currentPage").equals("0")) {
@@ -120,7 +120,7 @@ Logger log = Logger.getLogger(this.getClass());
 	// 공지사항 상세보기
 	@RequestMapping(value="/noticeDetail") 
 	public ModelAndView noticeDetail(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("/board/noticeDetail");
+		ModelAndView mv = new ModelAndView("notice_detail");
 		
 		Map<String, Object> map = NoticeService.noticeDetail(commandMap.getMap());
 		
@@ -133,7 +133,4 @@ Logger log = Logger.getLogger(this.getClass());
 		
 		return mv;
 		}
-	
-	
-	
 }

@@ -1,16 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
-</head>
-
-<body>
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header" onclick="location.href='adminNoticeList.pulu';" >Notice</h1>
+			<h1 class="page-header">Notice</h1>
 		</div>
 
 		<!-- /.row -->
@@ -61,7 +56,7 @@
 									</c:choose>
 							</tbody>
 						</table>
-						${pagingHtml}
+						<div class="paging" style="border: 1px; float: right;">${pagingHtml}</div>
 
 						<div>
 							<div style="border: 1px; float: left; width: 310px;">
@@ -74,10 +69,9 @@
 											style="width: 80px;">
 											<option value="0">제목</option>
 											<option value="1">내용</option>
-										</select> 
-										<input class="form-control" type="text" name="isSearch"
-											id="isSearch" style="width: 190px;" />
-											 <span class="input-group-btn">
+										</select> <input class="form-control" type="text" name="isSearch"
+											id="isSearch" style="width: 190px;" /> <span
+											class="input-group-btn">
 											<button type="submit" class="btn btn-primary">
 												<i class="fa fa-search"></i>
 											</button>
@@ -134,7 +128,3 @@
          comSubmit.submit();
       }
    </script>  
-</body>
-</body>
-</html>
-

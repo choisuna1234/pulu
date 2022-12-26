@@ -29,7 +29,7 @@
     <![endif]-->
 
 <script>
-	// 선민: 삭제완료 창을 닫고 회원목록(adminMemberList) 페이지를 새로고침
+	<!-- 선민: 삭제완료 창을 닫고 회원목록(adminMemberList) 페이지 새로고침 -->
 	function closePopup() {
 		opener.parent.location.reload();
 		window.close();
@@ -72,7 +72,6 @@
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
-    </div>
     <!-- /#wrapper -->
 
     <!-- jQuery -->

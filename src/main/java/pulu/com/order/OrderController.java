@@ -73,7 +73,14 @@ public class OrderController {
 		
 		ModelAndView mv = new ModelAndView("orderResult");
 		orderService.insertOrder(ol.getOrders());
+		
+		Map<String, Object> orderDeliMap = orderService.selectOrderDeliSuccess(session);
+		List<Map<String, Object>> orderGoodslist = orderService.selectOrderGoodsSuccess(orderDeliMap);
+		
+		mv.addObject("map", orderDeliMap);
+		mv.addObject("list", orderGoodslist);
 		return mv;
+		
 	}
 
 }

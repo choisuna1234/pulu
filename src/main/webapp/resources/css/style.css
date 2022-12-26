@@ -13,7 +13,7 @@ a {
     font-size: 14px;
     color: #555;
 }
-
+			
 .footerA{
 	color: #fff;
 }
@@ -69,24 +69,21 @@ li {
     text-align: center;
     position: relative;
 	
-    border: 1px solid red;
     float: left;
     width:10%;
     box-sizing: border-box;
 }
 
+
 #secondMenu{
-	border: 1px solid green;
     float: left;
-    width:72%;
+    width:60%; 
     box-sizing: border-box;
 }
 
 #thirdMenu{
-	
-	border: 1px solid blue;
     float: right;
-    width:18%;
+    width:25%;
     box-sizing: border-box;
 }
 
@@ -136,7 +133,6 @@ li {
 }
 
 #topMain {
-    background: #fff;
     width: 100%;
     height: auto;
     margin: 0 auto;
@@ -146,6 +142,7 @@ li {
 #topMainMenuAll {
 	width: 100%;
     height: 42px;
+    box-shadow: 0 17px 6px -18px #555;
 }
 
 #topManu{
@@ -485,12 +482,11 @@ li.home {
     width: 100%;
     max-width: 1285px;
     margin: 100px auto;
-}
+
 }
 
 img {
     border: none;
-    vertical-align: top;
 }
 
 
@@ -510,22 +506,14 @@ img {
 }
 
 
-/* QNA 테이블 아코디언 형식 */
-table {
-	width: 500px;
+#thirdMenu li{
+	margin: 0 6px 0 6px;
+}
+.headicon{
+	vertical-align: middle;
 }
 
-.hide {
-	display: none;
-}
 
-.show {
-	display: table-row;
-}
-
-.item td {
-	cursor: pointer;
-}
 
 /* 페이징 스타일 지정 */
 .paging{text-align:center;height:32px;margin-top:5px;margin-bottom:15px;}
@@ -539,6 +527,6 @@ table {
 		  box-shadow:1px 1px 1px 0px rgba(235,235,235,1);
 }
 .paging a:first-child{margin-left:0;}
-.paging strong{color:#fff;background:#337AB7;border:1px solid #337AB7;}
+.paging strong{color:#fff;background:#006F3E;border:1px solid #006F3E;}
 .paging .page_arw{font-size:11px;line-height:30px;}
 

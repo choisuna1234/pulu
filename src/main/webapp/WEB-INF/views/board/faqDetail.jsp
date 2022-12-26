@@ -1,71 +1,80 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h2 onclick="location.href='faqList.pulu';">FAQ</h2>
-	<table class="board_view">
-		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
-		</colgroup>
-		<caption>게시글 상세</caption>
-		<tbody>
-			<tr>
-				<th scope="row">글번호</th>
-				<td>${map.FAQ_NUM }</td>
-				<th scope="row">조회수</th>
-				<td>${map.FAQ_READCOUNT }</td>
-			</tr>
-			<tr>
-				<th scope="row">작성자</th>
-				<td>${map.FAQ_ID }</td>
-				<th scope="row">작성일</th>
-				<td>${map.FAQ_DATE }</td>
-			</tr>
-			<tr>
-				<th scope="row">제목</th>
-				<td colspan="3">${map.FAQ_SUBJECT }</td>
-			</tr>
-			<tr>
-				<td colspan="4">${map.FAQ_CONTENT }</td>
-			</tr>
-		</tbody>
-	</table>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/board.css" />
+
+<div class="boardcontainer">
+	<div class="wid1280">
+		<div class="titleArea">
+            <h2><font color="#555555">FAQ</font> </h2>
+            <p>푸르뎁의 새로운 소식을 알려드립니다.</p>
+        </div>
+		<div class="base-table boardWrite">
+			<table border="1" summary>
+				<colgroup>
+					<col width="130px"/>
+					<col width="*"/>
+				</colgroup>
+				<tbody>
+					<tr>
+						<th scope="row">제목</th>
+						<td colspan="3">${map.FAQ_SUBJECT}
+					</tr>
+					<tr>
+						<th scope="row">작성자</th>
+						<td>${map.FAQ_ID }</td>
 	
-	<a href="#this" class="btn" id="list">목록으로</a>
-	
-	<%@ include file="/WEB-INF/include/include-body.jspf" %>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#list").on("click", function(e){ //리스트
-				e.preventDefault();	//
-				fn_faqList();
-			});
+					</tr>
+					<tr>
+						<td colspan="2">
+							<ul class="etcArea">
+	                            <li class="">
+	                                <strong>작성일</strong> <span class="txtNum">${map.FAQ_DATE }</span>
+	                            </li>
+	                            <li class="">
+	                                <strong>조회수</strong> <span class="txtNum">${map.FAQ_READCOUNT }</span>
+	                            </li>
+	                        </ul>
+	                        <div class="detail">
+	                        	<div class="boardview">
+	                        		${map.FAQ_CONTENT }
+	                        	</div>
+	                        </div>
+						</td>
+					</tr>
+			</table>
+			<div class="base-button">	
+				<a href="#this" class="btnNo" id="list">목록으로</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#list").on("click", function(e) { //리스트
+			e.preventDefault(); //
+			fn_faqList();
 		});
-		
-		function fn_faqList(){
-			var comSubmit = new ComSubmit();
-			var currentPage;
-			var isSearch;
-			var searchNum;
-			
-//			if (isSearch === null) { 
-				comSubmit.setUrl("<c:url value='/faqList.pulu?searchNum=${searchNum}&isSearch=${isSearch}&currentPage=${currentPage}'/>");
-//			} else {
-//				comSubmit.setUrl("<c:url value='/adminFaqList.pulu?currentPage=${currentPage}'/>");
-//			}
-			comSubmit.submit();
-			
-//			history.go(-1);
-		}
-	</script>
-</body>
-</html>
+	});
+
+	function fn_faqList() {
+		var comSubmit = new ComSubmit();
+		var currentPage;
+		var isSearch;
+		var searchNum;
+
+		//			if (isSearch === null) { 
+		comSubmit
+				.setUrl("<c:url value='/faqList.pulu?searchNum=${searchNum}&isSearch=${isSearch}&currentPage=${currentPage}'/>");
+		//			} else {
+		//				comSubmit.setUrl("<c:url value='/adminFaqList.pulu?currentPage=${currentPage}'/>");
+		//			}
+		comSubmit.submit();
+
+		//			history.go(-1);
+	}
+</script>

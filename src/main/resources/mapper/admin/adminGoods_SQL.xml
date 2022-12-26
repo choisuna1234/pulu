@@ -116,7 +116,8 @@ select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 					GOODS_NAME = #{GOODS_NAME},
 					GOODS_PRICE = #{GOODS_PRICE},
 					GOODS_AMOUNT = #{GOODS_AMOUNT},
-					GOODS_CALORIE = #{GOODS_CALORIE} 
+					GOODS_CALORIE = #{GOODS_CALORIE},
+					GOODS_CATEGORY = #{GOODS_CATEGORY} 
 				WHERE 
 					GOODS_NUM = #{GOODS_NUM}	
 			]]>
@@ -133,6 +134,18 @@ select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 				IMAGE_GOODS_NUM = #{GOODS_NUM}	
 		]]>
 	</update>
+	
+	<!-- 이미지 수정 -->
+	<update id="deleteFile" parameterType="hashmap">
+		<![CDATA[
+			UPDATE IMAGE 
+			SET
+				IMAGE_DEL_GB = 'N'
+			WHERE
+				IMAGE_NUM = #{FILE_IDX}	
+		]]>
+	</update>
+	
 
 
 	<!-- 상품 삭제 -->

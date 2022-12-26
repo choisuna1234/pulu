@@ -1,15 +1,10 @@
 package pulu.com.main;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,23 +36,21 @@ public class MainController {
 		mv.addObject("loginGrade", (String)session.getAttribute("loginGrade"));  
 		return "admin_Main";
 	}
-	
-	
-	//선아: 매장지도 띄우기
+
+	// 선아: 매장지도 띄우기
 	@RequestMapping(value = "/burialMap")
 	public ModelAndView burialMap() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("burialMap");
 		return mv;
 	}
-	
-	//선아: 영양정보 띄우기
-		@RequestMapping(value = "/nutritionFacts")
-		public ModelAndView nutritionFacts() {
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("nutritionFacts");
-			return mv;
+
+	// 선아: 영양정보 띄우기
+	@RequestMapping(value = "/nutritionFacts")
+	public ModelAndView nutritionFacts() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("nutritionFacts");
+		return mv;
 	}
-		
 	
 } 
