@@ -2,8 +2,42 @@
 <!-- 선민: id속성값이 zipcode인 <input>에 우편번호 리턴 -->
 <!-- 선민: id속성값이 addr1인 <input>에 주소 리턴 -->
 <head>
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+.join_Title {
+	text-align: left;
+}
+
+#join_Title {
+	margin-bottom: 20px;
+}
+
+.insert {
+      display: inline-block;
+      height: 10px;
+      padding: 10px 10px 10px 20px;
+      vertical-align: middle;
+      border: 1px solid #dddddd;
+      width: 25%;
+      color: #999999;
+      border-radius: 5px;
+      size : 100px;
+}
+input {
+  width:200px;
+  height:100px;
+    font-size:20px;
+}
+#btn{
+width:100px;
+height:25px;
+}
+
+
+</style>
+
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- 카카오 js -->
 <script src="webjars/jquery/3.5.1/dist/jquery.min.js"></script>
 <script>
@@ -92,116 +126,140 @@
 	
 </script>
 </head>
-
+<!-- 선아: 회원 정보 수정 -->
 <br>
 <br>
 <br>
-<center>
-	<h1>회원 정보 수정</h1>
-</center>
-<br>
-<center>
-<h3> ${loginId}님의 회원정보 입니다. </h3>
-</center>
-
-
-<hr width="70%" color="grey">
-
+<link rel="stylesheet" type="text/css" href="./resources/css/board.css" />
+<div class="boardcontainer">
+	<div class="wid1280">
+		<div class="titleArea">
+            <h2><font color="#555555">회원 정보 수정</font> </h2>
+            <p>${loginId}님의 회원정보 입니다.</p>
+        </div>
+</div>
+</div>
 <br>
 <br>
 <br>
-
+<!-- 선아: 회원 정보 가져오기 -->
 <div id="content">
 	<div id="joinAll">
 		<div id="modifyForm">
-			<!-- 선민: submit 시 passwordCheck() 함수 실행 -->
 			<form id="modify_form" name="myInfoModify" method="post" action="myInfoModify.pulu" onsubmit="return checkValidation()" >
 				
-				<!-- 선아: 회원 정보 가져오기 -->
-				<div style="padding: 10px 50px 10px 250px;">
+					<!-- 선아: 회원 정보 가져오기 -->
+				<div style="padding: 10px 50px 10px 122px;">
 					<h2>기본 정보</h2>
-					<hr width="35%" color="grey" align="left">
+					<hr width="35%" color="#006F3E"  align="left">
 				</div>
+		</div>
 				
-				<div style="padding: 10px 50px 50px 250px;">
-				
-							<h3>아이디</h3>
-						<span class="insertbox"> 
-						<input type="text" name="ID" id="id" class="insert" value="${myInfo.ID}" maxlength="20" onkeydown="inputIdCheck()" readonly>
-						</span>
-						
-						
-					<div id="join_password1">
-						<div id="join_Title"><h3>비밀번호</h3></div>
-						<span class="insertbox">
-							<input type="password" name="PASSWORD" id="password" class="insert" maxlength="20" value="${myInfo.PASSWORD}"> 
+				<div style="padding: 10px 50px 50px 122px;">
+
+			<div>
+				<div id="join_id">
+					<div id="join_Title">
+						<span class="insertbox">					
+						아이디 
+						<input type="text" name="ID" id="id" class="insert"  value="${myInfo.ID}" maxlength="20" onkeydown="inputIdCheck()" readonly >
 						</span>
 					</div>
-					<div id="join_password2">
-						<div id="join_Title"><h3>비밀번호 확인</h3></div>
-						<span class="insertbox">
-							<input type="password" id="password_confirm" class="insert" maxlength="20">
+				</div>
+
+
+				<div id="join_password1">
+					<div id="join_Title">
+						<span class="insertbox"> 
+						비밀번호 
+						<input type="password"
+							name="PASSWORD" id="password" class="insert" 
+							maxlength="20" value="${myInfo.PASSWORD}">
 						</span>
-					
-							<h3>이름</h3>
-						
-						<span class="insertbox"> <input type="text" name="NAME" value="${myInfo.NAME}"
-							id="name" class="insert" maxlength="10">
+					</div>
+				</div>
+
+
+				<div id="join_password2">
+					<div id="join_Title">
+						<span class="insertbox"> 비밀번호 확인
+						<input type="password"
+							id="password_confirm" class="insert"  maxlength="20">
 						</span>
-					
-					<div id="join_phone">
-						<div id="join_Title">
-							
-							<h3>연락처</h3>
-						</div>
-						<span class="insertbox"> <input type="text" name="PHONE" value="${myInfo.PHONE}"
-							id="phone" class="insert" maxlength="11" placeholder="숫자만 입력하세요"
+					</div>
+				</div>
+
+
+				<div id="join_Title">
+					<span class="insertbox"> 이름 <input type="text" name="NAME"
+						value="${myInfo.NAME}" id="name" class="insert" maxlength="10">
+					</span>
+				</div>
+
+
+
+				<div id="join_phone">
+					<div id="join_Title">
+						<span class="insertbox"> 
+						연락처 <input type="text"
+							name="PHONE"  value="${myInfo.PHONE}" id="phone"
+							class="insert" maxlength="11" placeholder="숫자만 입력하세요"
 							onfocus="this.placeholder=''"
 							onblur="this.placeholder='숫자만 입력하세요'">
 						</span>
 					</div>
-					<div id="join_email">
-						<div id="join_Title">
-							
-							<h3>이메일</h3>
-						</div>
-						<span class="insertbox"> <input type="text" name="EMAIL" value="${myInfo.EMAIL}"
-							id="email" class="insert" maxlength="40">
+				</div>
+
+
+
+				<div id="join_email">
+					<div id="join_Title">
+						<span class="insertbox"> 이메일 <input type="text"
+							name="EMAIL"  value="${myInfo.EMAIL}" id="email"
+							class="insert" maxlength="40">
 						</span>
 					</div>
-					<div id="join_addressAll">
-						<div id="join_zipcode">
-							<div id="join_Title">
-								
-								<h3>우편번호</h3>
-							</div>
-							<span class="insertbox"> <input type="text" name="ZIPCODE" value="${myInfo.ZIPCODE}"
-								id="zipcode" class="insert" maxlength="5"> 
-								<input type="button" class="zipcodebt" value="우편번호 찾기"onclick="kakaoPost()"> <!-- 선민: 버튼 클릭 시 kakaoPost() 함수 실행 -->
+				</div>
+
+
+
+
+				<div id="join_addressAll">
+					<div id="join_zipcode">
+						<div id="join_Title">
+							<span class="insertbox"> 우편번호 <input type="text"
+								name="ZIPCODE" value="${myInfo.ZIPCODE}" id="zipcode"
+								class="insert" maxlength="5" size="40"> 
+								<input type="button" id="btn" class="btn"
+								value="우편번호 찾기" onclick="kakaoPost()"> <!-- 선민: 버튼 클릭 시 kakaoPost() 함수 실행 -->
 							</span>
-						</div>
-						<div id="join_address">
-							<div id="join_Title">
-								
-								<h3>주소</h3>
-							</div>
-							<span class="insertbox"> <input type="text" name="ADDR1" value="${myInfo.ADDR1}"
-								id="addr1" class="insert" maxlength="200"><br> 
-								<input type="text" name="ADDR2" id="addr2" class="insert" value="${myInfo.ADDR2}"
-								maxlength="200" size="40">
-							</span>
-							</div>
 						</div>
 					</div>
-					<br />
+				</div>
+
+
+				<div id="join_address">
+							<div id="join_Title">
+							<span class="insertbox"> 
+							주소 <input type="text" name="ADDR1" value="${myInfo.ADDR1}" id="addr1" class="insert" maxlength="200" >
+							<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" name="ADDR2"id="addr2" class="insert" value="${myInfo.ADDR2}" maxlength="200" >
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br />
 					<br />
 					<br />
 
 					<!-- 작성완료 버튼 -->
 					<div style="text-align: center;" id="modify_button">
-						<input type="submit" name="myInfoModify" class="insert_bt" value="수정 완료" >
+						<input type="submit" name="myInfoModify" class="btn" value="수정 완료" >
 					</div>
 			</form>
 		</div>
 	</div>
 </div>
+					

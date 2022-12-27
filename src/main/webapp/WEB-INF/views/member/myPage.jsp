@@ -96,15 +96,11 @@ Mypage</h1>
         </div>
 <br>
         <div>
-          <h2><a href=".pulu"><span style="color:black">QNA</h2></a>
-        </div>
-<br>
-        <div>
           <h2><a href="deleteForm.pulu"><span style="color:black">회원탈퇴</h2></a>
         </div>
         <br>
         <div>
-          <h2><a href="memberInfo.pulu"><span style="color:black">정보 수정</h2></a>
+          <h2><a href="myInfoModify.pulu"><span style="color:black">정보 수정</h2></a>
         </div>
         <br>
   </div>

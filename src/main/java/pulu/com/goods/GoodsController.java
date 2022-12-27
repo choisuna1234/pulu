@@ -243,7 +243,9 @@ public class GoodsController {
 			mv.addObject("qnaList", qnaList);
 			
 			mv.addObject("map", map.get("map"));
-
+			mv.addObject("list", map.get("list"));
+			
+			
 			return mv;
 		}
 	}
