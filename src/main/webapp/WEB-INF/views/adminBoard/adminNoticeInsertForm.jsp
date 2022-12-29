@@ -1,61 +1,95 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<form id="frm" name="frm" enctype="multipart/form-data">
-<table class="adminNoticeInsert">
-<colgroup>
-<col width="15%">
-<col width="*"/>
-</colgroup>
-<caption>공지사항 작성</caption>
-<tbody>
-<tr>
-<th scope="row">제목</th>
-<td><input type="text" id="NOTICE_SUBJECT" name="NOTICE_SUBJECT" class="wdp_90"></input></td>
-</tr>
-<tr>
-<th scope="row">내용</th>
-<td colspan="2" class="view_text">
-<textarea rows="20" cols="100" title="내용" id="NOTICE_CONTENT" name="NOTICE_CONTENT"></textarea>
-</td></tr>
-</tbody>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">공지사항</h1>
+	</div>
+
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-10">
+			<div class="panel panel-default">
+				<div class="panel-heading">공지사항 작성</div>
+				<div class="panel-body">
+
+					<form id="frm" name="frm" method="get"
+						enctype="multipart/form-data" action="adminFaqInsert.pulu"
+						onsubmit="return checkFaqInsertForm();">
+						<table class="board_view">
+
+							<tbody>
+								<tr>
+									<th style="width: 5%">제목</th>
+									<td><input type="text" id="FAQ_SUBJECT" name="FAQ_SUBJECT"
+										class="form-control" class="form-control"></input></td>
+								</tr>
+								<tr>
+									<th>내용</th>
+									<td colspan="2" class="view_text" height="30"><pre>
+											<textarea rows="20" class="form-control" cols="100"
+												title="내용" id="FAQ_CONTENT" name="FAQ_CONTENT"></textarea>
+										</pre></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+
+				</div>
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+</div>
+<!-- "row" -->
+
+
+<table>
+	<colgroup>
+		<col width="80px"/>
+		<col width="*"/>
+	</colgroup>
+	<tr>
+		<th></th>
+		<td></td>
+	</tr>
 </table>
-<br/><br/>
-<a href="#this" class="btn" id="write">작성하기</a>
-<a href="#this" class="btn" id="list">목록으로</a>
-</form>
-	<%@ include file="/WEB-INF/include/include-body.jspf" %>
+
+<a href="#this" class="btn btn-primary" id="insert" type="submit">작성하기</a>
+<a href="#this" class="btn btn-primary" id="list">목록으로</a>
+
+
+
+<%@ include file="/WEB-INF/include/include-body.jspf"%>
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#list").on("click", function(e) { // 목록으로 버튼
+			e.preventDefault();
+			fn_adminNoticeList();
+		});
 
+		$("#write").on("click", function(e) { // 작성하기 버튼
+			e.preventDefault();
+			fn_adminNoticeInsert();
 
-$(document).ready(function(){
-	$("#list").on("click", function(e){ // 목록으로 버튼
-		e.preventDefault();
-	fn_adminNoticeList();
+		});
+
 	});
-	
-	$("#write").on("click", function(e){ // 작성하기 버튼
-		e.preventDefault();
-	fn_adminNoticeInsert();
-	
-	});
-	
-	
-});
 
-function fn_adminNoticeList(){
-	var comSubmit = new ComSubmit();
-	comSubmit.setUrl("<c:url value='/adminNoticeList.pulu' />");
-	comSubmit.submit();
-	
-}
+	function fn_adminNoticeList() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/adminNoticeList.pulu' />");
+		comSubmit.submit();
 
-function fn_adminNoticeInsert(){
-	var comSubmit = new ComSubmit("frm");
-	comSubmit.setUrl("<c:url value='/adminNoticeInsert.pulu' />");
-	comSubmit.submit();
-}
+	}
 
+	function fn_adminNoticeInsert() {
+		var comSubmit = new ComSubmit("frm");
+		comSubmit.setUrl("<c:url value='/adminNoticeInsert.pulu' />");
+		comSubmit.submit();
+	}
 </script>

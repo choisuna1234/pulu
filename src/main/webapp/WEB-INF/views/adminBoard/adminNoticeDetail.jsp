@@ -1,45 +1,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 onclick="location.href='adminNoticeList.pulu';">Notice</h1>
+			<br>
+		</div>
 
-<h2 onclick="location.href='adminNoticeList.pulu';">Notice</h2><br>
-	<table class="board_view">
-		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
-		</colgroup>
-		<caption>게시글 상세</caption>
-		<tbody>
-			<tr>
-				<th scope="row">글번호</th>
-				<td>${map.NOTICE_NUM }</td>
-				<th scope="row">조회수</th>
-				<td>${map.NOTICE_READCOUNT }</td>
-			</tr>
-			<tr>
-				<th scope="row">작성자</th>
-				<td>${map.NOTICE_ID }</td>
-				<th scope="row">작성일</th>
-				<td>${map.NOTICE_DATE }</td>
-			</tr>
-			<tr>
-				<th scope="row">제목</th>
-				<td colspan="3">${map.NOTICE_SUBJECT }</td>
-			</tr>
-			<tr>
-			    <th scope="row">내용</th>
-				<td colspan="4">${map.NOTICE_CONTENT }</td>
-			</tr>
-		</tbody>
-	</table>
-	
-	<a href="#this" class="btn" id="list">목록으로</a>
-	<a href="#this" class="btn" id="update">수정하기</a>
-	<a href="#this" class="btn" id="delete">삭제하기</a>
-	<%@ include file="/WEB-INF/include/include-body.jspf" %>
+
+		<!-- /.row -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">게시글 상세</div>
+					<div class="panel-body">
+						<table class="table table-striped table-bordered table-hover"
+							id="board_view">
+
+							<tbody>
+								<tr>
+									<th style="width: 5%">글번호</th>
+									<td>${map.NOTICE_NUM}</td>
+									<th style="width: 5%">조회수</th>
+									<td>${map.NOTICE_READCOUNT}</td>
+								</tr>
+
+								<tr>
+									<th>작성자</th>
+									<td>${map.NOTICE_ID }</td>
+
+									<th style="width: 5%">작성일</th>
+									<td>${map.NOTICE_DATE }</td>
+								</tr>
+
+								<tr>
+									<th>제목</th>
+									<td colspan="3">${map.NOTICE_SUBJECT }</td>
+								</tr>
+
+								<tr>
+									<th>내용</th>
+									<td colspan="4">${map.NOTICE_CONTENT }</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+					<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- "row" -->
+	<a href="#this" class="btn btn-primary" id="list">목록으로</a>
+	<a href="#this" class="btn btn-primary" id="update">수정하기</a>
+	<a href="#this" class="btn btn-primary" id="delete">삭제하기</a>
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#list").on("click", function(e){ //리스트
@@ -91,3 +117,5 @@
 	         
 	      }
 	</script>
+</body>
+</html>

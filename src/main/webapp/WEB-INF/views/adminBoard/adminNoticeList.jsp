@@ -127,4 +127,5 @@
          comSubmit.addParam("NOTICE_NUM", obj.parent().find("#NOTICE_NUM").val());
          comSubmit.submit();
       }
+      
    </script>  

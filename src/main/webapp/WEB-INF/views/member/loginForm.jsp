@@ -116,8 +116,8 @@
 			
 		<!-- 선아: 로그인 부가기능단 -->
 		<div style="text-align: center">
-			<a href=""><span style="color: black">아이디찾기</span></a> &nbsp
-			<a href=""><span style="color: black">비밀번호찾기</span></a> &nbsp
+			<a href="/findIdForm.pulu"><span style="color: black">아이디찾기</span></a> &nbsp
+			<a href="/findPwForm.pulu"><span style="color: black">비밀번호찾기</span></a> &nbsp
 			<a href="/join.pulu"><span style="color: black">회원가입</span></a> &nbsp
 		</div>
 	</div>
