@@ -45,21 +45,23 @@ public interface MemberService {
 
 	// 선아: 새 비밀번호 변경
 	void newPassword(Map<String, Object> commandMap) throws Exception;
-	
+
 	// 병찬: 나의 후기 리스트
 	List<Map<String, Object>> myReview(Map<String, Object> map) throws Exception;
-		
-	// 병찬: 마이페이지 주문 리스트
+
+	// 선민: 마이페이지 주문 리스트
 	public List<Map<String, Object>> myInfoOrder(Map<String, Object> map) throws Exception;
-			
+
 	// 병찬: 마이페이지 주문 상세보기
-	public Map<String, Object> myInfoOrderDetail(Map<String, Object> map) throws Exception;
-			
+	public List<Map<String, Object>> myInfoOrderDetail(Map<String, Object> map) throws Exception;
+
+	// 병찬: 마이페이지 주문 상세보기
+	public Map<String, Object> myInfoOrderDetail2(Map<String, Object> map) throws Exception;
+
 	// 병찬: 마이페이지 주문 수정
 	public void myInfoOrderUpdate(Map<String, Object> map, HttpServletRequest request) throws Exception;
-			
+
 	// 병찬: 마이페이지 주문 취소
 	public void myInfoOrderDelete(Map<String, Object> map) throws Exception;
-
-
+	
 }

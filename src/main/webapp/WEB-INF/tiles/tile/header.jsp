@@ -16,7 +16,7 @@
 		<div id="topMainMenuAll">
 				<div id="topMenu" style="z-index: 0;">
 					<div id="totalMenu">	<!-- 탑 메인바 '전체 카테고리' -->
-						<a class="menuLink" href=""> 전체 카테고리 </a>
+						<a class="menuLink" href="allList.pulu"> 전체 카테고리 </a>
 					</div>
 					<div id="totalSide">	<!-- 탑 메인바 왼쪽 '전체 카테고리' 마우스 올릴 시 나올 창 -->
 						<div id="total_Category"></div>
@@ -26,8 +26,8 @@
 							<li class="topMenuLi"><a class="menuLink" href="List.pulu?categoryNo=1">샐러드<span class="circle"></span></a></li>
 							<li class="topMenuLi"><a class="menuLink" href="List.pulu?categoryNo=2">샌드위치</a></li>
 							<li class="topMenuLi"><a class="menuLink" href="List.pulu?categoryNo=3">간식/음료</a></li>
-							<li class="topMenuLi"><a class="menuLink" href="nutritionFacts.pulu">영양정보</a></li>
-							<li class="topMenuLi"><a class="menuLink" href="burialMap.pulu">매장</a></li>
+							<li class="topMenuLi"><a class="menuLink" href="nutritionInfo.pulu">영양정보</a></li>
+							<li class="topMenuLi"><a class="menuLink" href="storeMap.pulu">매장</a></li>
 						</ul>
 					</div>
 

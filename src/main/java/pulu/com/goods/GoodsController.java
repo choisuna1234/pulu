@@ -60,6 +60,9 @@ public class GoodsController {
 
 	@RequestMapping(value = "/List")
 	public ModelAndView List(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	 blockCount = 12;
+	 blockPage = 5;
+		
 		ModelAndView mv = new ModelAndView("goods_list");
 		//log.info("검색전=============");
 
@@ -76,29 +79,61 @@ public class GoodsController {
 
 		categoryNo = Integer.parseInt(request.getParameter("categoryNo"));
 		goodsSearch = request.getParameter("goodsSearch");
+		
+		searchOption = request.getParameter("searchOption");
 
-		// 옵션별 검색
-//				searchOption = request.getParameter("searchOption");
-//                
-//				if (searchOption !=  null) {
-//				    optionNum = Integer.parseInt(request.getParameter("optionNum"));				
-//				    commandMap.put("searchOption",searchOption);
-//				    commandMap.put("optionNum",optionNum);
-//					
-//					if(optionNum == 0) { // 낮은가격
-//						list = goodsService.searchOption0(commandMap.getMap(),Integer.parseInt(request.getParameter("categoryNo")));
-//					} else if(optionNum == 1) { // 높은가격
-//						list = goodsService.searchOption1(commandMap.getMap(),Integer.parseInt(request.getParameter("categoryNo")));
-//					} else if(optionNum == 2) { // 추천상품
-//						list = goodsService.searchOption2(commandMap.getMap(),Integer.parseInt(request.getParameter("categoryNo")));
-//					}  
-//						
-//						mv.addObject("list", list);
-//						mv.addObject("categoryNo", categoryNo);
-//						mv.addObject("optionNum", optionNum);
-//						mv.addObject("goodsList",list);
-//						return mv;
-//	             }
+		//옵션별 정렬
+		
+		  if (searchOption != null) { 
+			  
+			  optionNum = Integer.parseInt(request.getParameter("optionNum"));
+		      
+			  commandMap.put("optionNum", optionNum); 
+			  commandMap.put("searchOption", searchOption);
+			  commandMap.put("categoryNo", categoryNo);
+		
+		  if(optionNum == 1) { // 제목 list =
+		  
+		  list = goodsService.searchOption0(commandMap.getMap(),Integer.parseInt(request.getParameter("categoryNo"))); 
+		   
+		  } 
+		  else if(optionNum == 2) { // 내용 
+		  list = goodsService.searchOption1(commandMap.getMap(),Integer.parseInt(request.getParameter("categoryNo"))); 
+		    
+		  } 
+		  else if(optionNum == 3) { // 내용 
+		  list = goodsService.searchOption2(commandMap.getMap(),Integer.parseInt(request.getParameter("categoryNo"))); 
+		  } 
+		   
+		  log.info("optionNum========" + optionNum);
+		  log.info("searchOption========" + searchOption);
+		  totalCount = list.size();
+			page = new Paging(currentPage, totalCount, blockCount, blockPage, "List.pulu", optionNum,searchOption, categoryNo, request);
+			pagingHtml = page.getPagingHtml().toString();
+			startPage = (int) ((currentPage - 1) / blockPage) * blockPage + 1;
+			endPage = startPage + blockPage - 1;
+
+			int lastCount = totalCount;
+
+			if (page.getEndCount() < totalCount)
+				lastCount = page.getEndCount() + 1;
+
+			list = list.subList(page.getStartCount(), lastCount);
+			
+			mv.addObject("totalCount", totalCount);
+			mv.addObject("pagingHtml", pagingHtml);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("searchOption", searchOption); 
+		    mv.addObject("optionNum", optionNum);
+			mv.addObject("startPage", startPage);
+			mv.addObject("endPage", endPage);
+			mv.addObject("goodsList", list);
+			mv.addObject("categoryNo", categoryNo);
+			
+			return mv;
+		 
+		  
+		  }
 
 		if (goodsSearch != null) {
 
@@ -106,7 +141,7 @@ public class GoodsController {
 			commandMap.put("categoryNo", categoryNo);
 
 			list = goodsService.goodsSearch(commandMap.getMap(), Integer.parseInt(request.getParameter("categoryNo")));
-			//log.info("검색 후 =========================" + list);
+			log.info("검색 후 =========================" + list);
 
 			totalCount = list.size();
 			page = new Paging(currentPage, totalCount, blockCount, blockPage, "List.pulu", goodsSearch, categoryNo,
@@ -163,7 +198,7 @@ public class GoodsController {
 			return mv;
 		}
 	}
-
+	
 	@RequestMapping(value = "/Detail")
 	public ModelAndView Detail(CommandMap commandMap, HttpServletRequest request) throws Exception {
 
@@ -244,9 +279,139 @@ public class GoodsController {
 			
 			mv.addObject("map", map.get("map"));
 			mv.addObject("list", map.get("list"));
-			
-			
+
 			return mv;
 		}
-	}
+	
 
+	  @RequestMapping(value = "/allList")
+      public ModelAndView allList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+     	 blockCount = 12;
+     	 blockPage = 5;
+     	 
+     	 ModelAndView mv = new ModelAndView("goods_list");
+     	 
+     	// 받아오는 현제페이지가 없으면 페이지 1부터시작
+  		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+  				|| request.getParameter("currentPage").equals("0")) { // currentPage가 null 이거나 공백 이거나 0 일때.
+  			currentPage = 1;
+  			// 받아오는 현제페이지가 있으면 인트값으로해서 현제페이지 값설정
+  		} else {
+  			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+  		}
+     	 
+     	 List<Map<String, Object>> list = goodsService.allGoodsList(commandMap.getMap());
+     	 
+				 goodsSearch = request.getParameter("goodsSearch"); 
+  		
+				
+			     searchOption = request.getParameter("searchOption");
+				  
+				  //옵션별 정렬
+				  
+				  if (searchOption != null) {
+				  
+				  optionNum = Integer.parseInt(request.getParameter("optionNum"));
+				  
+				  commandMap.put("optionNum", optionNum); 
+				  commandMap.put("searchOption", searchOption);
+				  
+				  commandMap.put("categoryNo", categoryNo);
+				  
+				  if(optionNum == 1) { //낮은 가격	 
+				  
+				  list = goodsService.searchAllOption0(commandMap.getMap());
+				  
+				  } else if(optionNum == 2) { //높은 가격
+				   list = goodsService.searchAllOption1(commandMap.getMap());
+				  }			  
+		
+				  totalCount = list.size(); 
+				  page = new Paging(currentPage, totalCount, blockCount, blockPage, "allList.pulu", optionNum, searchOption, categoryNo);
+				  pagingHtml = page.getPagingHtml().toString(); 
+				  startPage = (int) ((currentPage - 1) / blockPage) * blockPage + 1; 
+				  endPage = startPage + blockPage - 1;
+				  
+				  int lastCount = totalCount;
+				  
+				  if (page.getEndCount() < totalCount) lastCount = page.getEndCount() + 1;
+				  
+				  list = list.subList(page.getStartCount(), lastCount);
+				  
+				  mv.addObject("totalCount", totalCount); 
+				  mv.addObject("pagingHtml", pagingHtml); 
+				  mv.addObject("currentPage", currentPage);
+				  mv.addObject("searchOption", searchOption); 
+				  mv.addObject("optionNum", optionNum); 
+				  mv.addObject("startPage", startPage); 
+				  mv.addObject("endPage", endPage); 
+				  mv.addObject("goodsList", list);
+				  
+				  
+				  mv.addObject("categoryNo", categoryNo);
+				  
+				  return mv;
+				  
+				  
+				  }
+				 
+
+  		if (goodsSearch != null) {
+
+  			commandMap.put("goodsSearch", goodsSearch);
+  			
+
+  			list = goodsService.goodsAllSearch(commandMap.getMap());
+  			
+  			totalCount = list.size();
+  			page = new Paging(currentPage, totalCount, blockCount, blockPage, "allList.pulu", goodsSearch );
+  			pagingHtml = page.getPagingHtml().toString();
+  			startPage = ((currentPage - 1) / blockPage) * blockPage + 1;
+  			endPage = startPage + blockPage - 1;
+
+  			int lastCount = totalCount;
+
+  			if (page.getEndCount() < totalCount)
+
+  				lastCount = page.getEndCount() + 1;
+
+  			list = list.subList(page.getStartCount(), lastCount);
+
+  			mv.addObject("totalCount", totalCount); // 서비스 로직 결과를 mv에 담아 jsp에서 사용
+  			mv.addObject("pagingHtml", pagingHtml);
+  			mv.addObject("currentPage", currentPage);
+  			mv.addObject("goodsSearch", goodsSearch);
+  			mv.addObject("startPage", startPage);
+  			mv.addObject("endPage", endPage);
+  			mv.addObject("list", list);
+  			mv.addObject("goodsList", list);
+  			return mv;
+
+  		} else {
+
+  			totalCount = list.size();
+
+  			page = new Paging(currentPage, totalCount, blockCount, blockPage, "allList.pulu");
+  			pagingHtml = page.getPagingHtml().toString();
+  			startPage = ((currentPage - 1) / blockPage) * blockPage + 1;
+  			endPage = startPage + blockPage - 1;
+
+  			int lastCount = totalCount;
+
+  			if (page.getEndCount() < totalCount)
+  				lastCount = page.getEndCount() + 1;
+
+  			list = list.subList(page.getStartCount(), lastCount);
+
+  			mv.addObject("totalCount", totalCount);
+  			mv.addObject("pagingHtml", pagingHtml);
+  			mv.addObject("currentPage", currentPage);
+  			mv.addObject("startPage", startPage);
+  			mv.addObject("endPage", endPage);
+  			mv.addObject("list", list);
+  			mv.addObject("goodsList", list);
+
+  			return mv;
+  		}
+      }
+    }

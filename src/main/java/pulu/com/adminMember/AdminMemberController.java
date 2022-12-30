@@ -27,7 +27,7 @@ public class AdminMemberController {
 	// 페이징 변수
 	private int currentPage = 1;
 	private int totalCount;
-	private int blockCount = 5;
+	private int blockCount = 10;
 	private int blockPage = 5;
 	private int startPage;
 	private int endPage;
@@ -153,7 +153,7 @@ public class AdminMemberController {
 		int searchOption = Integer.parseInt(request.getParameter("SEARCH_OPTION"));
 		String keyword = request.getParameter("SEARCH_KEYWORD");
 		log.info("01. 서치옵션 == " + searchOption);
-		log.info("01. 서키워드 == " + keyword);
+		log.info("02. 서치키워드 == " + keyword);
 		
 		List<Map<String, Object>> list = adminService.searchMemberInfo(request, commandMap.getMap());
 		
@@ -179,15 +179,5 @@ public class AdminMemberController {
 		return mv;
 	}
 	
-	
-	
-	
-	
-
-	/* ---------------------- (2) 관리자-게시판 ---------------------- */
-
-	/* ---------------------- (3) 관리자-상품 ---------------------- */
-
-	/* ---------------------- (4) 관리자-주문 ---------------------- */
 
 }

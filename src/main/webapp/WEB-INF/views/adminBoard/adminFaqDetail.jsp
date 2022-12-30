@@ -1,44 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<title>FAQ</title>
+</head>
+<body>
 
-<h2 onclick="location.href='adminFaqList.pulu';">FAQ</h2><br>
-	<table class="board_view" >
-		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
-		</colgroup>
-		<caption>게시글 상세</caption>
-		<tbody>
-			<tr>
-				<th scope="row">글번호</th>
-				<td>${map.FAQ_NUM }</td>
-				<th scope="row">조회수</th>
-				<td>${map.FAQ_READCOUNT }</td>
-			</tr>
-			<tr>
-				<th scope="row">작성자</th>
-				<td>${map.FAQ_ID }</td>
-				<th scope="row">작성일</th>
-				<td>${map.FAQ_DATE }</td>
-			</tr>
-			<tr>
-				<th scope="row">제목</th>
-				<td colspan="3">${map.FAQ_SUBJECT }</td>
-			</tr>
-			<tr>
-				<td colspan="4"><pre>${map.FAQ_CONTENT }</pre></td>
-			</tr>
-		</tbody>
-	</table>
+<div class="row">
+		<div class="col-lg-12">
+			<h1 onclick="location.href='adminFaqList.pulu';">FAQ</h1>
+			<br>
+		</div>
+
+
+		<!-- /.row -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">게시글 상세</div>
+					<div class="panel-body">
+						<table class="table table-striped table-bordered table-hover"
+							id="board_view">
+
+							<tbody>
+								<tr>
+									<th style="width: 5%">글번호</th>
+									<td>${map.FAQ_NUM }</td>
+									<th style="width: 5%">조회수</th>
+									<td>${map.FAQ_READCOUNT }</td>
+								</tr>
+
+								<tr>
+									<th>작성자</th>
+									<td>${map.FAQ_ID }</td>
+
+									<th style="width: 5%">작성일</th>
+									<td>${map.FAQ_DATE }</td>
+								</tr>
+
+								<tr>
+									<th>제목</th>
+									<td colspan="3">${map.FAQ_SUBJECT }</td>
+								</tr>
+
+								<tr>
+									<th>내용</th>
+									<td colspan="4"><pre>${map.FAQ_CONTENT }</pre></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+					<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+
+
 	
 	<Br>
-	<a href="#this" class="btn" id="list" >목록으로</a>
-	<a href="#this" class="btn" id="update">수정하기</a>
-	<a href="#this" class="btn" id="delete">삭제하기</a>
+	<a href="#this" class="btn btn-primary" id="list" >목록으로</a>
+	<a href="#this" class="btn btn-primary" id="update">수정하기</a>
+	<a href="#this" class="btn btn-primary" id="delete">삭제하기</a>
 	
 	
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
@@ -82,10 +112,11 @@
 		function fn_adminFaqDelete(){
 			var faq_num = "${map.FAQ_NUM}";
 			var comSubmit = new ComSubmit();
-			if (confirm("삭제 하겠습니까?") == true) {
 			comSubmit.setUrl("<c:url value='/adminFaqDelete.pulu'/>");
 			comSubmit.addParam("FAQ_NUM", faq_num);
 			comSubmit.submit();
-			}
+			
 		}
 	</script>
+</body>
+</html>

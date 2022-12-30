@@ -42,7 +42,7 @@
 	</select>
 
 	<!-- 선민: (Map) 주문할 상품의 번호, 이름, 가격, 이미지정보 1개를 select -->
-	<select id="selectOrderGoodsInfo" resultType="hashMap">
+	<select id="orderByDetail" resultType="hashMap">
 	<![CDATA[
 		select	GOODS_NUM, GOODS_NAME, GOODS_PRICE,
 				IMAGE_STORED

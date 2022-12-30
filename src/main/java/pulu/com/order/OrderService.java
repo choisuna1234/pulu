@@ -10,7 +10,7 @@ import pulu.com.basket.BasketListItemDTO;
 public interface OrderService {
 	
 	// 선민: 상세페이지에서 주문페이지 이동 시 회원, 상품, 이미지 정보를 DB로부터 가져오기
-	public List<Map<String, Object>> selectOrderGoodsInfo(Map<String, Object> map, HttpSession session)
+	public List<Map<String, Object>> orderByDetail(Map<String, Object> map, HttpSession session)
 			throws Exception;
 	
 	// 선민: 장바구니에서 주문페이지 이동 시 회원 정보 DB로부터 가져오기

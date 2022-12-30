@@ -273,11 +273,12 @@
 
 											<!-- 썸네일이미지 -->
 											<td style="text-align: center">
-												<img class="goodsimg" src="./resources/file/${row.IMAGE_STORED}" />
+												<a href="Detail.pulu?GOODS_NUM=${row.GOODS_NUM}"><img class="goodsimg" src="./resources/file/${row.IMAGE_STORED}" /></a>
 											</td>
 
 											<!-- 상품이름 -->
-											<td style="text-align: center">${row.GOODS_NAME}<br />index: ${status.index}
+											<td style="text-align: center">
+												<a href="Detail.pulu?GOODS_NUM=${row.GOODS_NUM}">${row.GOODS_NAME}</a>
 											</td>
 
 											<!-- 수량 -->
@@ -319,7 +320,7 @@
 										<input type="hidden" name="SELECTED_GOODS_AMOUNT" class="selected_goods_amount">
 									</form>
 									<!-- 상품주문 form -->
-									<form action="pOrderBasketList.pulu" class="order_form" method="post"></form>
+									<form action="orderByBasket.pulu" class="order_form" method="post"></form>
 									<!-- 선택삭제 form -->
 									<form action="deleteBasketSelect.pulu" class="delete_form" method="post"></form>
 								</c:forEach>

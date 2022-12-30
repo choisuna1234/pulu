@@ -74,6 +74,12 @@ public class AdminQnaServiceImpl implements AdminQnaService {
 		adminQnaDAO.adminQnaComInsert(map);
 		
 	}
+	
+	@Override
+	public void adminQnaComStatus(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		adminQnaDAO.adminQnaComStatus(map);
+		
+	}
 
 	// 관리자 QNA 코멘트 수정
 	@Override

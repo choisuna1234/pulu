@@ -48,7 +48,6 @@
 
 		<a href="#this" class="btn btn-primary" id="insert" type="submit">작성하기</a>
 	<a href="#this" class="btn btn-primary" id="list">목록으로</a>
-	</form>
 	
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">

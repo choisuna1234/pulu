@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<welcome-file-list>
-      <welcome-file>main.pulu</welcome-file>
-   </welcome-file-list>
+		<welcome-file>main.pulu</welcome-file>
+	</welcome-file-list>
 
 	<!-- Encoding: UTF-8 -->
 	<filter>

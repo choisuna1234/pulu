@@ -65,7 +65,7 @@
 	<!--FAQ검색(제목)0  -->
 	<select id="faqSearch0" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
-		  SELECT FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_READCOUNT, FAQ_DATE
+		  SELECT FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_READCOUNT, TO_CHAR(FAQ_DATE, 'YYYY.MM.DD') AS FAQ_DATE
 		  FROM FAQ
 		  WHERE FAQ_SUBJECT LIKE '%' || #{isSearch} || '%'
 		  AND FAQ_DELETE = 'N'
@@ -76,7 +76,7 @@
 	<!--FAQ검색(내용)1  -->
 	<select id="faqSearch1" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
-			SELECT FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_READCOUNT, FAQ_DATE
+			SELECT FAQ_NUM, FAQ_ID, FAQ_SUBJECT, FAQ_READCOUNT, TO_CHAR(FAQ_DATE, 'YYYY.MM.DD') AS FAQ_DATE
 			FROM FAQ
 			WHERE FAQ_CONTENT LIKE '%' || #{isSearch} || '%'
 			AND FAQ_DELETE = 'N'

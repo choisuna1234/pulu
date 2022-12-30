@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j;
+import pulu.com.order.OrderListDTO;
+import pulu.com.order.OrderListItemDTO;
 
 @Service("memberService")
 @Log4j
@@ -88,16 +90,22 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.myReview(map);
 	}
 
-	@Override // 병찬: 마이페이지 주문 리스트
+	@Override // 선민: 마이페이지 주문 리스트
 	public List<Map<String, Object>> myInfoOrder(Map<String, Object> map) throws Exception {
 		
 		return memberDAO.myInfoOrder(map);
 	}
 
 	@Override // 병찬: 마이페이지 주문 상세보기
-	public Map<String, Object> myInfoOrderDetail(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> myInfoOrderDetail(Map<String, Object> map) throws Exception {
 		
 		return memberDAO.myInfoOrderDetail(map);
+	}
+	
+	@Override // 병찬: 마이페이지 주문 상세보기
+	public Map<String, Object> myInfoOrderDetail2(Map<String, Object> map) throws Exception {
+		
+		return memberDAO.myInfoOrderDetail2(map);
 	}
 
 	@Override // 병찬: 마이페이지 주문 수정
@@ -108,8 +116,16 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override // 병찬: 마이페이지 주문 취소
 	public void myInfoOrderDelete(Map<String, Object> map) throws Exception {
-		
+			
 		memberDAO.myInfoOrderDelete(map);
+		
+		List<Map<String, Object>> list = memberDAO.goodsAmountSelect(map);
+		
+		for(Map<String, Object> mapp : list) {
+			
+			
+			
+			memberDAO.goodsAmountUpdate(mapp);	
+		}
 	}
-
 }

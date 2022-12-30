@@ -26,13 +26,13 @@ public class OrderController {
 	private OrderService orderService;
 
 	// 선민: (페이지이동) 상품상세페이지->주문페이지: 단일상품주문에 필요한 정보 DB로부터 가져오기
-	@RequestMapping(value = "/selectOrderGoodsInfo", method = RequestMethod.POST)
-	public ModelAndView selectOrderGoodsInfo(CommandMap commandMap, HttpSession session) throws Exception {
+	@RequestMapping(value = "/orderByDetail", method = RequestMethod.POST)
+	public ModelAndView orderByDetail(CommandMap commandMap, HttpSession session) throws Exception {
 
 		ModelAndView mv = new ModelAndView("pOrder");
 
 		// pOrder.jsp
-		List<Map<String, Object>> mapList = orderService.selectOrderGoodsInfo(commandMap.getMap(), session);
+		List<Map<String, Object>> mapList = orderService.orderByDetail(commandMap.getMap(), session);
 		Map<String, Object> memberMap = mapList.get(0);
 		Map<String, Object> goodsMap = mapList.get(1);
 		goodsMap.put("SELECTED_GOODS_AMOUNT", commandMap.getMap().get("SELECTED_GOODS_AMOUNT"));
@@ -42,25 +42,25 @@ public class OrderController {
 
 		mv.addObject("list", list);
 		mv.addObject("map", memberMap);
-		log.info("01. 최종 list의 내용 == " + list);
-		log.info("02. 최종 map의 내용 == " + memberMap);
+		log.info("\n01. 최종 list의 내용 == " + list);
+		log.info("\n02. 최종 map의 내용 == " + memberMap);
 
 		return mv;
 	}
 
 	// 선민: (페이지이동) 장바구니리스트->주문페이지: 선택된 모든 상품의 정보 DB로부터 가져오기
-	@RequestMapping(value = "/pOrderBasketList", method = RequestMethod.POST)
-	public ModelAndView pOrderBasketList(HttpSession session, BasketListDTO bl) throws Exception {
+	@RequestMapping(value = "/orderByBasket", method = RequestMethod.POST)
+	public ModelAndView orderByBasket(HttpSession session, BasketListDTO bl) throws Exception {
 
 		ModelAndView mv = new ModelAndView("pOrder");
 		Map<String, Object> memberMap = new HashMap<String, Object>();
 		memberMap = orderService.selectMemberInfo(memberMap, session);
 		List<Map<String, Object>> goodslist = orderService.selectGoodsInfo(bl.getOrders());
 
-		log.info("01. 세션 == " + session.getAttribute("loginId"));
-		log.info("02. ListDTO == " + bl.getOrders());
-		log.info("03. memberMap == " + memberMap);
-		log.info("04. goodslist == " + goodslist);
+		log.info("\n01. 세션 == " + session.getAttribute("loginId"));
+		log.info("\n02. ListDTO == " + bl.getOrders());
+		log.info("\n03. memberMap == " + memberMap);
+		log.info("\n04. goodslist == " + goodslist);
 
 		mv.addObject("map", memberMap);
 		mv.addObject("list", goodslist);

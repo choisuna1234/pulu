@@ -13,7 +13,7 @@ public interface BasketService {
 	public void insertBasket(Map<String, Object> map, HttpSession session) throws Exception ;
 
 	// 명식: 장바구니 중복 확인
-	public Map<String, Object> checkBasket(Map<String, Object> map, HttpSession session) throws Exception;
+	public Map<String, Object> basketCheck(Map<String, Object> map, HttpSession session) throws Exception;
 
 	// 명식: 장바구니 수량 변경
 	public void updateBasket(Map<String, Object> map, HttpSession session) throws Exception ;

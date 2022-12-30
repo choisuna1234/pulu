@@ -100,21 +100,6 @@
 		order by GOODS_PRICE desc
     ]]>
 	</select>
-
-	<!-- 의종: 상품 옵션별 검색 추천상품 -->
-	<select id="searchOption2" resultType="hashMap">
-	<![CDATA[		
-	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
-			GOODS_BEST,	GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
-		from GOODS, IMAGE 
-		where GOODS_CATEGORY = #{categoryNo}
-        and GOODS_BEST = 1
-      	and GOODS_NUM = IMAGE_GOODS_NUM
-		and IMAGE_CATEGORY = 1
-		and GOODS_DELETE = 'N'
-		order by GOODS_NUM desc 
-    ]]>
-	</select>
 	
 	<!-- 선민: 주문처리 후 재고수량 감소 -->
     <update id="updateGoodsAmount">
@@ -123,5 +108,68 @@
 		WHERE GOODS_NUM = #{ORDER_GOODS_NUM}
 	</update>
 
+    
+    <!-- 의종: 전체 상품 검색 -->
+	<select id="searchAllGoods" resultType="hashMap">
+	<![CDATA[		
+	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+				GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where GOODS_NAME LIKE '%' || #{goodsSearch} || '%'
+      	and GOODS_NUM = IMAGE_GOODS_NUM
+		and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'
+		and IMAGE_DEL_GB = 'N'
+		order by GOODS_NUM desc
+    ]]>
+	</select>
+
+	<!-- 의종: 전체 상품 옵션별 검색 낮은가격 -->
+	<select id="searchAllOption0" resultType="hashMap">
+	<![CDATA[		
+	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+				GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where GOODS_NUM = IMAGE_GOODS_NUM
+		and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'
+		and IMAGE_DEL_GB = 'N' 
+		order by GOODS_PRICE asc
+    ]]>
+	</select>
+
+	<!-- 의종: 전체 상품 옵션별 검색 높은가격 -->
+	<select id="searchAllOption1" resultType="hashMap">
+	<![CDATA[		
+	select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+				GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where GOODS_NUM = IMAGE_GOODS_NUM
+		and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'
+		and IMAGE_DEL_GB = 'N' 
+		order by GOODS_PRICE desc
+    ]]>
+	</select>
+	
+	<!-- main.jsp에서 보여지는 전체 상품 정렬 -->
+	<select id="allGoodsList" resultType="hashmap">
+	<![CDATA[
+	SELECT ROW_NUMBER() OVER (ORDER BY GOODS_NUM DESC) RNUM, GOODS_NUM,
+        GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+        GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+		from GOODS, IMAGE 
+		where IMAGE_DEL_GB = 'N' 
+		and GOODS_NUM = IMAGE_GOODS_NUM
+	    and IMAGE_CATEGORY = 1
+		and GOODS_DELETE = 'N'		
+	]]>
+	</select>
+	
+
+	
+
+
+    
 
 </mapper>

@@ -32,5 +32,19 @@ public interface GoodsService {
 	List<Map<String, Object>> qnaSearch0(Map<String, Object> map) throws Exception;
 
 	List<Map<String, Object>> qnaSearch1(Map<String, Object> map) throws Exception;
+	
+
+	/* 전체 상품 검색 */
+	List<Map<String, Object>> goodsAllSearch(Map<String, Object> map) throws Exception;
+
+	/* 전체 상품 옵션 */
+	List<Map<String, Object>> searchAllOption0(Map<String, Object> map) throws Exception;
+
+	List<Map<String, Object>> searchAllOption1(Map<String, Object> map) throws Exception;
+	
+	//전체 상품 리스트
+	public List<Map<String, Object>> allGoodsList(Map<String, Object> map) throws Exception;
+
+
 
 }

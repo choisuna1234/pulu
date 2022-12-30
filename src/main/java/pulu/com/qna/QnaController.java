@@ -99,7 +99,6 @@ public class QnaController {
 		
 		// 줄바꿈 시 <br/> 넣기
 		String QNA_CONTENTS = (String)commandMap.get("QNA_CONTENTS");
-//		QNA_CONTENTS = QNA_CONTENTS.replace("<br/>", "\r\n");
 		QNA_CONTENTS = QNA_CONTENTS.replace("\r\n", "<br/>");
 		commandMap.getMap().put("QNA_CONTENTS", QNA_CONTENTS);
 		
@@ -126,6 +125,11 @@ public class QnaController {
 	public ModelAndView qnaDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/Detail.pulu?GOODS_NUM="+commandMap.get("GOODS_NUM")+"#here3");
 
+		// 줄바꿈 시 <br/> 넣기
+		String QNA_CONTENTS = (String)commandMap.get("QNA_CONTENTS");
+		QNA_CONTENTS = QNA_CONTENTS.replace("\r\n", " ");
+		commandMap.getMap().put("QNA_CONTENTS", QNA_CONTENTS);
+		
 		qnaService.qnaDelete(commandMap.getMap(), request);
 		Map<String, Object> map = qnaService.qnaDetail(commandMap.getMap());// 상세보기 정보를 맵에서 받아옴
 		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장

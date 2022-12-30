@@ -66,7 +66,12 @@ public class AdminQnaDAO extends AbstractDAO {
 		update ("qna.qnaComInsert", map);
 		
 	}
-
+	@SuppressWarnings("unchecked")
+	public void adminQnaComStatus(Map<String, Object> map) throws Exception{
+		update ("qna.qnaComStatus", map);
+			
+		}
+	
 	// 관리자 QNA 코멘트 수정
 	@SuppressWarnings("unchecked")
 	public void adminQnaComUpdate(Map<String, Object> map) throws Exception{
@@ -80,5 +85,7 @@ public class AdminQnaDAO extends AbstractDAO {
 		update ("qna.qnaComDelete", map);
 		
 	}
+
+	
 
 }

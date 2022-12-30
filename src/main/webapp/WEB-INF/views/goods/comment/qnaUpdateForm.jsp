@@ -75,8 +75,8 @@
 								<!-- <input class="form-control" type="text" value="${qnaMap.QNA_CONTENTS }" name="QNA_CONTENTS">-->
 						</div>
 						
-						<button type="button" class="btn btn-primary" onclick="window.close();">닫기</button>
-						<input type="button" class="btn btn-primary" value="수정하기" onclick="fn_qnaUpdate()">
+						<button type="button" class="btn btn-primary" style="background-color: #006F3E;" onclick="window.close();">닫기</button>
+						<input type="button" class="btn btn-primary" style="background-color: #006F3E;" value="수정하기" onclick="fn_qnaUpdate()">
 						<!-- <input type="submit" class="btn btn-primary" value="수정하기-서브밋" onclick="opener.parent.location.reload(); window.close();"> -->
 					
 					</form></br></br></br>

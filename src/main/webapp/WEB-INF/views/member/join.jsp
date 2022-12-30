@@ -115,7 +115,7 @@
 			form.id.focus();
 			return false;
 			} else {
-			alert("검증 완료");
+// 			alert("검증 완료");
 			}
 		}
 		
@@ -148,8 +148,8 @@
 		
 	</script>
 	
-<style>
-#content {
+	<style>
+	#content {
 	position: relative;
 	width: 100%;
 	min-width: 800px;
@@ -209,6 +209,7 @@
     z-index: 2;
 
 }
+
 
 .insert {
     display: block;
@@ -788,7 +789,9 @@ button.insert_bt.reset{
   transform: translateX(-0%) translateY(-25%) rotate(45deg);
 }
 
-</style>
+
+
+	</style>
 	
 </head>
 
@@ -849,8 +852,9 @@ button.insert_bt.reset{
 						<div class="join_zipcode">
 							<div class="join_Title"><h3>우편번호</h3></div>
 							<span class="insertbox"> 
-								<input type="text" name="ZIPCODE" id="zipcode" class="insert" maxlength="5"> <input type="button" class="intbtn green" value="우편번호 찾기" 
-								onclick="kakaoPost()"> <!-- 선민: 버튼 클릭 시 kakaoPost() 함수 실행 -->
+								<input type="text" name="ZIPCODE" id="zipcode" class="insert" maxlength="5">
+								<input type="button" class="intbtn green" value="우편번호 찾기" onclick="kakaoPost()">
+								<!-- 선민: 버튼 클릭 시 kakaoPost() 함수 실행 -->
 							</span>
 						</div>
 						<div class="join_address">
@@ -997,7 +1001,7 @@ button.insert_bt.reset{
 								</label>
 							</div>
 													
-							<div class="joininfotext"> 
+							<div class="joininfotext">
 								<h3>프로모션 정보수신 (선택)</h3>
 							</div>
 						</div>

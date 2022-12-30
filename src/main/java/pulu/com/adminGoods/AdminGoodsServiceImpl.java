@@ -82,6 +82,41 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 
 		adminGoodsDAO.deleteAdminGoods(map);
 	}
+	
+	/* 상품 삭제 취소 */
+	@Override
+	public void updateAdminGoodsD(Map<String, Object> map) throws Exception {
+
+		adminGoodsDAO.updateAdminGoodsD(map);
+	}
+	
+	/* 상품 검색 */
+	@Override
+	public List<Map<String, Object>> adminGcategory(Map<String, Object> map) throws Exception {
+		return adminGoodsDAO.adminGcategory(map);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> adminGpricehigh(Map<String, Object> map) throws Exception {
+		return adminGoodsDAO.adminGpricehigh(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> adminGpricerow(Map<String, Object> map) throws Exception {
+		return adminGoodsDAO.adminGpricerow(map);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> adminGdelete(Map<String, Object> map) throws Exception {
+		return adminGoodsDAO.adminGdelete(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> adminGdate(Map<String, Object> map) throws Exception {
+		return adminGoodsDAO.adminGdate(map);
+	}
 
 
 }

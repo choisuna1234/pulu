@@ -11,8 +11,8 @@ import pulu.com.common.AbstractDAO;
 public class BasketDAO extends AbstractDAO {
 
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> checkBasket(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>) selectOne("basket.checkBasket", map);
+	public Map<String, Object> basketCheck(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("basket.basketCheck", map);
 	}
 
 	public void insertBasket(Map<String, Object> map) throws Exception {

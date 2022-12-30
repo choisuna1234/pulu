@@ -41,6 +41,7 @@ public class AdminGoodsDAO extends AbstractDAO{
     // 파일 수정
 	public void updateFile(Map<String, Object> map) throws Exception{
 		update("adminGoods.updateFile", map);
+		update("adminGoods.deleteFile", map);
 	}
 	
 	//파일 삭제
@@ -55,4 +56,35 @@ public class AdminGoodsDAO extends AbstractDAO{
 		return selectList("adminGoods.selectFileList", map);
 	}
 
+	//상품 삭제 취소
+			public void updateAdminGoodsD(Map<String, Object> map) throws Exception{
+				update("adminGoods.updateAdminGoodsD", map);
+			}
+		//상품 옵션 검색
+			@SuppressWarnings("unchecked")
+			public List<Map<String, Object>> adminGcategory(Map<String, Object> map) throws Exception {
+				return selectList("adminGoods.admingGcategory",map);
+			}
+			
+			@SuppressWarnings("unchecked")
+			public List<Map<String, Object>> adminGpricehigh(Map<String, Object> map) throws Exception {
+				return selectList("adminGoods.admingGpricehigh",map);
+			}
+			
+			@SuppressWarnings("unchecked")
+			public List<Map<String, Object>> adminGpricerow(Map<String, Object> map) throws Exception {
+				return selectList("adminGoods.admingGpricerow",map);
+			}
+			
+			@SuppressWarnings("unchecked")
+			public List<Map<String, Object>> adminGdelete(Map<String, Object> map) throws Exception {
+				return selectList("adminGoods.admingGdelete",map);
+			}
+			
+			@SuppressWarnings("unchecked")
+			public List<Map<String, Object>> adminGdate(Map<String, Object> map) throws Exception {
+				return selectList("adminGoods.admingGdate",map);
+			}
+	
+	
 }

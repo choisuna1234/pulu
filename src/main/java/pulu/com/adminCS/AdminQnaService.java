@@ -29,6 +29,9 @@ public interface AdminQnaService {
 	void adminQnaComUpdate(Map<String, Object> map, HttpServletRequest request) throws Exception;
 
 	void adminQnaComDelete(Map<String, Object> map, HttpServletRequest request) throws Exception;
+	
+	void adminQnaComStatus(Map<String, Object> map, HttpServletRequest request) throws Exception;
+
 
 
 	

@@ -341,7 +341,7 @@
 				<div class="orderInfo">
 					<p>
 						<strong>고객님의 주문이 완료 되었습니다.</strong> 주문내역 및 배송에 관한 안내는
-						<a href="/">주문조회</a>
+						<a href="/myInfoOrder.pulu">주문조회</a>
 						를 통하여 확인 가능합니다.
 					</p>
 				</div>
@@ -621,7 +621,7 @@ function setTotalInfo(){
 	// 총 가격
 	$(".totalPrice_span").text(totalPrice.toLocaleString());
 	// 배송비
-	$(".delivery_price").text(deliveryPrice);	
+	$(".delivery_price").text(deliveryPrice.toLocaleString());	
 }
 
 </script>

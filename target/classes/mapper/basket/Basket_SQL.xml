@@ -5,7 +5,7 @@
 
 
 	<!-- 선민: 장바구니 중복확인 -->
-	<select id="checkBasket" parameterType="hashmap" resultType="hashmap">
+	<select id="basketCheck" parameterType="hashmap" resultType="hashmap">
 		SELECT *
 		FROM BASKET
 		WHERE BASKET_GOODS_NUM = #{GOODS_NUM}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminreview">
+<!-- 관리자 후기 답변 등록 -->
+<update id="adminReviewInsert" parameterType="hashMap">
+<![CDATA[
+UPDATE REVIEW
+SET REVIEW_STATUS = '답변완료',
+    REVIEW_COMMENT = #{REVIEW_COMMENT}
+WHERE REVIEW_NUM = #{REVIEW_NUM}
+]]>
+</update>
+
+<!-- 관리자 후기 답변 삭제 -->
+<update id="adminReviewDelete" parameterType="hashMap">
+<![CDATA[
+UPDATE REVIEW
+SET REVIEW_STATUS = '답변대기',
+    REVIEW_COMMENT = NULL
+WHERE REVIEW_NUM = #{REVIEW_NUM}
+]]>
+</update>
+
+
+<!-- 관리자 페이지 후기 리스트 -->
+<select id="adminReviewList" resultType="hashMap" parameterType="hashMap">
+<![CDATA[
+SELECT ROW_NUMBER() OVER (ORDER BY REVIEW_NUM DESC) RNUM, REVIEW_NUM, REVIEW_GOODS_NUM, REVIEW_ID,
+       REVIEW_CONTENTS, TO_CHAR(REVIEW_DATE, 'YYYY.MM.DD') AS REVIEW_DATE, REVIEW_STATUS, REVIEW_COMMENT
+FROM REVIEW
+WHERE REVIEW_DELETE = 'N'
+]]>
+</select>
+
+</mapper>

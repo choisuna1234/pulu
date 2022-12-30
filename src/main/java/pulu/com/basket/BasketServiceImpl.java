@@ -23,11 +23,11 @@ public class BasketServiceImpl implements BasketService {
 
 	
 	@Override // 선민: 장바구니 중복 확인
-	public Map<String, Object> checkBasket(Map<String, Object> map, HttpSession session) throws Exception {
+	public Map<String, Object> basketCheck(Map<String, Object> map, HttpSession session) throws Exception {
 		String loginId = String.valueOf((session.getAttribute("loginId")));
 		map.put("LOGIN_ID", loginId);
 		
-		return basketDAO.checkBasket(map);
+		return basketDAO.basketCheck(map);
 	}
 
 	

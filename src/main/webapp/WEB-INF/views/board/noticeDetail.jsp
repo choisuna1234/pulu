@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
+
 
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/board.css" />
@@ -48,11 +50,12 @@
 				</tbody>
 			</table>
 			<div class="base-button">	
-				<a href="#this" class="btnNo" id="list">목록으로</a>
+				<a href="noticeList.pulu" class="btnNo" id="list">목록으로</a>
 			</div>
 		</div>
 	</div>
 </div>
+<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#list").on("click", function(e){ //리스트

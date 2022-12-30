@@ -23,17 +23,17 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDAO;
 
 	@Override // 선민: 상세페이지에서 주문페이지 이동 시 회원, 상품, 이미지 정보를 DB로부터 가져오기
-	public List<Map<String, Object>> selectOrderGoodsInfo(Map<String, Object> map, HttpSession session)
+	public List<Map<String, Object>> orderByDetail(Map<String, Object> map, HttpSession session)
 			throws Exception {
 
 		// 선민: 세션에 존재하는 아이디를 DB에 접근할 map에 추가
 		String loginId = String.valueOf((session.getAttribute("loginId")));
 		map.put("ID", loginId);
 
-		return orderDAO.selectOrderGoodsInfo(map);
+		return orderDAO.orderByDetail(map);
 	}
 
-	@Override // 장바구니리스트->주문페이지 값 넘기기
+	@Override // 선민: 장바구니리스트->주문페이지 값 넘기기
 	public List<Map<String, Object>> selectGoodsInfo(List<BasketListItemDTO> orders) throws Exception {
 
 		Map<String, Object> goodsMap = new HashMap<String, Object>();
@@ -41,13 +41,12 @@ public class OrderServiceImpl implements OrderService {
 
 		for (BasketListItemDTO ord : orders) {
 			goodsMap = orderDAO.selectGoodsInfo(ord.getGOODS_NUM());
-			log.info("01. ord 수량 == " + ord.getSELECTED_GOODS_AMOUNT());
-			log.info("02. goodsMap == " + goodsMap);
-			log.info("03. ord.getGOODS_NUM == " + ord.getGOODS_NUM());
+			log.info("\nord 수량 == " + ord.getSELECTED_GOODS_AMOUNT());
+			log.info("\ngoodsMap == " + goodsMap);
+			log.info("\nord.getGOODS_NUM == " + ord.getGOODS_NUM());
 			goodsMap.put("SELECTED_GOODS_AMOUNT", ord.getSELECTED_GOODS_AMOUNT());
 			result.add(goodsMap);
 		}
-		log.info("쿼리결과를 list에 add");
 		return result;
 	}
 
@@ -86,6 +85,11 @@ public class OrderServiceImpl implements OrderService {
 		// ORDER_DELI 테이블에 1회 insert
 		int order_num = orderDAO.insertOrderDeli(orderDeli);
 
+		
+		
+		
+		
+		
 		// 상품 정보는 구매한 상품의 종류만큼 필요, 따라서 Map에 값을 복사하고 쿼리를 실행하는 과정을 객체의 개수만큼 반복
 		for (OrderListItemDTO ord : orders) {
 			orderGoods.put("ORDER_NUM", order_num);

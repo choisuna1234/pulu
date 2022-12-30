@@ -46,6 +46,12 @@ public class AdminOrderServiceImpl implements AdminOrderService {	//Service μΈν
 		return adminOrderDAO.adminOrderDetail(map);
 	}
 	
+	@Override
+	public List<Map<String, Object>> adminOrderDetail2(Map<String, Object> map) throws Exception {
+		return adminOrderDAO.adminOrderDetail2(map);
+	}
+	
+	
 //	@Override public List<Map<String, Object>> adminOrderDetail(Map<String,Object> map) throws Exception { 
 //		return adminOrderDAO.adminOrderDetail(map); 
 //		}
@@ -63,8 +69,12 @@ public class AdminOrderServiceImpl implements AdminOrderService {	//Service μΈν
 	public void adminOrderDelete(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		adminOrderDAO.adminOrderDelete(map);
 		
+		List<Map<String, Object>> list = adminOrderDAO.goodsAmountSelect(map);
+		
+		for(Map<String, Object> map_amount : list) {
+			adminOrderDAO.goodsAmountUpdate(map_amount);
+		}
+	
 	}
-	
-	
 
 }

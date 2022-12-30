@@ -237,8 +237,7 @@ public class MemberController {
 	// 선아: 마이페이지
 	@RequestMapping(value = "/myPage")
 	public ModelAndView myPage() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("myPage");
+		ModelAndView mav = new ModelAndView("redirect:/myInfoOrder.pulu");
 		return mav;
 	}
 
@@ -309,7 +308,7 @@ public class MemberController {
 	// 병찬: 내가 쓴 후기 리스트
 	@RequestMapping(value = "/myReview")
 	public ModelAndView myReview(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("myinfo_review");
 
 		HttpSession session = request.getSession();
 		String ID = (String) session.getAttribute("loginId"); // 회원 ID 값 불러오기
@@ -346,18 +345,20 @@ public class MemberController {
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
 		mv.addObject("myReview", myReview);
-		mv.setViewName("member/myReview");
+	
 		return mv;
 	}
 
-	// 병찬: 마이페이지 주문 리스트
+	// SELECT ORDER_NUM FROM ORDER_DELI WHERE ORDER_MEMBER_ID = 'AISU'
+	// SELECT * FROM ORDER_DELI WHERE ORDER_NUM = '99'
+	// SELECT COUNT(*) FROM ORDER_GOODS WHERE ORDER_NUM = '99'
+	
+	// 선민: 마이페이지 주문 리스트
 	@RequestMapping(value = "/myInfoOrder")
-	public ModelAndView myInfoOrder(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView myInfoOrder(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView("myinfo_order");
 
-		HttpSession session = request.getSession();
-		String ID = (String) session.getAttribute("loginId"); // 회원 ID 값 불러오기
-
+		String ID = (String) session.getAttribute("loginId");
 		commandMap.getMap().put("ID", ID);
 		
 		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
@@ -369,9 +370,9 @@ public class MemberController {
 			// 받아오는 현제페이지가 있으면 인트값으로해서 현재페이지 값설정
 		}
 
-		List<Map<String, Object>> myInfoOrder = memberService.myInfoOrder(commandMap.getMap());
+		List<Map<String, Object>> list = memberService.myInfoOrder(commandMap.getMap());
 		
-		totalCount = myInfoOrder.size();
+		totalCount = list.size();
 		page = new Paging(currentPage, totalCount, blockCount, blockPage, "myInfoOrder.pulu");
 		pagingHtml = page.getPagingHtml().toString();
 		startPage = (int) ((currentPage - 1) / blockPage) * blockPage + 1;
@@ -382,34 +383,34 @@ public class MemberController {
 		if (page.getEndCount() < totalCount)
 			lastCount = page.getEndCount() + 1;
 
-		myInfoOrder = myInfoOrder.subList(page.getStartCount(), lastCount);
+		list = list.subList(page.getStartCount(), lastCount);
 
 		mv.addObject("totalCount", totalCount);
 		mv.addObject("pagingHtml", pagingHtml);
 		mv.addObject("currentPage", currentPage);
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
-		mv.addObject("myInfoOrder", myInfoOrder);
-		mv.setViewName("member/myInfoOrder");
+		mv.addObject("myInfoOrder", list);
 		return mv;
 	}
 
 	// 병찬: 마이페이지 주문 상세보기
 	@RequestMapping(value = "/myInfoOrderDetail")
 	public ModelAndView myInfoOrderDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("member/myInfoOrderDetail");
-
+		ModelAndView mv = new ModelAndView("myinfo_order_detail");
+		
 		HttpSession session = request.getSession();
 
 		commandMap.getMap().put("ORDER_NUM", commandMap.getMap().get("ORDER_NUM")); // 주문 번호
 		commandMap.getMap().put("ID", session.getAttribute("loginId")); // 회원 ID
 
 		// System.out.println(commandMap.getMap());
-		Map<String, Object> myInfoOrderDetail = memberService.myInfoOrderDetail(commandMap.getMap());
-
-		mv.addObject("myInfoOrderDetail", myInfoOrderDetail);
+		List<Map<String, Object>> list = memberService.myInfoOrderDetail(commandMap.getMap());
+		Map<String, Object> mapp = memberService.myInfoOrderDetail2(commandMap.getMap());
+		
+		mv.addObject("myInfoOrderDetail", list);
+		mv.addObject("myInfoOrderDetail2", mapp);
 		// System.out.println(myInfoOrderDetail);
-		mv.setViewName("member/myInfoOrderDetail");
 		return mv;
 	}
 
@@ -427,13 +428,13 @@ public class MemberController {
 	// 병찬: 마이페이지 주문 수정폼
 	@RequestMapping(value = "/myInfoOrderUpdateForm")
 	public ModelAndView myInfoOrderUpdateForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("member/myInfoOrderUpdateForm");
+		ModelAndView mv = new ModelAndView("myinfo_order_update_form");
 		
 		HttpSession session = request.getSession();
 		
 		commandMap.getMap().put("ID", session.getAttribute("loginId")); // 회원 ID
 
-		Map<String, Object> map = memberService.myInfoOrderDetail(commandMap.getMap());
+		Map<String, Object> map = memberService.myInfoOrderDetail2(commandMap.getMap());
 
 		mv.addObject("map", map);
 		return mv;

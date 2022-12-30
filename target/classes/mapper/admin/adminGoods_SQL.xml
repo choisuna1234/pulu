@@ -62,7 +62,7 @@ VALUES (
 	<select id="adminGoodsList" resultType="hashmap">
 <![CDATA[
 select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
-			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY
+			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY, GOODS_DELETE
 	from GOODS, IMAGE 
 	where GOODS_NUM = IMAGE_GOODS_NUM
     and IMAGE_CATEGORY = 1
@@ -142,7 +142,7 @@ select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 			SET
 				IMAGE_DEL_GB = 'N'
 			WHERE
-				IMAGE_NUM = #{FILE_IDX}	
+				IMAGE_GOODS_NUM = #{GOODS_NUM}	
 		]]>
 	</update>
 	
@@ -158,6 +158,90 @@ select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
 			GOODS_NUM = #{GOODS_NUM}
   ]]>
 	</update>
+	
+	 <!-- 상품 삭제 취소 -->
+  
+   <update id="updateAdminGoodsD" parameterType="hashmap">
+	  <![CDATA[
+  UPDATE GOODS
+		 SET
+			GOODS_DELETE = 'N'
+		 WHERE
+			GOODS_NUM = #{GOODS_NUM}
+  ]]>
+  </update>
+  
+   <!--   옵션별 분류 -->
+  
+ <!--  카테고리 별  -->
+<select id="admingGcategory" resultType="hashmap">
+  <![CDATA[
+    select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY, GOODS_DELETE
+	from GOODS, IMAGE 
+	where GOODS_NUM = IMAGE_GOODS_NUM
+    and IMAGE_CATEGORY = 1
+	and GOODS_DELETE = 'N'
+	and IMAGE_DEL_GB ='N'
+	and GOODS_CATEGORY = #{searchNum}
+	order by GOODS_NUM desc
+]]>
+	</select>
+	
+	<!-- 높은 가격 순 정렬 -->
+<select id="admingGpricehigh" resultType="hashmap">
+  <![CDATA[
+    select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY, GOODS_DELETE
+	from GOODS, IMAGE 
+	where GOODS_NUM = IMAGE_GOODS_NUM
+	  and IMAGE_CATEGORY = 1
+	  and GOODS_DELETE = 'N'
+	 order by GOODS_PRICE desc
+]]>
+	</select>
+	
+	<!-- 낮은 가격 순 정렬 -->
+	<select id="admingGpricerow" resultType="hashmap">
+  <![CDATA[
+    select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY, GOODS_DELETE
+	from GOODS, IMAGE 
+	where GOODS_NUM = IMAGE_GOODS_NUM
+	  and IMAGE_CATEGORY = 1
+	  and GOODS_DELETE = 'N'
+	 order by GOODS_PRICE asc
+]]>
+	</select>
+	
+   <!-- 삭제 여부 -->
+	<select id="admingGdelete" resultType="hashmap">
+  <![CDATA[
+    select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY , GOODS_DELETE
+	from GOODS, IMAGE 
+	where GOODS_NUM = IMAGE_GOODS_NUM
+    and IMAGE_CATEGORY = 1
+	and GOODS_DELETE = 'Y'
+	and IMAGE_DEL_GB ='N'
+	order by GOODS_NUM desc
+]]>
+	</select>
+	
+	<!-- 오래된 순 -->
+	<select id="admingGdate" resultType="hashmap">
+  <![CDATA[
+    select	GOODS_NUM, GOODS_CATEGORY, GOODS_NAME, GOODS_AMOUNT, GOODS_PRICE,
+			GOODS_DATE, GOODS_CALORIE, IMAGE_STORED, IMAGE_CATEGORY, GOODS_DELETE
+	from GOODS, IMAGE 
+	where GOODS_NUM = IMAGE_GOODS_NUM
+    and IMAGE_CATEGORY = 1
+	and GOODS_DELETE = 'N'
+	and IMAGE_DEL_GB ='N'
+	order by GOODS_NUM asc
+]]>
+	</select>
+	
 
 
 

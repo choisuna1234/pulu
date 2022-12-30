@@ -38,18 +38,18 @@ public class MainController {
 	}
 
 	// 선아: 매장지도 띄우기
-	@RequestMapping(value = "/burialMap")
-	public ModelAndView burialMap() {
+	@RequestMapping(value = "/storeMap")
+	public ModelAndView store() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("burialMap");
+		mv.setViewName("storeMap");
 		return mv;
 	}
 
 	// 선아: 영양정보 띄우기
-	@RequestMapping(value = "/nutritionFacts")
-	public ModelAndView nutritionFacts() {
+	@RequestMapping(value = "/nutritionInfo")
+	public ModelAndView nutritionInfo() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("nutritionFacts");
+		mv.setViewName("nutritionInfo");
 		return mv;
 	}
 	

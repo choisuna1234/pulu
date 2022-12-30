@@ -24,28 +24,16 @@
 	<definition name="goods_detail" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/goods/detail.jsp"/>
 	</definition>	
-
-	<definition name="admin_goods_list" extends="layout">
-		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsList.jsp"/>
-	</definition>	
-
-	<definition name="admin_goods_insert" extends="layout">
-		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsInsert.jsp"/>
-	</definition>	
-
-	<definition name="admin_goods_update" extends="layout">
-		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsUpdateForm.jsp"/>
-	</definition>	
 	
 	<definition name="pOrder" extends="layout">
       <put-attribute name="body" value="/WEB-INF/views/order/pOrder.jsp"/>
    </definition>
    
-   <definition name="nutritionFacts" extends="layout">
-      <put-attribute name="body" value="/WEB-INF/views/nutritionFacts/nutritionFacts.jsp"/>
+   <definition name="nutritionInfo" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/nutritionInfo/nutritionInfo.jsp"/>
    </definition>
- <definition name="burialMap" extends="layout">
-      <put-attribute name="body" value="/WEB-INF/views/burialMap/burialMap.jsp"/>
+ <definition name="storeMap" extends="layout">
+      <put-attribute name="body" value="/WEB-INF/views/storeMap/storeMap.jsp"/>
    </definition>
 
 
@@ -82,8 +70,8 @@
 	<definition name="deleteForm2" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/member/deleteForm2.jsp"/>
 	</definition>
-	<definition name="myInfoModify" extends="layout">
-		<put-attribute name="body" value="/WEB-INF/views/member/myInfoModify.jsp"/>
+	<definition name="memberInfo" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/member/memberInfo.jsp"/>
 	</definition>
 	
 	
@@ -155,6 +143,18 @@
 		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminQnaList.jsp"/>
 	</definition>
 	
+	<definition name="admin_goods_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsList.jsp"/>
+	</definition>	
+
+	<definition name="admin_goods_insert" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsInsert.jsp"/>
+	</definition>	
+
+	<definition name="admin_goods_update" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminGoods/adminGoodsUpdateForm.jsp"/>
+	</definition>	
+	
 	
 	
 	
@@ -178,7 +178,30 @@
 	<definition name="admin_order_list" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminOrderList.jsp"/>
 	</definition>
+
 	
+
+	
+	<definition name="layout_mypage" template="/WEB-INF/tiles/layout/mypage_layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/tiles/tile/header.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/myInfoOrder.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/tiles/tile/footer.jsp"/>
+	</definition>
+	<definition name="myinfo_order" extends="layout_mypage">
+		<put-attribute name="body" value="/WEB-INF/views/member/myInfoOrder.jsp"/>
+	</definition>
+	<definition name="myinfo_order_detail" extends="layout_mypage">
+		<put-attribute name="body" value="/WEB-INF/views/member/myInfoOrderDetail.jsp"/>
+	</definition>
+	<definition name="myinfo_order_update_form" extends="layout_mypage">
+		<put-attribute name="body" value="/WEB-INF/views/member/myInfoOrderUpdateForm.jsp"/>
+	</definition>
+	<definition name="myinfo_review" extends="layout_mypage">
+		<put-attribute name="body" value="/WEB-INF/views/member/myReview.jsp"/>
+	</definition>
+	<definition name="myInfoModify" extends="layout_mypage">
+		<put-attribute name="body" value="/WEB-INF/views/member/myInfoModify.jsp"/>
+	</definition>
 	
 	
 </tiles-definitions> 

@@ -24,10 +24,10 @@ public class BasketController {
 
 	
 	// 선민: 장바구니 중복 확인 (select)
-	@RequestMapping(value = "/checkBasket", method = RequestMethod.POST)
-	public ModelAndView checkBasket(CommandMap commandMap, HttpSession session) throws Exception {
+	@RequestMapping(value = "/basketCheck", method = RequestMethod.POST)
+	public ModelAndView basketCheck(CommandMap commandMap, HttpSession session) throws Exception {
 
-		Map<String, Object> basketMap = basketService.checkBasket(commandMap.getMap(), session);
+		Map<String, Object> basketMap = basketService.basketCheck(commandMap.getMap(), session);
 		ModelAndView mv = new ModelAndView();
 
 		if (basketMap == null) { // 장바구니 새로 등록 (insert)
@@ -97,7 +97,7 @@ public class BasketController {
 
 	// 선민: 장바구니 넣기 완료 팝업 (계속 쇼핑, 장바구니 이동)
 	@RequestMapping(value = "/basketSuccess")
-	public String basketCheck() throws Exception {
+	public String basketSuccess() throws Exception {
 		return "/basket/basketSuccess";
 	}
 

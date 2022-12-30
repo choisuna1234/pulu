@@ -74,16 +74,19 @@
 		$(document).ready(function() {
 			$("#list").on("click", function(e) { //목록으로 버튼
 				e.preventDefault();
+				alert("목록으로 넘어가시겠습니까?");
 				fn_adminNoticeList();
 			});
 
 			$("#update").on("click", function(e) { //저장하기 버튼
 				e.preventDefault();
+				alert("수정하시겠습니까?");
 				fn_adminNoticeUpdate();
 			});
 
 			$("#delete").on("click", function(e) { //삭제하기 버튼
 				e.preventDefault();
+				 alert("정말 삭제하시겠습니까?");
 				fn_adminNoticeDelete();
 			});
 		});
@@ -101,6 +104,18 @@
 
 		function fn_adminNoticeUpdate() {
 			var comSubmit = new ComSubmit("frm");
+			
+			if (frm.NOTICE_SUBJECT.value.length == 0) {   //선아: 제목, 내용 유효성검사
+	        	 frm.NOTICE_SUBJECT.focus();
+	            alert("제목을 입력하세요.");
+	            return false;
+	         }
+	         if (frm.NOTICE_CONTENT.value.length == 0) {
+	            alert("내용을 입력하세요.");
+	            frm.NOTICE_CONTENT.focus();
+	            return false;
+	         }
+
 			comSubmit.setUrl("<c:url value='/adminNoticeUpdate.pulu'/>");
 			comSubmit.submit();
 		}
@@ -112,6 +127,11 @@
 			comSubmit.submit();
 
 		}
+		
+		
+		
+		
+		
 	</script>
 </body>
 </html>

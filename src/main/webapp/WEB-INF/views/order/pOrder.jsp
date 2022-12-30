@@ -367,7 +367,7 @@
 										<th>주소 <span class="icoRequired">필수</span></th>
 										<td>
 											<input type="text" id="ORDER_RECEIVE_ZIPCODE" name="ORDER_RECEIVE_ZIPCODE" class="ORDER_RECEIVE_ZIPCODE" value="${map.ZIPCODE}" />
-											<input type="button" class="zipcodebt" value="주소검색" onclick="kakaoPost()">
+											<input type="button" class="zipcodebt" value="주소검색" onclick="kakaoPostReceive()">
 											<!-- 선민: 버튼 클릭 시 kakaoPost() 함수 실행 -->
 										</td>
 										<td colspan="2"></td>
@@ -492,9 +492,6 @@
 						</div>
 					</div>
 				</div>
-
-
-
 				<!-- 명식 : 결제정보 판넬 시작 -->
 				<div class="panel panel-default">
 
@@ -547,30 +544,11 @@
 								<input type="radio" id="ORDER_PAY_TYPE" name="ORDER_PAY_TYPE" value="0">
 								<label>무통장 입금</label>
 							</div>
-
+							
 							<div id="showResult"></div>
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 				<div id="button" align="center">
 					<!-- 결제 완료페이지로 추후 수정 -->
 					<input type="submit" id="cddd" class="submitbtn" value='결제하기' />
@@ -849,7 +827,7 @@ function setTotalInfo(){
 	// 총 갯수
 	$(".totalCount_span").text(totalCount);
 	// 배송비
-	$(".delivery_price").text(deliveryPrice);	
+	$(".delivery_price").text(deliveryPrice.toLocaleString());	
 	// 최종 가격(총 가격 + 배송비)
 	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	
 	

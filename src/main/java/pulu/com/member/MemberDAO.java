@@ -1,5 +1,6 @@
 package pulu.com.member;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import pulu.com.common.AbstractDAO;
 @Repository("memberDAO")
 @Log4j
 public class MemberDAO extends AbstractDAO {
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
@@ -89,37 +90,81 @@ public class MemberDAO extends AbstractDAO {
 	public void newPassword(Map<String, Object> map) throws Exception {
 		update("member.newPassword", map);
 	}
-	
+
 	// 병찬: 내가 쓴 후기 리스트
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> myReview(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>) selectList("review.myReview", map);
 	}
-		
-	// 병찬: 마이페이지 주문 리스트
+
+	// 선민: 마이페이지 주문 리스트 가져오기
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> myInfoOrder(Map<String, Object> map) throws Exception {
-			
-		return (List<Map<String, Object>>) selectList("member.myInfoOrder", map);
+
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Integer> orderNumList = selectList("member.selectMyOrderNum", map);
+		log.info("\n01. 회원이 주문한 모든 주문번호 == " + orderNumList);
+
+		for (int ORDER_NUM : orderNumList) {
+			Map<String, Object> orderDeliMap = (Map<String, Object>) selectOne("member.selectOrderDeliByOrderNum",
+					ORDER_NUM);
+			log.info("\n02. 주문번호 " + ORDER_NUM + "의 주문정보 == " + orderDeliMap);
+			List<Map<String, Object>> orderGoodsList = (List<Map<String, Object>>) selectList(
+					"member.selectOrderGoodsByOrderNum", ORDER_NUM);
+			log.info("\n03. 주문번호 " + ORDER_NUM + "의 상품항목 수 == " + orderGoodsList.size());
+			orderDeliMap.put("ORDER_GOODS_COUNT", orderGoodsList.size());
+			orderDeliMap.put("ORDER_GOODS_NUM", orderGoodsList.get(0).get("ORDER_GOODS_NUM"));
+			orderDeliMap.put("ORDER_GOODS_NAME", orderGoodsList.get(0).get("ORDER_GOODS_NAME"));
+			orderDeliMap.put("ORDER_GOODS_IMAGE", orderGoodsList.get(0).get("ORDER_GOODS_IMAGE"));
+			list.add(orderDeliMap);
+		}
+		return list;
 	}
-			
+
 	// 병찬: 마이페이지 주문 상세보기
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> myInfoOrderDetail(Map<String, Object> map) throws Exception {
-				
-		return (Map<String, Object>) selectOne("member.myInfoOrderDetail", map);
+	public List<Map<String, Object>> myInfoOrderDetail(Map<String, Object> map) throws Exception {
+
+		List<Map<String, Object>> list = selectList("member.selectOrderGoodsByOrderNum", map);
+
+		return list;
 	}
-			
+
+	// 병찬: 마이페이지 주문 상세보기
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> myInfoOrderDetail2(Map<String, Object> map) throws Exception {
+
+		Map<String, Object> mapp = (Map<String, Object>) selectOne("member.selectOrderDeliByOrderNum", map);
+
+		return mapp;
+	}
+
 	// 병찬: 마이페이지 주문 수정
 	public void myInfoOrderUpdate(Map<String, Object> map) throws Exception {
-				
+
 		update("member.myInfoOrderUpdate", map);
 	}
-			
+
 	// 병찬: 마이페이지 주문 취소
-	public void myInfoOrderDelete(Map<String ,Object> map) throws Exception {
-				
+	public void myInfoOrderDelete(Map<String, Object> map) throws Exception {
+
 		delete("member.myInfoOrderDelete", map);
+	}
+	
+	//
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> goodsAmountSelect(Map<String, Object> map) throws Exception {
+		
+		List<Map<String, Object>> list = selectList("member.goodsAmountSelect", map);
+		
+		return list;
+	}
+	
+	
+	//
+	public void goodsAmountUpdate(Map<String, Object> map) throws Exception {
+		
+		update("member.goodsAmountUpdate", map);
 	}
 
 }

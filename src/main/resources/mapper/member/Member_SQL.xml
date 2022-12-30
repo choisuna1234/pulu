@@ -157,24 +157,27 @@
 	</update>
 
   <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ주문내역ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-<!-- 병찬: 마이페이지 주문내역 리스트 -->
-<select id="myInfoOrder" parameterType="hashmap" resultType="hashmap">
+<!-- 병찬: 마이페이지 주문내역 상세보기1 -->
+<select id="myInfoOrderDetail1" parameterType="hashmap" resultType="hashmap">
 <![CDATA[
-SELECT G.GOODS_NUM, G.GOODS_NAME, OG.ORDER_NUM, OD.ORDER_STATUS, OD.ORDER_SUM_MONEY, OD.ORDER_MEMBER_ID, OD.ORDER_DATE, OG.ORDER_GOODS_AMOUNT, IMAGE_STORED
-FROM ORDER_GOODS OG, ORDER_DELI OD, GOODS G, MEMBER M, IMAGE I
-WHERE G.GOODS_NUM = OG.ORDER_GOODS_NUM AND M.ID = OD.ORDER_MEMBER_ID AND M.ID = #{ID} AND GOODS_NUM = IMAGE_GOODS_NUM AND OD.ORDER_NUM = OG.ORDER_NUM
-AND IMAGE_CATEGORY = 1
+SELECT ORDER_GOODS_NUM, ORDER_GOODS_NAME, ORDER_GOODS_PRICE, ORDER_GOODS_AMOUNT, IMAGE_STORED
+FROM ORDER_GOODS OG, GOODS G, IMAGE I
+WHERE GOODS_NUM = ORDER_GOODS_NUM 
+AND GOODS_NUM = IMAGE_GOODS_NUM
+AND ORDER_NUM = #{ORDER_NUM}
 ]]>
 </select>
 
-<!-- 병찬: 마이페이지 주문내역 상세보기 -->
-<select id="myInfoOrderDetail" parameterType="hashmap" resultType="hashmap">
+<!-- 병찬: 마이페이지 주문내역 상세보기2 -->
+<select id="myInfoOrderDetail2" parameterType="hashmap" resultType="hashmap">
 <![CDATA[
-SELECT OG.ORDER_NUM, G.GOODS_NUM, G.GOODS_NAME, OD.ORDER_STATUS, OG.ORDER_GOODS_PRICE, OD.ORDER_MEMBER_ID, OD.ORDER_DATE, OG.ORDER_GOODS_AMOUNT, IMAGE_STORED,
-OD.ORDER_PAY_TYPE, OD.ORDER_MEMBER_NAME, OD.ORDER_MEMBER_PHONE, OD.ORDER_RECEIVE_NAME, OD.ORDER_RECEIVE_ADDR1, OD.ORDER_RECEIVE_ADDR2, OD.ORDER_RECEIVE_PHONE,
-OD.ORDER_MEMO, OD.ORDER_RECEIVE_ZIPCODE
-FROM ORDER_GOODS OG, ORDER_DELI OD, GOODS G, MEMBER M, IMAGE I
-WHERE G.GOODS_NUM = OG.ORDER_GOODS_NUM AND M.ID = OD.ORDER_MEMBER_ID AND M.ID = #{ID} AND OG.ORDER_NUM = #{ORDER_NUM} AND GOODS_NUM = IMAGE_GOODS_NUM AND OD.ORDER_NUM = OG.ORDER_NUM
+SELECT ORDER_MEMBER_NAME, ORDER_MEMBER_PHONE, ORDER_MEMBER_ADDR1, ORDER_MEMBER_ADDR2, ORDER_MEMBER_ZIPCODE,
+       ORDER_RECIVE_NAME, ORDER_RECIVE_PHONE, ORDER_RECIVE_ADDR1, ORDER_RECIVE_ADDR2, ORDER_RECIVE_ZIPCODE,
+       ORDER_MEMO, ORDER_SUM_MONEY, TO_CHAR(ORDER_DATE, 'YYYY.MM.DD') AS ORDER_DATE
+FROM ORDER_DELI OD, MEMBER M
+WHERE ORDER_NUM = #{ORDER_NUM}
+AND ORDER_MEMBER_ID = #{ID}
+AND OD.ORDER_MEMBER_ID = M.ID
 ]]>
 </select>
 
@@ -202,13 +205,42 @@ WHERE ORDER_NUM = #{ORDER_NUM}
 ]]>
 </update>
 
+<!-- 병찬: 주문내역 취소 시 상품수량 복구 확인 -->
+<select id="goodsAmountSelect" parameterType="hashmap" resultType="hashMap">
+<![CDATA[
+SELECT ORDER_GOODS_NUM, ORDER_GOODS_AMOUNT
+FROM ORDER_GOODS
+WHERE ORDER_NUM = #{ORDER_NUM}
+]]>
+</select>
+
 <!-- 병찬: 주문내역 취소 시 상품수량 복구 -->
 <update id="goodsAmountUpdate" parameterType="hashmap">
 <![CDATA[
 UPDATE GOODS
-SET GOODS_AMOUNT + ${GOODS_AMOUNT}
-WHERE GOODS_NUM = #{GOODS_NUM}
+SET GOODS_AMOUNT = GOODS_AMOUNT + #{ORDER_GOODS_AMOUNT}
+WHERE GOODS_NUM = #{ORDER_GOODS_NUM}
 ]]>
 </update>
+
+<!-- 선민: 내가 주문한 모든 주문의 번호 뽑아오기 -->
+<select id="selectMyOrderNum" parameterType="hashmap" resultType="int">
+<![CDATA[
+	SELECT ORDER_NUM, TO_CHAR(ORDER_DATE, 'YYYY.MM.DD') AS ORDER_DATE FROM ORDER_DELI WHERE ORDER_MEMBER_ID = #{ID} ORDER BY ORDER_DATE DESC
+]]>
+</select>
+
+<!-- 선민: 특정 주문번호의 주문정보 뽑아오기 -->
+<select id="selectOrderDeliByOrderNum" parameterType="int" resultType="hashmap">
+<![CDATA[
+	SELECT * FROM ORDER_DELI WHERE ORDER_NUM = #{ORDER_NUM}
+]]>
+</select>
+<!-- 선민: 특정 주문번호의 주문상품항목 뽑아오기 -->
+<select id="selectOrderGoodsByOrderNum" parameterType="int" resultType="hashmap">
+<![CDATA[
+	SELECT * FROM ORDER_GOODS WHERE ORDER_NUM = #{ORDER_NUM}
+]]>
+</select>
 
 </mapper>

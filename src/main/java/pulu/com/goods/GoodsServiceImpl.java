@@ -83,5 +83,29 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<Map<String, Object>> qnaSearch1(Map<String, Object> map) throws Exception {
 		return goodsDao.qnaSearch1(map);
 	}
+	
+	//전체 상품 리스트
+	@Override
+	public List<Map<String, Object>> allGoodsList(Map<String, Object> map) throws Exception {
+		return goodsDao.allGoodsList(map);
+	}
+	
+	// 전체상품 검색
+			@Override
+			public List<Map<String, Object>> goodsAllSearch(Map<String, Object> map) throws Exception {
+				return goodsDao.goodsAllSearch(map);
+			}
+
+			//전체 상품 옵션 1,2
+			@Override
+			public List<Map<String, Object>> searchAllOption0(Map<String, Object> map) throws Exception {
+				return goodsDao.searchAllOption0(map);
+			}
+
+			@Override
+			public List<Map<String, Object>> searchAllOption1(Map<String, Object> map) throws Exception {
+				return goodsDao.searchAllOption1(map);
+			}
+
 
 }

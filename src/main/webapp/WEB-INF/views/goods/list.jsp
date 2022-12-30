@@ -87,16 +87,24 @@ td {
 	<div class="sublistcontainer">
 	<div class="wid1280">
 	<div class="goodsheader">
-		<div class="SaladAmount">상품 ${fn:length(goodsList)} 개</div>
+		<div class="SaladAmount" style="    margin-top: 20px;">상품 ${fn:length(goodsList)} 개</div>
+		
 		<div class="SaladCategory">
-			<div id="select" align="right">
-				<select name="job" align="right">
-					<option value="낮은가격">낮은가격</option>
-					<option value="높은가격">높은가격</option>
-					<option value="추천상품">추천상품</option>
-
+			
+			<!--의종: 옵션별 정렬 -->
+		<form id="searchOption" action="" method="get" >
+			<div id="searchOptionForm" align="right">
+				<input type="hidden" name="categoryNo" value="${categoryNo}"/>
+				<input type="hidden" name="searchOption" value="option"/>
+				<select name="optionNum" id="optionNum"  align="right" onchange="this.form.submit()">
+				  <option value="0"<c:if test="${optionNum == '0'}">selected="selected"</c:if>>신상품</option>
+				  <option value="1" <c:if test="${optionNum == '1'}">selected="selected"</c:if>>낮은가격</option>
+				  <option value="2"<c:if test="${optionNum == '2'}">selected="selected"</c:if>>높은가격</option>
+				 <%-- 미구현 <option value="3"<c:if test="${optionNum == '3'}">selected="selected"</c:if>>추천상품</option> --%>
 				</select>
 			</div>
+		</form>
+		
 		</div>
 	</div>
 	<div class="goodsListBody">
@@ -148,18 +156,13 @@ td {
 			${pagingHtml}
 			<div id="dataTables-example_filter" class="dataTables_filter"
 				style="width: 600px;">
-				 <form action="List.pulu"  >
+				 <form action=""  >
 		
 					<div style="width:70%;">
 						<input type="hidden" name="categoryNo" value="${categoryNo}"/>
-						<input class="form-control" type="text" name="goodsSearch"
-							id="goodsSearch" value="${goodsSearch}" placeholder="상품이름을 입력하세요."/>
+						<input class="form-control" type="text" name="goodsSearch" id="goodsSearch" value="${goodsSearch}" placeholder="상품이름을 입력하세요."/>
+						<button type="submit" class="btn btn-default" >검색</button>
 					</div>
-					<span>
-						<div style="float:auto; width: 10%;">
-							<button type="submit" class="btn btn-default" >검색</button>
-						</div>
-					</span>
                
 				</form> 
 			</div>

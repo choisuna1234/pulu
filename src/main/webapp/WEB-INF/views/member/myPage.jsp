@@ -1,172 +1,50 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>¸¶ÀÌ ÆäÀÌÁö</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <style>
-*{margin:0; padding:0;}
-
-body {
-font:20px
+.left_title {
+    font-size: 25px;
+    color: #333;
+    margin-bottom: 30px;
+}
+.left_cont {
+    margin-top: 12px;
+}
+.left_cont ul {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0px;
+    border-top: 1px solid #cccccc;
+}
+.left_cont ul li {
+    border-bottom: 1px solid #cccccc;
+}
+.left_cont ul li a {
+    display: block;
+    padding: 15px 0;
+    font-size: 15px;
+    color: #555;
 }
 
-#wrap {
-width:1200px;
-height:700px;
-margin:0 auto;
-}
 
-#header{
-padding: 60px 100px 10px 1px;
-}
-#container {
-height:500px;
-}
-#aside {
-width:300px;
-height:700px;
-float:left;
-}
-#contents {
-width:900px;
-height:700px;
-float:left;
-}
-#footer{
-height:100px
-clear:both;
-}
-.child {
-  padding: 50px;
-  margin: 1rem;
-  background-color: #ccc;
-}
-.parent {
-  display: flex;
-}
-.buttons {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
 </style>
-</head>
 
-<body>
 
-<br>
-<br>
-
-<div id="wrap">
-<div id="header">
-
-<h1>
-Mypage</h1>
-<br>
-<br>
-
-<h2><strong>${loginName}È¸¿ø´Ô</strong> µî±ŞÀº ${loginGrade} ÀÔ´Ï´Ù.</h2>
-</div>
-
-<div>
-
-<div id="container">
-<div id="aside">
-<br>
-<br>
-<br>
-
-        <div>
-          <h2><a href="myInfoOrder.pulu"><span style="color:black">ÁÖ¹®/°áÁ¦ ³»¿ª</h2></a>
-        </div>
-<br>
-        <div>
-           <h2><a href="myReview.pulu"><span style="color:black">ÈÄ±â ¸ñ·Ï</h2></a>
-
-        </div>
-<br>
-        <div>
-          <h2><a href="deleteForm.pulu"><span style="color:black">È¸¿øÅ»Åğ</h2></a>
-        </div>
-        <br>
-        <div>
-          <h2><a href="myInfoModify.pulu"><span style="color:black">Á¤º¸ ¼öÁ¤</h2></a>
-        </div>
-        <br>
-  </div>
-  <br>
-  <br>
-  
-  <div id="contents">
-  <h2>ÁÖ¹®/°áÁ¦ ³»¿ª</h2> <h4>ÃÖ±Ù 30ÀÏ ³»¿¡ ÁÖ¹®ÇÏ½Å ³»¿ªÀÔ´Ï´Ù.</h4>
-  <br>
-  ÁÖ¹® Ã³¸® ÇöÈ²(ÃÖ±Ù 3°³¿ù) 
-  <br>
-  <br>
-    <div class="parent">
-    <div class="child">
-    <center><h4>
-      ÀÔ±İÀü 
-      <br><br>
-      0
-      </center>
-    </div>
-  
-      <div class="child">
-      <center><h4>
-      ¹è¼ÛÁØºñÁß 
-      <br><br>
-      0
-      </center>
-    </div>
-    
-     <div class="child">
-    <center><h4>
-      ¹è¼ÛÁß
-      <br><br>
-      0
-      </center>
-    </div>
-    
-    <div class="child">
-    <center><h4>
-      ¹è¼Û¿Ï·á
-      <br><br>
-      0
-      </center>
-    </div>
-  </div>
-  
-  <br> 
-  
-  <hr width = "90%" color = "grey">
-  
-  <div style = "padding: 40px 100px 10px 100px;">
-  
-  <button class="buttons">
-  <h4>ÀÏ¹İÁÖ¹®</h4></button>
-  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-  <button class="buttons">
-  <h4>Á¤±â°áÁ¦</button></h4>
-  
-  
-
-  </div>
-
-  </div>
-  </div>
-  </div>
-  </div>
-</body>
-</html>
+	<div>
+		<div>
+			<p class="left_title"><strong>ë§ˆì´í˜ì´ì§€</strong></p>
+			<p style="font-size: 15px;">
+			<strong>${loginName} ë‹˜</strong>
+			<br>
+			</p>
+			íšŒì›ë“±ê¸‰ì€ ${loginGrade} ì…ë‹ˆë‹¤.
+		
+		</div>
+		<div class="left_cont">
+			<ul><li class="selected"><a href="myInfoOrder.pulu">ì£¼ë¬¸ / ê²°ì œë‚´ì—­</a></li>
+	            <li><a href="myReview.pulu">í›„ê¸°ëª©ë¡</a></li>
+	            <li><a href="myInfoModify.pulu"">ì •ë³´ìˆ˜ì •</a></li>
+	            <li><a href="deleteForm.pulu">íšŒì›íƒˆí‡´</a></li>
+	        </ul>
+		</div>
+	</div>

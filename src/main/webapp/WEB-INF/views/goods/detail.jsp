@@ -321,7 +321,7 @@ strong {
 	   else
 	   {
 	      var form = document.getElementById("detailForm"); // id="detailForm"인 <form> 받아오기
-	      form.action = "checkBasket.pulu"; 
+	      form.action = "basketCheck.pulu"; 
 	      form.method = "post";
 	      form.submit(); // form안의 파라미터들을 post방식으로 insertBasket.pulu에 보내기
 	      
@@ -334,11 +334,34 @@ strong {
    /* 선아: 바로 구매 연결 */
 	function openBuyCheck() {
 		var form = document.getElementById("detailForm");
-		form.action = "selectOrderGoodsInfo.pulu";
+		form.action = "orderByDetail.pulu";
 		form.method = "post";
 		form.submit();
 	}
 	
+	<!-- 선민: 수량변경에 따른 단일항목의 총 상품금액 변경 -->
+	function changeAmount(type)  {
+	    
+		const a = document.getElementById('selectedGoodsAmount');
+		
+		// 현재 화면에 표시된 값
+		let amount = a.value; 
+		
+		if(type === 'plus') {
+			amount = parseInt(amount) + 1;
+		}
+		else if(type === 'minus') {
+			amount = parseInt(amount) - 1;
+		}
+		
+		if(parseInt(amount) < 1) {
+			amount = 1;
+		}
+		
+		// 결과 출력
+		document.getElementById('selectedGoodsAmount').value = amount;
+	}
+  
 </script>
 
 
@@ -356,15 +379,15 @@ strong {
 						<c:choose>
 							<c:when test="${map.GOODS_CATEGORY eq 1}">
 								<li><a class="topCategorylink"
-									href="goodsList.pulu?categoryNo=1">샐러드</a></li>
+									href="List.pulu?categoryNo=1">샐러드</a></li>
 							</c:when>
 							<c:when test="${map.GOODS_CATEGORY eq 2}">
 								<li><a class="topCategorylink"
-									href="goodsList.pulu?categoryNo=2">샌드위치</a></li>
+									href="List.pulu?categoryNo=2">샌드위치</a></li>
 							</c:when>
 							<c:when test="${map.GOODS_CATEGORY eq 3}">
 								<li><a class="topCategorylink"
-									href="goodsList.pulu?categoryNo=3">간식/음료</a></li>
+									href="List.pulu?categoryNo=3">간식/음료</a></li>
 							</c:when>
 							<c:otherwise>
 								<li><a class="topCategorylink"
@@ -445,11 +468,12 @@ strong {
 											<table>
 												<tr>
 													<td>${goodsDetail.GOODS_NAME}</td>
-													<td>수량 <input type="text" id="selectedGoodsAmount"
-														name="SELECTED_GOODS_AMOUNT" value="1"
-														style="width: 20px; text-align: right;">
-													</td>
-													<td>수량x가격</td>
+												<td>수량 
+<!-- 												<input type="text" id="selectedGoodsAmount" name="SELECTED_GOODS_AMOUNT" value="1" style="width: 20px; text-align: right;"> -->
+												</td>
+												<button type="button" onClick='changeAmount("minus")' style="width: 30px;">-</button>
+												<input type="text" id="selectedGoodsAmount" name="SELECTED_GOODS_AMOUNT" value="1" style="width: 20px; text-align: right;">
+												<button type="button" onClick='changeAmount("plus")' style="width: 30px;">+</button>
 												</tr>
 											</table>
 										</div>
@@ -496,13 +520,13 @@ strong {
 									<li title="상품리뷰 이동"><a href="#here2">
 											<p>
 												구매후기<span style="display: inline-block;"
-													class="xans-element- xans-product xans-product-action">(후기개수)</span>
+													class="xans-element- xans-product xans-product-action"></span>
 											</p>
 									</a></li>
 									<li title="상품문의 이동"><a href="#here3">
 											<p>
 												상품문의 <span style="display: inline-block;"
-													class="xans-element- xans-product xans-product-action ">(문의개수)</span>
+													class="xans-element- xans-product xans-product-action "></span>
 											</p>
 									</a></li>
 									<li title="배송안내 이동"><a href="#here4">
@@ -536,14 +560,14 @@ strong {
 									<li title="상품리뷰 이동" id="selected"><a href="#none"
 										name="here2">
 											<p>
-												구매후기<span style="display: inline-block;"
-													class="xans-element- xans-product xans-product-action">(후기개수)</span>
+												구매후기
+												<span style="display: inline-block;" class="xans-element- xans-product xans-product-action"></span>
 											</p>
 									</a></li>
 									<li title="상품문의 이동"><a href="#here3">
 											<p>
 												상품문의 <span style="display: inline-block;"
-													class="xans-element- xans-product xans-product-action ">(문의개수)</span>
+													class="xans-element- xans-product xans-product-action "></span>
 											</p>
 									</a></li>
 									<li title="배송안내 이동"><a href="#here4">
@@ -566,14 +590,14 @@ strong {
 									<li title="상품리뷰 이동"><a href="#here2">
 											<p>
 												구매후기<span style="display: inline-block;"
-													class="xans-element- xans-product xans-product-action">(후기개수)</span>
+													class="xans-element- xans-product xans-product-action"></span>
 											</p>
 									</a></li>
 									<li title="상품문의 이동" id="selected"><a href="#none"
 										name="here3">
 											<p>
 												상품문의 <span style="display: inline-block;"
-													class="xans-element- xans-product xans-product-action ">(문의개수)</span>
+													class="xans-element- xans-product xans-product-action "></span>
 											</p>
 									</a></li>
 									<li title="배송안내 이동"><a href="#here4">
@@ -616,13 +640,13 @@ strong {
 								<li title="상품리뷰 이동"><a href="#here2">
 										<p>
 											구매후기<span style="display: inline-block;"
-												class="xans-element- xans-product xans-product-action">(후기개수)</span>
+												class="xans-element- xans-product xans-product-action"></span>
 										</p>
 								</a></li>
 								<li title="상품문의 이동"><a href="#here3">
 										<p>
 											상품문의 <span style="display: inline-block;"
-												class="xans-element- xans-product xans-product-action ">(문의개수)</span>
+												class="xans-element- xans-product xans-product-action "></span>
 										</p>
 								</a></li>
 								<li title="배송안내 이동" id="selected"><a href="#none"

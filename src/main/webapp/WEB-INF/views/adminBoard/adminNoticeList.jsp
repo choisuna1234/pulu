@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 	<div class="row">
 		<div class="col-lg-12">
@@ -44,7 +45,7 @@
 													<td>${row.NOTICE_READCOUNT}</td>
 													<td>${row.NOTICE_ID}</td>
 													<td>${row.NOTICE_DATE}</td>
-													
+<%-- 													<td><fmt:formatDate value="${row.NOTICE_DATE}" pattern="yyyy-MM-dd"/></td> --%>
 												</tr>
 											</c:forEach>
 										</c:when>
@@ -127,5 +128,4 @@
          comSubmit.addParam("NOTICE_NUM", obj.parent().find("#NOTICE_NUM").val());
          comSubmit.submit();
       }
-      
    </script>  

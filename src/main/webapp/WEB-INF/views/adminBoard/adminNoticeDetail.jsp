@@ -69,17 +69,20 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#list").on("click", function(e){ //리스트
-				e.preventDefault();	//
+				e.preventDefault();	
+				alert("목록으로 넘어가시겠습니까?");
 				fn_adminNoticeList();
 			});
 			
 			$("#update").on("click", function(e){ //수정하기
 				e.preventDefault();
+				alert("게시글을 수정하시겠습니까?");
 				fn_adminNoticeUpdate();
 			});
 			
 			$("#delete").on("click", function(e){ //삭제하기 
 	            e.preventDefault();
+	            alert("게시글을 삭제하시겠습니까?");
 	            fn_adminNoticeDelete();
 	        });
 		});
@@ -98,7 +101,6 @@
 			comSubmit.submit(); 	
 //			history.go(-1);
 		}
-		
 		
 		function fn_adminNoticeUpdate(){
 			var notice_num = "${map.NOTICE_NUM}";

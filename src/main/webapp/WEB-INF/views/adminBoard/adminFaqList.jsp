@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 	<div class="row">
 		<div class="col-lg-12">
@@ -46,6 +47,7 @@
 												<td align="center">${row.FAQ_ID}</td>
 												<td align="center">${row.FAQ_READCOUNT}</td>
 												<td align="center">${row.FAQ_DATE}</td>
+<%-- 												<td align="center"><fmt:formatDate value="${row.FAQ_DATE}" pattern="yyyy-MM-dd"/></td> --%>
 											</tr>
 										</c:forEach>
 									</c:when>

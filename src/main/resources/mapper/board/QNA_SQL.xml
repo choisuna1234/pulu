@@ -167,11 +167,21 @@
 	<update id="qnaComInsert" parameterType="hashMap">
 			<![CDATA[
 				UPDATE QNA 
-				SET QNA_COMMENT = #{QNA_COMMENT},
-					QNA_STATUS = '답변완료'
+				SET QNA_COMMENT = #{QNA_COMMENT}
 				WHERE QNA_NUM = #{QNA_NUM}
 			]]>
 	</update>
+	
+	<update id="qnaComStatus" parameterType="hashMap">
+			<![CDATA[
+				UPDATE QNA 
+				SET QNA_STATUS = (CASE WHEN LENGTH(#{QNA_COMMENT}) > 0 THEN '답변완료'
+									    ELSE '답변대기' END)
+				WHERE QNA_NUM = #{QNA_NUM}
+			]]>
+	</update><!-- AND LENGTH(#{QNA_COMMENT}) > 0 -->
+	
+	
 	<!-- UPDATE QNA 
 				SET QNA_COMMENT = #{QNA_COMMENT}
 					QNA_STATUS = CASE WHEN QNA_COMMENT IS NULL THEN '답변대기'

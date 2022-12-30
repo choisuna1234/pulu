@@ -3,11 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<link rel="stylesheet" href="resources/css/ui.css" type="text/css" />
 
 <link rel="stylesheet" type="text/css" href="./resources/css/board.css" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 .qnaInsertForm{
 	text-align: center;
@@ -48,11 +47,47 @@
     vertical-align: top;
     padding: 17px;
 }
-
+.QNACommentDiv {
+	word-break: break-all;
+}
 
 .inboard{
 
 }
+
+/* QNA 게시글 아코디언 */
+ table {
+	font-family: PureunJeonnam;
+	padding: 10px;
+	}
+tr {
+	padding: 10px;
+}
+td {
+	padding: 10px;
+} 
+.hide {display: none;}
+.show {display: table-row;}
+.item td {cursor: pointer;}
+
+.hide2 {display: none;}
+
+@font-face { /* 나눔고딕 Regular */
+	font-family: PureunJeonnam;
+	font-style: normal;
+	font-weight: 400;
+	src: url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.eot);
+	src:
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.eot?#iefix)
+		format('embedded-opentype'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.woff2)
+		format('woff2'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.woff)
+		format('woff'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.ttf)
+		format('truetype');
+}
+
 
 </style>
 
@@ -107,10 +142,10 @@
 							<table border="0" class="QNAList board_list">
 
 								<colgroup>
-									<col width="80px">
+									<col width="10%">
 									<col width="*">
-									<col width="84px">
-									<col width="175px">
+									<col width="15%">
+									<col width="20%">
 								</colgroup>
 
 								<thead>
@@ -136,77 +171,75 @@
 														<td align="center">${row.QNA_DATE }</td>
 													</tr>
 													<tr class="hide" bordercolor="red">
-														<td bgcolor="white" width="80px"></td>
+														<td bgcolor="white" width="10%"></td>
 														<td colspan="2">
-															
-															<table style="width: 100%; border-top: 0; border-bottom: 0; margin: 20px; resize: none" class="inboard">
-																<c:choose>
-																	<c:when test="${row.QNA_COMMENT == null}">
-																		<tbody>
-																			<tr>
-																				<td width="15%">
-																					<img alt="q" src="resources/img/icon/qq.png" width="30" height="30">
-																				</td>
-																				<td width="85%" style="text-align: left; padding-left: 10px; resize: none;">
-																					<p style="word-break: break-all;">${row.QNA_CONTENTS}</p>
-																					<form action="qnaDelete.pulu" role="form" id="qnaDelete" method="post">
-																						<input type="hidden" name="ID" value="${loginId}">
-																						<input type="hidden" name="QNA_GOODS_NUM" value="${row.GOODS_NUM}"> 
-																						<input type="hidden" name="GOODS_NUM" value="${row.GOODS_NUM}"> 
-																						<input type="hidden" name="QNA_ID" value="${row.QNA_ID}">
-
-																						<c:if test="${loginId == row.QNA_ID}">
-																							<input type="button" class="btn btn-default qnaptn" value="삭제" onclick="qnaDelete('${row.QNA_NUM}')" style="width: 65px">
-																							<a href="#this" type="button" class="btn btn-default qnaptn" onclick="openQnaUpdate('${row.QNA_NUM}')" style="width: 65px">수정 
-																								<input type="hidden" name="QNA_CONTENTS" value="${row.QNA_CONTENTS}" />
-																								<input type="hidden" name="QNA_COMMENT" value="${row.QNA_COMMENT}" />
-																							</a>
-																						</c:if>
-																						
-																					</form>
-																				</td>
-																			</tr>
-																		</tbody>
-																	</c:when>
-																	<c:otherwise>
-																		<tbody>
-																			<tr>
-																				<td width="6%">
-																					<img alt="q" src="resources/img/icon/qq.png" width="30" height="30"></td>
-																				<td width="*%" style="text-align: left; padding-left: 10px; resize: none">${row.QNA_CONTENTS}
-
-
-																					<form action="qnaDelete.pulu" role="form" id="qnaDelete" method="post">
-																						<input type="hidden" name="ID" value="${loginId}">
-																						<input type="hidden" name="QNA_GOODS_NUM" value="${row.GOODS_NUM}"> 
-																						<input type="hidden" name="GOODS_NUM" value="${row.GOODS_NUM}"> 
-																						<input type="hidden" name="QNA_ID" value="${row.QNA_ID}">
-
-																						<c:if test="${loginId == row.QNA_ID}">
-																							<input type="button" class="btn btn-default qnaptn" value="삭제" onclick="qnaDelete('${row.QNA_NUM}')">
-
-																							<a href="#this" type="button" class="btn btn-default qnaptn" onclick="openQnaUpdate('${row.QNA_NUM}','${row.QNA_COMMENT}')">수정
-																								<input type="hidden" name="QNA_CONTENTS" value="${row.QNA_CONTENTS}" /> 
-																								<input type="hidden" name="QNA_COMMENT" value="${row.QNA_COMMENT}" />
-																							</a>
-																						</c:if>
-																					</form>
-
-																				</td>
-																			</tr>
-																			<tr>
-																				<td width="15%"><img alt="a"
-																					src="resources/img/icon/aa.png" width="30"
-																					height="30"></td>
-																				<!-- 이미지 추후 변경 필수!! -->
-																				<td width="*%" style="text-align: left; padding-left: 10px; resize: none">${row.QNA_COMMENT}</td>
-																			</tr>
-																		</tbody>
-																	</c:otherwise>
-																</c:choose>
-															</table></div>
+																<table style="width: 100%; border-top: 0; border-bottom: 0; margin: 20px; resize: none" class="inboard">
+																	<c:choose>
+																		<c:when test="${row.QNA_COMMENT == null}">
+																			<tbody>
+																				<tr>
+																					<td width="15%"  style="border: 0">
+																						<img alt="q" src="resources/img/icon/qq.png" width="30" height="30">
+																					</td>
+																					<td width="85%" style="text-align: left; padding-left: 10px; resize: none; border: 0">
+																						<p style="word-break: break-all;">${row.QNA_CONTENTS}</p>
+																						<form action="qnaDelete.pulu" role="form" id="qnaDelete" method="post">
+																							<input type="hidden" name="ID" value="${loginId}">
+																							<input type="hidden" name="QNA_GOODS_NUM" value="${row.GOODS_NUM}"> 
+																							<input type="hidden" name="GOODS_NUM" value="${row.GOODS_NUM}"> 
+																							<input type="hidden" name="QNA_ID" value="${row.QNA_ID}">
+	
+																							<c:if test="${loginId == row.QNA_ID}">
+																								<input type="button" class="btn btn-default qnaptn" value="삭제" onclick="qnaDelete('${row.QNA_NUM}')" style="width: 65px">
+																								<a href="#this" type="button" class="btn btn-default qnaptn" onclick="openQnaUpdate('${row.QNA_NUM}')" style="width: 65px">수정 
+																									<input type="hidden" name="QNA_CONTENTS" value="${row.QNA_CONTENTS}" />
+																									<input type="hidden" name="QNA_COMMENT" value="${row.QNA_COMMENT}" />
+																								</a>
+																							</c:if>
+																							
+																						</form>
+																					</td>
+																				</tr>
+																			</tbody>
+																		</c:when>
+																		<c:otherwise>
+																			<tbody style="border: 0">
+																				<tr>
+																					<td width="6%"  style="border: 0">
+																						<img alt="q" src="resources/img/icon/qq.png" width="30" height="30"></td>
+																					<td width="*%" style="text-align: left; padding-left: 10px; resize: none; border: 0">
+																						<p style="word-break: break-all;">${row.QNA_CONTENTS}</p>
+	
+	
+																						<form action="qnaDelete.pulu" role="form" id="qnaDelete" method="post">
+																							<input type="hidden" name="ID" value="${loginId}">
+																							<input type="hidden" name="QNA_GOODS_NUM" value="${row.GOODS_NUM}"> 
+																							<input type="hidden" name="GOODS_NUM" value="${row.GOODS_NUM}"> 
+																							<input type="hidden" name="QNA_ID" value="${row.QNA_ID}">
+	
+																							<c:if test="${loginId == row.QNA_ID}">
+																								<input type="button" class="btn btn-default qnaptn" value="삭제" onclick="qnaDelete('${row.QNA_NUM}')">
+	
+																								<a href="#this" type="button" class="btn btn-default qnaptn" onclick="openQnaUpdate('${row.QNA_NUM}','${row.QNA_COMMENT}')">수정
+																									<input type="hidden" name="QNA_CONTENTS" value="${row.QNA_CONTENTS}" /> 
+																									<input type="hidden" name="QNA_COMMENT" value="${row.QNA_COMMENT}" />
+																								</a>
+																							</c:if>
+																						</form>
+	
+																					</td>
+																				</tr>
+																				<tr>
+																					<td width="15%"><img alt="a" src="resources/img/icon/aa.png" width="30" height="30"></td>
+																					<!-- 이미지 추후 변경 필수!! -->
+																					<td width="*%" style="text-align: left; padding-left: 10px; resize: none">${row.QNA_COMMENT}</td>
+																				</tr>
+																			</tbody>
+																		</c:otherwise>
+																	</c:choose>
+																</table>
 														</td>
-														<td colspan="1" bgcolor="white" width="175px"></td>
+														<td colspan="1" bgcolor="white" width="20%"></td>
 													</tr>
 											</c:forEach>
 										</c:when>
@@ -263,7 +296,7 @@
          if(QNA_COMMENT == null || QNA_COMMENT == undefined) {
             window.open(URL,
                      'window_qnaUpdate',
-                     'width=800, height=400, location=no, status=no, scrollbars=yes');
+                     'width=500, height=500, location=no, status=no');
          } else if(QNA_COMMENT != null || QNA_COMMENT != undefined){
             alert("답변 완료된  Q&A는 수정할 수 없습니다.");
          }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <html>
 <head>
@@ -43,7 +44,7 @@
 									<th>연락처</th>
 									<th>주소</th>
 									<th>등급</th>
-									<th>최근 주문</th>
+<!-- 									<th>최근 주문</th> -->
 									<th>삭제여부</th>
 								</tr>
 							</thead>
@@ -62,9 +63,9 @@
 													<td>${row.PHONE}</td>
 													<td>${row.ZIPCODE}&nbsp${row.ADDR1}${row.ADDR2}</td>
 													<td>${row.GRADE}</td>
-													<td>
-														<button type="button" class="btn btn-default btn-xs" id="recentOrderById_bt" onclick="window.open('recentOrderById.pulu?ID=${row.ID }', 'window_recentOrderById', 'width=860, height=600, location=no, status=no, scrollbars=yes')">보기</button>
-													</td>
+<!-- 													<td> -->
+<%-- 														<button type="button" class="btn btn-default btn-xs" id="recentOrderById_bt" onclick="window.open('recentOrderById.pulu?ID=${row.ID }', 'window_recentOrderById', 'width=860, height=600, location=no, status=no, scrollbars=yes')">보기</button> --%>
+<!-- 													</td> -->
 													<td>${row.BLOCK}</td>
 												</tr>
 												<form id="memberListForm_${status.index }">

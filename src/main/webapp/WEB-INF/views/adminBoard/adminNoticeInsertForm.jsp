@@ -16,21 +16,20 @@
 				<div class="panel-body">
 
 					<form id="frm" name="frm" method="get"
-						enctype="multipart/form-data" action="adminFaqInsert.pulu"
-						onsubmit="return checkFaqInsertForm();">
+						enctype="multipart/form-data">
 						<table class="board_view">
 
 							<tbody>
 								<tr>
 									<th style="width: 5%">제목</th>
-									<td><input type="text" id="FAQ_SUBJECT" name="FAQ_SUBJECT"
+									<td><input type="text" id="NOTICE_SUBJECT" name="NOTICE_SUBJECT"
 										class="form-control" class="form-control"></input></td>
 								</tr>
 								<tr>
 									<th>내용</th>
 									<td colspan="2" class="view_text" height="30"><pre>
 											<textarea rows="20" class="form-control" cols="100"
-												title="내용" id="FAQ_CONTENT" name="FAQ_CONTENT"></textarea>
+												title="내용" id="NOTICE_CONTENT" name="NOTICE_CONTENT"></textarea>
 										</pre></td>
 								</tr>
 							</tbody>
@@ -59,7 +58,8 @@
 	</tr>
 </table>
 
-<a href="#this" class="btn btn-primary" id="insert" type="submit">작성하기</a>
+<!-- <a href="#this" class="btn btn-primary" id="insert" type="submit">작성하기</a> -->
+<a href="#this" class="btn btn-primary" id="write">작성하기</a>
 <a href="#this" class="btn btn-primary" id="list">목록으로</a>
 
 
@@ -69,6 +69,7 @@
 	$(document).ready(function() {
 		$("#list").on("click", function(e) { // 목록으로 버튼
 			e.preventDefault();
+			alert("목록으로 넘어가시겠습니까?");
 			fn_adminNoticeList();
 		});
 
@@ -87,8 +88,21 @@
 
 	}
 
+	
 	function fn_adminNoticeInsert() {
 		var comSubmit = new ComSubmit("frm");
+
+		if (frm.NOTICE_SUBJECT.value.length == 0) { //선아: 제목, 내용 유효성검사
+			frm.NOTICE_SUBJECT.focus();
+			alert("제목을 입력하세요.");
+			return false;
+		}
+		if (frm.NOTICE_CONTENT.value.length == 0) {
+			frm.NOTICE_CONTENT.focus();
+			alert("내용을 입력하세요.");
+			return false;
+		}
+
 		comSubmit.setUrl("<c:url value='/adminNoticeInsert.pulu' />");
 		comSubmit.submit();
 	}

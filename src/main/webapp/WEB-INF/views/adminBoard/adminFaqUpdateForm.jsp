@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html>
+<html>
+<head>
+<%@ include file="/WEB-INF/include/include-header.jspf" %>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 
 <div class="row">
 		<div class="col-lg-12">
@@ -44,7 +50,7 @@
 				</tr>
 				<tr>
 					<td colspan="4" class="view_text">
-						<pre><textarea class="form-control" rows="20" cols="100" title="내용" id="FAQ_CONTENT" name="FAQ_CONTENT">${map.FAQ_CONTENT }</textarea></pre>
+						<textarea class="form-control" rows="20" cols="100" title="내용" id="FAQ_CONTENT" name="FAQ_CONTENT">${map.FAQ_CONTENT }</textarea>
 					</td>
 				</tr>
 			</tbody>
@@ -95,19 +101,18 @@
 		}
 		
 		function fn_adminFaqUpdate(){
-			if (confirm("수정 하겠습니까?") == true) {
-				var comSubmit = new ComSubmit("frm");
-				comSubmit.setUrl("<c:url value='/adminFaqUpdate.pulu'/>");
-				comSubmit.submit();
-			}
+			var comSubmit = new ComSubmit("frm");
+			comSubmit.setUrl("<c:url value='/adminFaqUpdate.pulu'/>");
+			comSubmit.submit();
 		}
 		
 		function fn_adminFaqDelete(){
 			var comSubmit = new ComSubmit();
-			if (confirm("삭제 하겠습니까?") == true) {
-				comSubmit.setUrl("<c:url value='/adminFaqDelete.pulu'/>");
-				comSubmit.addParam("FAQ_NUM", $("#FAQ_NUM").val());
-				comSubmit.submit();
-			}
+			comSubmit.setUrl("<c:url value='/adminFaqDelete.pulu'/>");
+			comSubmit.addParam("FAQ_NUM", $("#FAQ_NUM").val());
+			comSubmit.submit();
+			
 		}
 	</script>
+</body>
+</html>

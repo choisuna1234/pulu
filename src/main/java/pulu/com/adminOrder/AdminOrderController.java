@@ -134,13 +134,13 @@ public class AdminOrderController {
 	// 관리자 주문관리 상세보기
 	@RequestMapping(value = "/adminOrderDetail")
 	public ModelAndView adminOrderDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("admin_order_detail");
+		ModelAndView mv = new ModelAndView("/adminBoard/adminOrderDetail");
 
-//		List<Map<String,Object>> orderList = adminOrderService.adminOrderDetail(commandMap.getMap());
 //		int ORDER_NUM = (Integer)commandMap.get("ORDER_NUM");
+		List<Map<String, Object>> list = adminOrderService.adminOrderDetail2(commandMap.getMap());
 		Map<String, Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());
 		
-//		mv.addObject("list", orderList);
+		mv.addObject("list", list);
 		mv.addObject("map", map);
 		mv.addObject("isSearch", isSearch);
 		mv.addObject("searchNum", searchNum);
@@ -155,19 +155,18 @@ public class AdminOrderController {
 	// 관리자 주문 관리 수정폼 이동
 	@RequestMapping(value = "/adminOrderUpdateForm", method = RequestMethod.POST)
 	public ModelAndView adminOrderUpdateForm(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("admin_order_update");
+		ModelAndView mv = new ModelAndView("/adminBoard/adminOrderUpdate");
 
 		//Map<String, Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());// 상세보기 정보를 맵에서 받아옴
 		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장
 		
 //		List<Map<String,Object>> map = adminOrderService.adminOrderList(commandMap.getMap());
-		Map<String , Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());
+		List<Map<String, Object>> list = adminOrderService.adminOrderDetail2(commandMap.getMap());
+		Map<String, Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());
 
+		mv.addObject("list", list);
 		mv.addObject("map", map);
 		mv.addObject("ORDER_NUM", commandMap.get("ORDER_NUM"));
-//		mv.addObject("currentPage", currentPage);
-//		mv.addObject("isSearch", isSearch);
-//		mv.addObject("searchNum", searchNum);
 		
 		System.out.println(map);
 		System.out.println("수정완료");
@@ -197,6 +196,7 @@ public class AdminOrderController {
 	@RequestMapping(value = "/adminOrderDelete")
 	public ModelAndView adminOrderDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/adminOrderList.pulu");
+		
 		System.out.println(request.getParameter("ORDER_NUM"));
 		adminOrderService.adminOrderDelete(commandMap.getMap(), request);
 		Map<String , Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());
