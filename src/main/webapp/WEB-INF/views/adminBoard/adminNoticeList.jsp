@@ -114,8 +114,7 @@
             fn_adminNoticeDetail($(this));
          });
       });
-      
-      
+            
       function fn_adminNoticeInsert(){
          var comSubmit = new ComSubmit();
          comSubmit.setUrl("<c:url value='/adminNoticeInsertForm.pulu'/>");

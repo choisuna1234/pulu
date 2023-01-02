@@ -264,7 +264,7 @@ public class MemberController {
 	@ResponseBody
 	public ModelAndView myInfoModify(CommandMap commandMap) throws Exception {
 
-		ModelAndView mav = new ModelAndView("myInfoModify");
+		ModelAndView mav = new ModelAndView("redirect:/myInfoModify.pulu");
 
 		//log.info("ID = " + commandMap.getMap().get("ID"));
 		memberService.memberUpdate(commandMap.getMap());

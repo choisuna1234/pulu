@@ -11,11 +11,6 @@
                  <img class="slide1" src="./resources/img/banner/1.jpg">
                  <img class="slide1" src="./resources/img/banner/3.jpg">
 				
-				
-				
-				
-				
-				
 			<!-- 	<img class="dummy" src="./resources/img/banner/2.jpg" width="1920" height="400"></a> -->
 			</div>
 		</div>

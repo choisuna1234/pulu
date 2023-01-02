@@ -104,6 +104,8 @@ input[type=text], input[type=password] {
 			alert("수정이 완료되었습니다");
 		}
 	}
+	
+	
 
 	// 선민: 중복확인 완료(Checked) 후 아이디 창에 입력된 아이디를 지우거나 변경하면 기존 중복확인 완료여부를 무효화
 	function inputIdCheck() {
