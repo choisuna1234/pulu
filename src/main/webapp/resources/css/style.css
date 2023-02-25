@@ -37,33 +37,57 @@ li {
 }
 
 #logoWrap {
-	background-color: #006F3E;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-left: auto;
-	margin-right: auto;
+	background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+    font-family: PureunJeonnam;
+    flex-direction: column;
+    width: 1285px;
 }
 
-#loginWrap {
-	height: 50px;
-	/*    background-color:blue; */
-	font-family: PureunJeonnam;
+#loginUl {
+	display : flex;
+    justify-content: space-evenly;
+}
+
+#logoWrap img {
+	width : 100px;
+	height: 100px; 
+}
+
+#loginMenu {
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 1285px;
+    height: 25%;
+    justify-content: flex-end;
+}
+
+#loginMenu img {
+    width : 18px;
+	height: 18px; 
 }
 
 #Logo {
-	margin-top: 5px;
-	margin-bottom: -8px;
+	/* margin-top: 5px;
+	margin-bottom: -8px; */
 }
 
 #topMenu{
 	width: 1280px;
     margin:auto;
+    background-color: #006F3E;
+    border: 10px;
 }
 
 #totalMenu{
-	color: #555;
-    background-color: #fff;
+	color: #fff;
+    background-color: #006F3E;
     line-height: 40px;
     vertical-align: middle;
     text-align: center;
@@ -74,17 +98,21 @@ li {
     box-sizing: border-box;
 }
 
+#totalSide {
+	width: 60px;
+}
 
 #secondMenu{
-    float: left;
-    width:60%; 
-    box-sizing: border-box;
+	
 }
 
 #thirdMenu{
     float: right;
-    width:25%;
+    width: 30%;
     box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
 }
 
 
@@ -142,15 +170,16 @@ li {
 #topMainMenuAll {
 	width: 100%;
     height: 42px;
-    box-shadow: 0 17px 6px -18px #555;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
 }
 
-#topManu{
-	max-width: 1280px;
-    margin: 0 auto;
-    height: 53px;
-    position: relative;
-    text-align: left;
+#topMenu {
+    width: 1280px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
 }
 
 #topMenu ul { /* 메인 메뉴 안의 ul을 설정함: 상위메뉴의 ul+하위 메뉴의 ul */
@@ -169,7 +198,21 @@ li {
 	position: relative; /* 해당 li 태그 내부의 top/left 포지션 초기화 */
 }
 
+.slclasseBanner {
+    display: flex;
+    justify-content: center;
+    border: 0px;
+}
 
+.slclasseBanner img {
+    background-color : #fff;
+    width : 1280px;
+}
+
+.topsubBanner {
+	width: 1280px;
+	display: flex;
+	margin-top: 10px;
 }
 
 #menu_kategori{
@@ -193,11 +236,16 @@ li {
 
 
 .menuLink { /* 상위 메뉴의 글씨색을 흰색으로 설정 */
-	color: #555;
+	color: #fff;
+    background-color: #006F3E;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .topMenuLi:hover .menuLink { /* 상위 메뉴의 li에 마우스오버 되었을 때 스타일 설정 */
-	color: #006F3E; /* 윌포인트색 */
+	font-size: larger;
 }
 
 .loginLink:hover .thirdMenu{
@@ -478,10 +526,14 @@ li.home {
     max-width: 632px;
 }
 
+.event_title {
+	width: 1285px;
+}
+
 .mainEventCon{
     width: 100%;
     max-width: 1285px;
-    margin: 100px auto;
+    margin: 30px auto;
 
 }
 
@@ -497,6 +549,17 @@ img {
     margin: 0 auto;
     *zoom: 1;
     max-width: 1920px;
+}
+
+
+.main_content {
+    width: 100%;
+    margin: 0 auto;
+    *zoom: 1;
+    max-width: 1920px;
+	display: flex;
+    display: f;
+    flex-direction: column;
 }
 
 .sub_content {

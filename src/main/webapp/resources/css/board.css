@@ -228,6 +228,7 @@ input[type=text], input[type=password] {
     white-space: nowrap;
     color: #fff;
     background-color: #333;
+    margin: 10px;
 }
 
 .base-button {
@@ -286,3 +287,4 @@ input[type=text], input[type=password] {
     word-break: break-all;
     line-height: normal;
 }
+

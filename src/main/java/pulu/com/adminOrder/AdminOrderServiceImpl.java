@@ -42,13 +42,13 @@ public class AdminOrderServiceImpl implements AdminOrderService {	//Service 인�
 
 	//관리자 주문처리 디테일
 	@Override
-	public Map<String, Object> adminOrderDetail(Map<String, Object> map) throws Exception {
-		return adminOrderDAO.adminOrderDetail(map);
+	public Map<String, Object> adminOrderDetail2(Map<String, Object> map) throws Exception {
+		return adminOrderDAO.adminOrderDetail2(map);
 	}
 	
 	@Override
-	public List<Map<String, Object>> adminOrderDetail2(Map<String, Object> map) throws Exception {
-		return adminOrderDAO.adminOrderDetail2(map);
+	public List<Map<String, Object>> adminOrderDetail(Map<String, Object> map) throws Exception {
+		return adminOrderDAO.adminOrderDetail(map);
 	}
 	
 	
@@ -61,8 +61,14 @@ public class AdminOrderServiceImpl implements AdminOrderService {	//Service 인�
 	@Override
 	public void adminOrderUpdate(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		adminOrderDAO.adminOrderUpdate(map);
-		
+
+		List<Map<String, Object>> list = adminOrderDAO.goodsAmountSelect(map);
+
+		for(Map<String, Object> map_amount : list) {
+			adminOrderDAO.goodsSellCountUpdate(map_amount);
+		}
 	}
+
 
 	//관리자 주문처리 삭제
 	@Override
@@ -77,4 +83,16 @@ public class AdminOrderServiceImpl implements AdminOrderService {	//Service 인�
 	
 	}
 
+	/********** 관리자 매출 관리 **********/
+	//상품 판매 수
+	@Override
+	public List<Map<String, Object>> sellGoodsList(Map<String, Object> map) throws Exception {
+		return adminOrderDAO.sellGoodsList(map);
+	}
+	
+	// 매출 리스트
+	@Override
+	public List<Map<String, Object>> adminSalesList(Map<String, Object> map) throws Exception {
+		return adminOrderDAO.adminSalesList(map);
+	}
 }

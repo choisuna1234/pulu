@@ -89,6 +89,22 @@
 	max-height: 550px;
 	resize: vertical;
 }
+
+ .inboard {
+	font-family: PureunJeonnam;
+	padding: 10px;
+	}
+tr {
+	padding: 10px;
+}
+td {
+	padding: 10px;
+} 
+.hide {display: none;}
+.show {display: table-row;}
+.item td {cursor: pointer;}
+
+
 </style>
 
 
@@ -128,30 +144,25 @@
 						</section>
 				</c:if>
 				
-		<div class="reviewcount">
-		<span><strong>후기갯수: </strong>${fn:length(reviewList)} 개</span>
-		</div>
 		<div class="reviewtable">
-		<table width="1000px">
+		<table width="1000px" class="reviewList">
 		<colgroup>
 			<col width="150px">
 			<col width="*">
 			<col width="130px">
 		</colgroup>
 		<thead>
-			<tr class="item">
-
+			<tr>
 				<th scope="col">작성자</th>
 				<th scope="col">내용</th>
 				<th scope="col">작성일</th>
-
 			</tr>
 		</thead>
 		<tbody>
 			<c:choose>
 				<c:when test="${fn:length(reviewList) > 0}">
 					<c:forEach items="${reviewList}" var="row" varStatus="status">
-						<tr>
+						<tr class="item">
 							<td>${row.REVIEW_ID}
 							<input type="hidden" id="REVIEW_NUM"
 								name="REVIEW_NUM" value="${row.REVIEW_NUM}"> <input
@@ -166,6 +177,33 @@
 								<td class="admintd"><a href="#this" class="btn" id="delete" style="width: 65px">삭제</a></td>
 							</c:if>
 						</tr>
+						<tr class="hide" bordercolor="red">
+														<td bgcolor="white" width="10%"></td>
+														<td colspan="2">
+																<table style="width: 100%; border-top: 0; border-bottom: 0; margin: 20px; resize: none" class="inboard">
+																	<c:choose>
+																		<c:when test="${row.REVIEW_COMMENT == null}">
+																			<tbody>
+																				<tr>
+																				<td width="85%" style="text-align: left; padding-left: 10px; resize: none; border: 0">
+																					작성된 답변글이 없습니다.
+																					</td>
+																				</tr>
+																			</tbody>
+																		</c:when>
+																		<c:otherwise>
+																			<tbody style="border: 0">
+																				<tr>
+													<td width="85%" style="text-align: left; padding-left: 10px; resize: none; border: 0">
+																						${row.REVIEW_COMMENT}</td>
+																				</tr>	
+																			</tbody>
+																		</c:otherwise>
+																	</c:choose>
+																</table>
+														</td>
+														<td colspan="1" bgcolor="white" width="20%"></td>
+													</tr>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -211,4 +249,24 @@
 		comSubmit.submit();
 
 	}
+	
+   
+</script>
+<script type="text/javascript">
+ $(function() {
+        var article = (".reviewList .show");
+        $(".reviewList .item  td").click(function() {
+           var myArticle = $(this).parents().next("tr");
+           var myArticle2 = $(this).parents().parents().next("tr");
+           if ($(myArticle).hasClass('hide')) {
+              $(article).removeClass('show').addClass('hide');
+              $(myArticle).removeClass('hide').addClass('show');
+              $(myArticle2).removeClass('hide').addClass('show');
+
+           } else {
+              $(myArticle).addClass('hide').removeClass('show');
+              $(myArticle2).addClass('hide').removeClass('show');
+           }
+        });
+     });
 </script>

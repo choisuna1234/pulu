@@ -1,5 +1,6 @@
 package pulu.com.adminOrder;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -137,10 +138,10 @@ public class AdminOrderController {
 		ModelAndView mv = new ModelAndView("/adminBoard/adminOrderDetail");
 
 //		int ORDER_NUM = (Integer)commandMap.get("ORDER_NUM");
-		List<Map<String, Object>> list = adminOrderService.adminOrderDetail2(commandMap.getMap());
-		Map<String, Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());
+		List<Map<String, Object>> list = adminOrderService.adminOrderDetail(commandMap.getMap()); //상품
+		Map<String, Object> map = adminOrderService.adminOrderDetail2(commandMap.getMap());
 		
-		mv.addObject("list", list);
+		mv.addObject("adminOrderlist", list);
 		mv.addObject("map", map);
 		mv.addObject("isSearch", isSearch);
 		mv.addObject("searchNum", searchNum);
@@ -161,8 +162,8 @@ public class AdminOrderController {
 		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장
 		
 //		List<Map<String,Object>> map = adminOrderService.adminOrderList(commandMap.getMap());
-		List<Map<String, Object>> list = adminOrderService.adminOrderDetail2(commandMap.getMap());
-		Map<String, Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());
+		List<Map<String, Object>> list = adminOrderService.adminOrderDetail(commandMap.getMap());
+		Map<String, Object> map = adminOrderService.adminOrderDetail2(commandMap.getMap());
 
 		mv.addObject("list", list);
 		mv.addObject("map", map);
@@ -178,10 +179,14 @@ public class AdminOrderController {
 	@RequestMapping(value = "/adminOrderUpdate", method = RequestMethod.POST)
 	public ModelAndView adminOrderUpdate(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/adminOrderDetail.pulu");
+		
 		System.out.println(commandMap.getMap());
+		
 		adminOrderService.adminOrderUpdate(commandMap.getMap(), request);
-		Map<String , Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());
-
+		Map<String , Object> map = adminOrderService.adminOrderDetail2(commandMap.getMap());
+		
+		
+		
 		mv.addObject("ORDER_NUM", commandMap.get("ORDER_NUM"));
 		mv.addObject("map", map);
 //		mv.addObject("isSearch", isSearch);
@@ -199,7 +204,7 @@ public class AdminOrderController {
 		
 		System.out.println(request.getParameter("ORDER_NUM"));
 		adminOrderService.adminOrderDelete(commandMap.getMap(), request);
-		Map<String , Object> map = adminOrderService.adminOrderDetail(commandMap.getMap());
+		Map<String , Object> map = adminOrderService.adminOrderDetail2(commandMap.getMap());
 		
 		mv.addObject("map", map);
 		
@@ -207,6 +212,32 @@ public class AdminOrderController {
 	}
 	
 	
-	
+	/********** 관리자 매출 관리 **********/
+	@RequestMapping(value = "adminSalesList")
+	public ModelAndView adminSalesList(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("adminBoard/adminSalesList");
+		
+		Date date = new Date();
+		int totalSum = 0;
+		
+		List<Map<String, Object>> sellGoodsList = adminOrderService.sellGoodsList(commandMap.getMap());
+		
+		List<Map<String, Object>> salesList = adminOrderService.adminSalesList(commandMap.getMap());
+/*		Map<String, Object> map = adminOrderService.adminOrderDetail2(commandMap.getMap());
+		
+		for(Map<String, Object> salesMap : salesList) {
+			totalSum += Integer.parseInt(map.get("SALES").toString());
+		}
+*/
+		mv.addObject("TOTALSUM", totalSum);
+		mv.addObject("SYSDATE", date);
+		mv.addObject("sellGoodsList", sellGoodsList);
+		mv.addObject("salesList", salesList);
+//		mv.addObject("map", map);
+		
+		
+		return mv;
+		
+	}
 }
 

@@ -34,6 +34,11 @@
 		var params = $("#qnaUpdateBtn").serialize();
 		
 		if (confirm("수정 하겠습니까?") == true) {
+			if ($("#QNA_CONTENTS").val().length == 0) {
+				alert("내용을 입력하세요");
+				$("#QNA_CONTENTS").focus();
+				return false;
+			}
 		$.ajax(
 		{
 			url : "<c:url value='/qnaUpdate.pulu'/>",

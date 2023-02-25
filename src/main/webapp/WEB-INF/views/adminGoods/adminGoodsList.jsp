@@ -1,8 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@ include file="/WEB-INF/include/include-header.jspf" %>
 <style>
 
 
@@ -94,8 +93,9 @@ form#Search {
 									<th scope="col" colspan="2">관리${list}</th>
 								</tr>
 							</thead>
+						
 							<tbody>
-								<form id="frm" name="frm" enctype="multipart/form-data">
+							
 									<c:choose>
 										<c:when test="${fn:length(adminlist) > 0}">
 											<c:forEach items="${adminlist}" var="row">
@@ -111,7 +111,7 @@ form#Search {
 													<td><fmt:formatDate value="${row.GOODS_DATE}" pattern="yyyy-MM-dd"/></td>
 													<td><a href="/adminGoodsUpdateForm.pulu?GOODS_NUM=${row.GOODS_NUM}" class="btn" name="update" id="update">수정</a></td>
 													<c:if test="${row.GOODS_DELETE == 'N'}">
-										<td><a href="/adminGoodsDelete.pulu?GOODS_NUM=${row.GOODS_NUM}" class="btn" id="delete"  onclick="removeCheck()">삭제</a></td>
+										<td><button type="submit" class="btn btn-primary" id="deletee" onclick="fn_deleteBoard(${row.GOODS_NUM})">삭제</button></td>
 										</c:if>
 									    <c:if test="${row.GOODS_DELETE == 'Y'}">
                                           <td><a href="/adminGoodsUpdateD.pulu?GOODS_NUM=${row.GOODS_NUM}" class="btn" id="updateDelete"  onclick="updateCheck()">삭제취소</a></td>
@@ -125,9 +125,11 @@ form#Search {
 											</tr>
 										</c:otherwise>
 									</c:choose>
-								</form>
+									
 							</tbody>
+						
 						</table>
+						
 						${pagingHtml}
 
 						<div>
@@ -166,14 +168,11 @@ form#Search {
 	</div>
 
 
-<div id="PAGE_NAVI">
 
-</div>
-	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
- <%@ include file="/WEB-INF/include/include-body.jspf" %>
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<%@ include file="/WEB-INF/include/include-body.jspf" %>
 <script type="text/javascript">
-function gfn_isNull(str) {
+
+ /* function gfn_isNull(str) {
 	if (str == null) return true;
 	if (str == "NaN") return true;
 	if (new String(str).valueOf() == "undefined") return true;    
@@ -182,14 +181,6 @@ function gfn_isNull(str) {
     if (chkStr == null) return true;    
     if (chkStr.toString().length == 0 ) return true;   
     return false; 
-}
-
-function removeCheck() {
-	 if (confirm("정말 삭제하시겠습니까??") == true){
-	     document.frm.submit();
-	 }else{ 
-	     return false;
-	 }
 }
 
 
@@ -216,7 +207,15 @@ function ComSubmit(opt_formId) {
 		frm.method = "post";
 		frm.submit();	
 	};
-}
+}  */
+/* 
+	 function removeCheck() {
+		if (confirm("정말 삭제하시겠습니까??") == true){
+		    document.frm.submit();
+		}else{ 
+		    return false;
+		}
+	}  */
 
 		
 		$(document).ready(function(){
@@ -225,11 +224,11 @@ function ComSubmit(opt_formId) {
 				e.preventDefault();
 				fn_updateBoard();
 			});
-			$("#delete").on("click", function(e){ //삭제하기 버튼
+			  $("#delete").on("click", function(e){ //삭제하기 버튼
 				e.preventDefault();
-				fn_deleteBoard();
+				fn_deleteBoard();			
 			});
-		});
+		});  
 		
 		function fn_updateBoard(){
 			var comSubmit = new ComSubmit();
@@ -237,12 +236,16 @@ function ComSubmit(opt_formId) {
 			comSubmit.addParam("GOODS_NUM", $("#GOODS_NUM").val());
 			comSubmit.submit();
 		}
-		function fn_deleteBoard(){
+		
+		function fn_deleteBoard(GOODS_NUM){
+			 
+			if (confirm("정말 삭제하시겠습니까??") == true){
+				
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='/adminGoodsDelete.pulu' />");
-			comSubmit.addParam("GOODS_NUM", $("#GOODS_NUM").val());
+			comSubmit.addParam("GOODS_NUM", GOODS_NUM); 
 			comSubmit.submit();
-			
+			}
 		}
 		
 

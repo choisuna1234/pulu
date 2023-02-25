@@ -296,13 +296,12 @@ label {
   top: 50%;
   right: 0;
   left: 0;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   margin: 0 auto;
   background-color: #f72414;
   transform: translateY(-50%);
   border-radius: 50%;
-  box-shadow: 0 7px 10px #ffbeb8;
   cursor: pointer;
   transition: 0.2s ease transform, 0.2s ease background-color,
     0.2s ease box-shadow;
@@ -323,7 +322,6 @@ label:before {
   background-color: #fff;
   transform: translateY(-50%);
   border-radius: 50%;
-  box-shadow: inset 0 7px 10px #ffbeb8;
   transition: 0.2s ease width, 0.2s ease height;
   border: 1px solid black;
 }
@@ -331,7 +329,6 @@ label:before {
 label:hover:before {
   width: 55px;
   height: 55px;
-  box-shadow: inset 0 7px 10px #ff9d96;
 }
 
 label:active {
@@ -365,8 +362,8 @@ label:active {
   bottom: 0;
   width: 3px;
   height: 9px;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
   transform: translateY(-68px);
+  margin-bottom: 2px;
 }
 
 #tick_mark1:after {
@@ -374,13 +371,12 @@ label:active {
   bottom: 0;
   width: 80%;
   height: 3px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
   transform: translateX(78px);
+  margin-bottom: 2px;
 }
 
 #_checkbox1:checked + label {
   background-color: #006F3E;
-  box-shadow: 0 7px 10px #006F3E;
 }
 
 #_checkbox1:checked + label:before {
@@ -421,7 +417,6 @@ label {
   background-color: #f72414;
   transform: translateY(-50%);
   border-radius: 50%;
-  box-shadow: 0 7px 10px #ffbeb8;
   cursor: pointer;
   transition: 0.2s ease transform, 0.2s ease background-color,
     0.2s ease box-shadow;
@@ -442,7 +437,6 @@ label:before {
   background-color: #fff;
   transform: translateY(-50%);
   border-radius: 50%;
-  box-shadow: inset 0 7px 10px #ffbeb8;
   transition: 0.2s ease width, 0.2s ease height;
   border: 1px solid black;
 }
@@ -450,7 +444,6 @@ label:before {
 label:hover:before {
   width: 55px;
   height: 55px;
-  box-shadow: inset 0 7px 10px #ff9d96;
 }
 
 label:active {
@@ -484,8 +477,8 @@ label:active {
   bottom: 0;
   width: 3px;
   height: 9px;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
   transform: translateY(-68px);
+  margin-bottom: 2px;
 }
 
 #tick_mark2:after {
@@ -493,13 +486,12 @@ label:active {
   bottom: 0;
   width: 80%;
   height: 3px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
   transform: translateX(78px);
+  margin-bottom: 2px;
 }
 
 #check1:checked + label {
   background-color: #006F3E;
-  box-shadow: 0 7px 10px #006F3E;
 }
 
 #check1:checked + label:before {
@@ -530,7 +522,6 @@ label {
   background-color: #f72414;
   transform: translateY(-50%);
   border-radius: 50%;
-  box-shadow: 0 7px 10px #ffbeb8;
   cursor: pointer;
   transition: 0.2s ease transform, 0.2s ease background-color,
     0.2s ease box-shadow;
@@ -551,7 +542,6 @@ label:before {
   background-color: #fff;
   transform: translateY(-50%);
   border-radius: 50%;
-  box-shadow: inset 0 7px 10px #ffbeb8;
   transition: 0.2s ease width, 0.2s ease height;
   border: 1px solid black;
 }
@@ -559,7 +549,6 @@ label:before {
 label:hover:before {
   width: 55px;
   height: 55px;
-  box-shadow: inset 0 7px 10px #ff9d96;
 }
 
 label:active {
@@ -593,8 +582,8 @@ label:active {
   bottom: 0;
   width: 3px;
   height: 9px;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
   transform: translateY(-68px);
+  margin-bottom: 2px;
 }
 
 #tick_mark3:after {
@@ -602,13 +591,12 @@ label:active {
   bottom: 0;
   width: 80%;
   height: 3px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
   transform: translateX(78px);
+  margin-bottom: 2px;
 }
 
 #check2:checked + label {
   background-color: #006F3E;
-  box-shadow: 0 7px 10px #006F3E;
 }
 
 #check2:checked + label:before {
@@ -634,13 +622,12 @@ label {
   top: 50%;
   right: 0;
   left: 0;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   margin: 0 auto;
   background-color: #f72414;
   transform: translateY(-50%);
   border-radius: 50%;
-  box-shadow: 0 7px 10px #ffbeb8;
   cursor: pointer;
   transition: 0.2s ease transform, 0.2s ease background-color,
     0.2s ease box-shadow;
@@ -655,13 +642,12 @@ label:before {
   top: 50%;
   right: 0;
   left: 0;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   margin: 0 auto;
   background-color: #fff;
   transform: translateY(-50%);
   border-radius: 50%;
-  box-shadow: inset 0 7px 10px #ffbeb8;
   transition: 0.2s ease width, 0.2s ease height;
   border: 1px solid black;
 }
@@ -669,7 +655,6 @@ label:before {
 label:hover:before {
   width: 55px;
   height: 55px;
-  box-shadow: inset 0 7px 10px #ff9d96;
 }
 
 label:active {
@@ -703,8 +688,8 @@ label:active {
   bottom: 0;
   width: 3px;
   height: 9px;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
   transform: translateY(-68px);
+  margin-bottom: 2px;
 }
 
 #tick_mark4:after {
@@ -712,13 +697,12 @@ label:active {
   bottom: 0;
   width: 80%;
   height: 3px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
   transform: translateX(78px);
+  margin-bottom: 2px;
 }
 
 #check_3:checked + label {
   background-color: #006F3E;
-  box-shadow: 0 7px 10px #006F3E;
 }
 
 #check_3:checked + label:before {
@@ -761,7 +745,6 @@ button.insert_bt.reset{
   font-size: 15px;
   padding: 	16px 91px;
   margin: 0 auto;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
 
 }
 

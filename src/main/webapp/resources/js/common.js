@@ -35,6 +35,10 @@ function ComSubmit(opt_formId) {
 }
 
 var gfv_ajaxCallback = "";
+
+
+
+/* Ajax 페이징*/
 function ComAjax(opt_formId){
 	this.url = "";		
 	this.formId = gfn_isNull(opt_formId) == true ? "commonForm" : opt_formId;

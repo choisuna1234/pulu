@@ -25,13 +25,6 @@ public class AdminFaqServiceImpl implements AdminFaqService {	//Service 인터�
 		
 	}
 
-/*
-	@Override
-	public void adminFaqInsert(Map<String, Object> map) throws Exception {
-		
-		adminFaqDAO.adminFaqInsert(map);
-	}*/
-
 	// FAQ 등록
 	@Override
 	public void adminFaqInsert(Map<String, Object> map, HttpServletRequest request) throws Exception {

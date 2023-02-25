@@ -32,8 +32,8 @@ public class MemberController {
 	// 페이징 변수
 	private int currentPage = 1;
 	private int totalCount;
-	private int blockCount = 5;
-	private int blockPage = 5;
+	private int blockCount = 10;
+	private int blockPage = 10;
 	private int startPage;
 	private int endPage;
 	private String pagingHtml;

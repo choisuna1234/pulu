@@ -178,6 +178,9 @@
 	<definition name="admin_order_list" extends="layout_admin">
 		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminOrderList.jsp"/>
 	</definition>
+	<definition name="admin_sales_list" extends="layout_admin">
+		<put-attribute name="body" value="/WEB-INF/views/adminBoard/adminSalesList.jsp"/>
+	</definition>
 
 	
 

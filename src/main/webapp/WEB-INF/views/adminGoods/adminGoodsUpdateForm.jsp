@@ -80,17 +80,18 @@ table {
 											<div id="fileDiv">				
 												<c:forEach var="row" items="${list}" varStatus="var">
 													<p>
-														<input type="hidden" id="IMAGE_GOODS_NUM" name="IMAGE_GOODS_NUM_${var.index }" value="${row.IMAGE_GOODS_NUM }" >
+														<input type="hidden" id="IDX_${var.index }" name="IDX_${var.index }" value="${row.IMAGE_NUM }">
 														<a href="#this" id="name_${var.index }" name="name_${var.index }">${row.IMAGE_IMG }</a>
-														<input type="file" id="file_${var.index }" name="file_${var.index }"  class="btn btn-primary"> 
-														<a href="#this" class="btn" id="delete_${var.index}" name="delete_${var.index }"  class="btn btn-primary">삭제</a>
-													</p>
+														<input type="file" id="file_${row.index }" name="file_${var.index }"> 
+														<a href="#this" class="btn" id="delete_${var.index}" name="delete_${var.index }">삭제</a>
+								                     </p>
 												</c:forEach>
 											</div>
 										</td>
 									</tr>
 								</tbody>
 							</table>
+						 </form> 
 						</div>
 					</div>
 				</div>
@@ -102,12 +103,11 @@ table {
 
 
 
-
 	
 	<a href="#this" class="btn btn-primary" id="addFile">파일 추가</a>
 	<a href="#this" class="btn btn-primary" id="list">목록으로</a>
 	<a href="#this" class="btn btn-primary" id="update">저장하기</a>
-	<a href="#this" class="btn btn-primary" id="delete" onclick="return removeCheck()">삭제하기</a>
+	<a href="#this" class="btn btn-primary" id="delete" >삭제하기</a>
 	
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <script type="text/javascript">
@@ -118,13 +118,43 @@ table {
 				fn_openBoardList();
 			});
 			
-			$("#update").on("click", function(e){ //저장하기 버튼
-				e.preventDefault();
-				fn_updateBoard();
+			<!-- 유효성검사, 저장하기버튼 -->
+			$("#update").on("click", function(e){ 
+				 var numCheck = RegExp(/[^0-9]$/);
+				 e.preventDefault();
+				 if($('#GOODS_NAME').val()==""){
+						alert("상품명을 입력해 주세요.");				
+						$("#GOODS_NAME").focus();
+						return false;
+				     } else if($('#GOODS_AMOUNT').val()==""){
+					     alert("상품수량을 입력해 주세요.");
+					     $("#GOODS_AMOUNT").focus();
+					    return false;	
+				     }else if(numCheck.test($('#GOODS_AMOUNT').val())){
+					     alert("숫자를 입력하세요")
+					     return false; 
+				     } else if($('#GOODS_PRICE').val()==""){
+					     alert("상품가격을 입력해 주세요.");
+					     $("#GOODS_PRICE").focus();
+					     return false;
+				     }else if(numCheck.test($('#GOODS_PRICE').val())){
+					     alert("숫자를 입력하세요")
+					     return false;    
+					 } else if($('#GOODS_CALORIE').val()==""){
+						 alert("상품칼로리를 입력해 주세요.");
+						 $("#GOODS_CALORIE").focus();
+						 return false;
+					 }else if(numCheck.test($('#GOODS_CALORIE').val())){
+					     alert("숫자를 입력하세요")
+					     return false; 	 
+					 } else{
+				        fn_updateBoard();
+				}
 			});
 			
 			$("#delete").on("click", function(e){ //삭제하기 버튼
 				e.preventDefault();
+			  
 				fn_deleteBoard();
 			});
 			
@@ -139,13 +169,13 @@ table {
 			});
 		});
 
-		function removeCheck() {
+		/* function removeCheck() {
 			 if (confirm("정말 삭제하시겠습니까??") == true){
 			     document.frm.submit();
 			 }else{ 
 			     return false;
 			 }
-		}
+		} */
 		
 function fn_openBoardList(){
 	var comSubmit = new ComSubmit();
@@ -160,11 +190,14 @@ function fn_updateBoard(){
 }
 
 function fn_deleteBoard(){
+	if (confirm("정말 삭제하시겠습니까??") == true){
 	var comSubmit = new ComSubmit();
 	comSubmit.setUrl("<c:url value='/adminGoodsDelete.pulu' />");
 	comSubmit.addParam("GOODS_NUM", $("#GOODS_NUM").val());
 	comSubmit.submit();
-	
+	}else{
+		return false;
+	}
 }
 	
 function fn_addFile(){

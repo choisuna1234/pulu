@@ -4,8 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/include/include-header.jspf"%>
 
-<link rel="stylesheet" type="text/css"
-	href="./resources/css/board.css" />
+<link rel="stylesheet" type="text/css" href="./resources/css/board.css" />
 
 <div class="boardcontainer">
 	<div class="wid1280">
@@ -41,7 +40,7 @@
 	                        </ul>
 	                        <div class="detail">
 	                        	<div class="boardview">
-	                        		${map.FAQ_CONTENT }
+	                        		<pre>${map.FAQ_CONTENT }</pre>
 	                        	</div>
 	                        </div>
 						</td>
@@ -68,14 +67,8 @@
 		var isSearch;
 		var searchNum;
 
-		//			if (isSearch === null) { 
 		comSubmit
-				.setUrl("<c:url value='/faqList.pulu?searchNum=${searchNum}&isSearch=${isSearch}&currentPage=${currentPage}'/>");
-		//			} else {
-		//				comSubmit.setUrl("<c:url value='/adminFaqList.pulu?currentPage=${currentPage}'/>");
-		//			}
+			.setUrl("<c:url value='/faqList.pulu?searchNum=${searchNum}&isSearch=${isSearch}&currentPage=${currentPage}'/>");
 		comSubmit.submit();
-
-		//			history.go(-1);
 	}
 </script>

@@ -110,35 +110,17 @@ public class AdminOrderDAO extends AbstractDAO {
 
 	//관리자 주문처리 디테일
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> adminOrderDetail(Map<String, Object> map) throws Exception {
+	public Map<String, Object> adminOrderDetail2(Map<String, Object> map) throws Exception {
 
-		return (Map<String, Object>) selectOne("adminOrder.orderDetail", map);
+		return (Map<String, Object>) selectOne("adminOrder.orderDetail2", map);
 	}
 
-	// 관리자 주문처리 디테일
+	// 관리자 주문처리 디테일 (상품)
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> adminOrderDetail2(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> adminOrderDetail(Map<String, Object> map) throws Exception {
 //		return (List<Map<String, Object>>) selectList("adminOrder.orderDetail2", map);
-		
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> orderNumList = selectList("adminOrder.orderDetail2", map);
-		log.info("\n01. 모든 주문번호 == " + orderNumList);
-
-		for (Map<String, Object> ORDER_NUM : orderNumList) {
-			Map<String, Object> orderDeliMap = (Map<String, Object>) selectOne("adminOrder.selectOrderDeliByOrderNum",
-					ORDER_NUM);
-			log.info("\n02. 주문번호 " + ORDER_NUM + "의 주문정보 == " + orderDeliMap);
-			List<Map<String, Object>> orderGoodsList = (List<Map<String, Object>>) selectList(
-					"adminOrder.selectOrderGoodsByOrderNum", ORDER_NUM);
-			log.info("\n03. 주문번호 " + ORDER_NUM + "의 상품항목 수 == " + orderGoodsList.size());
-			orderDeliMap.put("ORDER_GOODS_COUNT", orderGoodsList.size());
-			orderDeliMap.put("ORDER_GOODS_NUM", orderGoodsList.get(0).get("ORDER_GOODS_NUM"));
-			orderDeliMap.put("ORDER_GOODS_NAME", orderGoodsList.get(0).get("ORDER_GOODS_NAME"));
-			orderDeliMap.put("ORDER_GOODS_IMAGE", orderGoodsList.get(0).get("ORDER_GOODS_IMAGE"));
-			orderDeliMap.put("ORDER_GOODS_PRICE", orderGoodsList.get(0).get("ORDER_GOODS_PRICE"));
-			list.add(orderDeliMap);
-		}
-		return list;
+		return (List<Map<String, Object>>) selectList("adminOrder.orderDetail", map);
+	
 	}
 	
 
@@ -147,6 +129,17 @@ public class AdminOrderDAO extends AbstractDAO {
 	public void adminOrderUpdate(Map<String, Object> map) throws Exception {
 		update("adminOrder.orderUpdate",map);
 	}
+
+	//입금 완료시 상품 구매 수 카운트
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> goodsAmount_stutus_Select(Map<String, Object> map) throws Exception {
+		return (List<Map<String,Object>>) selectList("adminOrder.goodsAmount_stutus_Select");
+	}
+	public void goodsSellCountUpdate(Map<String, Object> map) throws Exception {
+		update("adminOrder.goodsSellCountUpdate", map);
+	}
+
+	
 
 	//관리자 주문처리 삭제
 	@SuppressWarnings("unchecked")
@@ -165,6 +158,17 @@ public class AdminOrderDAO extends AbstractDAO {
 		update("adminOrder.goodsAmountUpdate",map);
 		
 	}
+
+	/********** 관리자 매출 관리 **********/
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> sellGoodsList(Map<String, Object> map) {
+		return (List<Map<String,Object>>) selectList("adminOrder.sellGoodsList", map);
+	}
 	
+	// 매출 리스트
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> adminSalesList(Map<String, Object> map) {
+		return (List<Map<String,Object>>) selectList("adminOrder.adminSalesList", map);
+	}
 
 }

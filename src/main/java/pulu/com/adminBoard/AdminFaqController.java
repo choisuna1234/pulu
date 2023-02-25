@@ -178,8 +178,6 @@ public class AdminFaqController {
 		// 상세보기에 들어있는 정보를 꺼내서 mv에 다시저장
 
 		mv.addObject("map", map);
-//			mv.addObject("map", map.get("map"));
-//			mv.addObject("list", map.get("list"));
 		mv.addObject("FAQ_NUM", commandMap.get("FAQ_NUM"));
 		mv.addObject("currentPage", currentPage);
 		mv.addObject("isSearch", isSearch);
@@ -199,9 +197,6 @@ public class AdminFaqController {
 		adminFaqService.adminfaqUpdate(commandMap.getMap(), request);
 
 		mv.addObject("FAQ_NUM", commandMap.get("FAQ_NUM"));
-		mv.addObject("isSearch", isSearch);
-		mv.addObject("searchNum", searchNum);
-		mv.addObject("currentPage", currentPage);
 
 		return mv;
 	}

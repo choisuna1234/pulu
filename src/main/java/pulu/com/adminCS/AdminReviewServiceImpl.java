@@ -14,9 +14,9 @@ public class AdminReviewServiceImpl implements AdminReviewService {
 	private AdminReviewDAO adminReviewDAO;
 
 	@Override // 관리자 후기 답변 등록
-	public void adminReviewInsert(Map<String, Object> map) throws Exception {
+	public void adminReviewComInsert(Map<String, Object> map) throws Exception {
 		
-		adminReviewDAO.adminReviewInsert(map);
+		adminReviewDAO.adminReviewComInsert(map);
 	}
 
 	@Override // 관리자 페이지 후기 리스트
@@ -26,15 +26,15 @@ public class AdminReviewServiceImpl implements AdminReviewService {
 	}
 
 	@Override // 관리자 후기 답변 삭제
-	public void adminReviewDelete(Map<String, Object> map) throws Exception {
+	public void adminReviewComDelete(Map<String, Object> map) throws Exception {
 		
-		adminReviewDAO.adminReviewDelete(map);
+		adminReviewDAO.adminReviewComDelete(map);
 	}
 
 	@Override // 관리자 후기 삭제
-	public void reviewDelete(Map<String, Object> map) throws Exception {
+	public void adminReviewDelete(Map<String, Object> map) throws Exception {
 		
-		adminReviewDAO.reviewDelete(map);
+		adminReviewDAO.adminReviewDelete(map);
 	}
 	
 }

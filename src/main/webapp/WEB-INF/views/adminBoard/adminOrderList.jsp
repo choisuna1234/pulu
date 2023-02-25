@@ -158,11 +158,11 @@
 <script type="text/javascript">
 	function checkOrderDelete(ORDER_NUM){
 		if (confirm("주문 취소 하겠습니까?") == true) {
-		var comSubmit = new ComSubmit("adminOrderDelete");
-		comSubmit.setUrl("<c:url value='/adminOrderDelete.pulu' />");
-		comSubmit.addParam("ORDER_NUM", ORDER_NUM);
-		comSubmit.submit();
-		opener.parent.location.reload();
+			var comSubmit = new ComSubmit("adminOrderDelete");
+			comSubmit.setUrl("<c:url value='/adminOrderDelete.pulu' />");
+			comSubmit.addParam("ORDER_NUM", ORDER_NUM);
+			comSubmit.submit();
+			opener.parent.location.reload();
 		}
 	}
 </script>

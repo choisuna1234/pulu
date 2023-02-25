@@ -67,10 +67,10 @@
 						<div class="panel-body">
 
 							<div class="form-group">
-								<label>상품(수량)</label>
+								<label>상품</label>
 								<c:choose>
-									<c:when test="${fn:length(list) > 0}">
-										<c:forEach items="${list}" var="row" varStatus="status">
+									<c:when test="${fn:length(adminOrderlist) > 0}">
+										<c:forEach items="${adminOrderlist}" var="row" varStatus="status">
 											<table>
 												<tr>
 													<td width="40%">
@@ -81,8 +81,10 @@
 													</td>
 													<td>
 														<label>상품이름</label> 
-														<input class="form-control" type="text" value="${row.ORDER_GOODS_NAME }" name="ORDER_GOODS_NAME" readonly> <label>상품가격</label>
-														<input class="form-control" type="text" value="${row.ORDER_GOODS_PRICE }" name="ORDER_GOODS_PRICE" readonly> <label>상품수량</label> 
+														<input class="form-control" type="text" value="${row.ORDER_GOODS_NAME }" name="ORDER_GOODS_NAME" readonly> 
+														<label>상품가격</label>
+														<input class="form-control" type="text" value="${row.ORDER_GOODS_PRICE }" name="ORDER_GOODS_PRICE" readonly> 
+														<label>상품수량</label> 
 														<input class="form-control" type="text" value="${row.ORDER_GOODS_COUNT }" name="ORDER_GOODS_COUNT" readonly>
 													</td>
 												</tr>

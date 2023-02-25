@@ -30,25 +30,16 @@ public class AdminReviewController {
 	private Paging page;
 	
 	// 관리자 후기 답변 등록
-	@RequestMapping(value="/adminReviewInsert")
-	public ModelAndView adminReviewInsert(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		adminReviewService.adminReviewInsert(commandMap.getMap());
+	@RequestMapping(value="/adminReviewComInsert")
+	public ModelAndView adminReviewComInsert(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/adminReviewList.pulu");
+		adminReviewService.adminReviewComInsert(commandMap.getMap());
 		
-		mv.setViewName("redirect:/detail.pulu");
 		return mv;
 	}
 	
-	// 등록폼
-	@RequestMapping(value="/adminReviewInsertForm")
-	public ModelAndView adminReviewInsertForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("adminReviewInsert");
-		return mv;
-	}
 	
-	// 관리자 후기 답변 리스트 
+	// 관리자 후기 리스트 
 	@RequestMapping(value="/adminReviewList")
 	public ModelAndView adminReviewList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("admin_review_list");
@@ -82,13 +73,22 @@ public class AdminReviewController {
 	
 	
 	// 관리자 후기 답변 삭제
-	@RequestMapping(value="/adminReviewDelete")
-	public ModelAndView adminReviewDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView();
+	@RequestMapping(value="/adminReviewComDelete")
+	public ModelAndView adminReviewComDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/adminReviewList.pulu");
 				
-		adminReviewService.adminReviewDelete(commandMap.getMap());
-		mv.setViewName("redirect:/detail.pulu");
+		adminReviewService.adminReviewComDelete(commandMap.getMap());
 		
+		return mv;
+	}
+	
+	// 관리자 후기 삭제
+	@RequestMapping(value = "/adminReviewDelete")
+	public ModelAndView reviewDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/adminReviewList.pulu");
+
+		adminReviewService.adminReviewDelete(commandMap.getMap());
+
 		return mv;
 	}
 }

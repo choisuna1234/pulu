@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">공지사항</div>
+					<div class="paZnel-heading">공지사항</div>
 					<div class="panel-body">
 						<a href="#this" id="insert" class="btn btn-primary">글쓰기</a>
 						<br>
@@ -114,7 +114,8 @@
             fn_adminNoticeDetail($(this));
          });
       });
-            
+      
+      
       function fn_adminNoticeInsert(){
          var comSubmit = new ComSubmit();
          comSubmit.setUrl("<c:url value='/adminNoticeInsertForm.pulu'/>");

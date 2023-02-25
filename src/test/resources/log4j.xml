@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="pulu.com.admin">
+	<logger name="pulu.com.main">
 		<level value="info" />
 	</logger>
 	

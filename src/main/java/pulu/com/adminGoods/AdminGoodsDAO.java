@@ -41,7 +41,7 @@ public class AdminGoodsDAO extends AbstractDAO{
     // 파일 수정
 	public void updateFile(Map<String, Object> map) throws Exception{
 		update("adminGoods.updateFile", map);
-		update("adminGoods.deleteFile", map);
+		
 	}
 	
 	//파일 삭제
